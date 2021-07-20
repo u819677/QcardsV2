@@ -13,6 +13,17 @@
 		23BAC98126A723920065313D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BAC98026A723920065313D /* Preview Assets.xcassets */; };
 		23BAC98C26A723920065313D /* QcardsV2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC98B26A723920065313D /* QcardsV2Tests.swift */; };
 		23BAC99726A723920065313D /* QcardsV2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC99626A723920065313D /* QcardsV2UITests.swift */; };
+		23BAC9A526A724260065313D /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9A426A724260065313D /* TableView.swift */; };
+		23BAC9A726A7246C0065313D /* TopicStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9A626A7246C0065313D /* TopicStore.swift */; };
+		23BAC9A926A725200065313D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9A826A725200065313D /* Persistence.swift */; };
+		23BAC9AB26A725EA0065313D /* TopicEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9AA26A725EA0065313D /* TopicEditView.swift */; };
+		23BAC9AE26A727050065313D /* QcardsV2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9AC26A727050065313D /* QcardsV2.xcdatamodeld */; };
+		23BAC9B326A728630065313D /* Query+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */; };
+		23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */; };
+		23BAC9B526A728630065313D /* Topic+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */; };
+		23BAC9B626A728630065313D /* Topic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */; };
+		23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B726A7293D0065313D /* TopicEntryView.swift */; };
+		23BAC9BC26A7298D0065313D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAC9BB26A7298D0065313D /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +56,18 @@
 		23BAC99226A723920065313D /* QcardsV2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QcardsV2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BAC99626A723920065313D /* QcardsV2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QcardsV2UITests.swift; sourceTree = "<group>"; };
 		23BAC99826A723920065313D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		23BAC9A426A724260065313D /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		23BAC9A626A7246C0065313D /* TopicStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicStore.swift; sourceTree = "<group>"; };
+		23BAC9A826A725200065313D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		23BAC9AA26A725EA0065313D /* TopicEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicEditView.swift; sourceTree = "<group>"; };
+		23BAC9AD26A727050065313D /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Query+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Query+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B726A7293D0065313D /* TopicEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicEntryView.swift; sourceTree = "<group>"; };
+		23BAC9B926A7298A0065313D /* QcardsV2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QcardsV2.entitlements; sourceTree = "<group>"; };
+		23BAC9BB26A7298D0065313D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23BAC9BC26A7298D0065313D /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +103,7 @@
 				23BAC98A26A723920065313D /* QcardsV2Tests */,
 				23BAC99526A723920065313D /* QcardsV2UITests */,
 				23BAC97726A723900065313D /* Products */,
+				23BAC9BA26A7298D0065313D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,11 +120,22 @@
 		23BAC97826A723900065313D /* QcardsV2 */ = {
 			isa = PBXGroup;
 			children = (
+				23BAC9B926A7298A0065313D /* QcardsV2.entitlements */,
+				23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */,
+				23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */,
+				23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */,
+				23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */,
 				23BAC97926A723900065313D /* QcardsV2App.swift */,
 				23BAC97B26A723900065313D /* ContentView.swift */,
+				23BAC9A426A724260065313D /* TableView.swift */,
+				23BAC9A626A7246C0065313D /* TopicStore.swift */,
+				23BAC9AA26A725EA0065313D /* TopicEditView.swift */,
+				23BAC9B726A7293D0065313D /* TopicEntryView.swift */,
+				23BAC9A826A725200065313D /* Persistence.swift */,
 				23BAC97D26A723920065313D /* Assets.xcassets */,
 				23BAC98226A723920065313D /* Info.plist */,
 				23BAC97F26A723920065313D /* Preview Content */,
+				23BAC9AC26A727050065313D /* QcardsV2.xcdatamodeld */,
 			);
 			path = QcardsV2;
 			sourceTree = "<group>";
@@ -128,6 +164,14 @@
 				23BAC99826A723920065313D /* Info.plist */,
 			);
 			path = QcardsV2UITests;
+			sourceTree = "<group>";
+		};
+		23BAC9BA26A7298D0065313D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23BAC9BB26A7298D0065313D /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +303,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23BAC9AB26A725EA0065313D /* TopicEditView.swift in Sources */,
 				23BAC97C26A723900065313D /* ContentView.swift in Sources */,
+				23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */,
+				23BAC9A526A724260065313D /* TableView.swift in Sources */,
 				23BAC97A26A723900065313D /* QcardsV2App.swift in Sources */,
+				23BAC9A726A7246C0065313D /* TopicStore.swift in Sources */,
+				23BAC9B626A728630065313D /* Topic+CoreDataProperties.swift in Sources */,
+				23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */,
+				23BAC9A926A725200065313D /* Persistence.swift in Sources */,
+				23BAC9B326A728630065313D /* Query+CoreDataClass.swift in Sources */,
+				23BAC9AE26A727050065313D /* QcardsV2.xcdatamodeld in Sources */,
+				23BAC9B526A728630065313D /* Topic+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +471,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = QcardsV2/QcardsV2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"QcardsV2/Preview Content\"";
 				DEVELOPMENT_TEAM = 39Z673U42P;
@@ -439,6 +494,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = QcardsV2/QcardsV2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"QcardsV2/Preview Content\"";
 				DEVELOPMENT_TEAM = 39Z673U42P;
@@ -580,6 +636,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		23BAC9AC26A727050065313D /* QcardsV2.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				23BAC9AD26A727050065313D /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 23BAC9AD26A727050065313D /* CoreData.xcdatamodel */;
+			path = QcardsV2.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 23BAC96E26A723900065313D /* Project object */;
 }
