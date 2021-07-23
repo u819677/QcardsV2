@@ -8,30 +8,19 @@
 import SwiftUI
 import CoreData
 
-//extension Binding {
-//    init(_ source: Binding<Value?>, _ defaultValue: Value)
-//    {
-//        if source.wrappedValue == nil {
-//            source.wrappedValue = defaultValue
-//        }
-//        self.init(source)!
-//    }
-//
-//}
 
 struct TopicEntryView: View {
-    
-    
+
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentionMode
     @Binding var isPresented: Bool
     @State private var isEditing: Bool = false
-    //@State private var topicName: String = ""
+
     @State var topicName: String = ""
     var topic: Topic? // = nil
     
-    @State var testText: String = ""
+    @State var testText: String = "initial value"
     
     
    init(isPresented: Binding<Bool>,
@@ -39,29 +28,17 @@ struct TopicEntryView: View {
     self._isPresented = isPresented
     self.topic = topic
     
-    self._topicName = State(wrappedValue: topic?.name ?? "nil")
-    
-    
-    
-    
-    
+    self._topicName = State(wrappedValue: topic?.name ?? "")
+ 
     print("topic coming in is  \(topic?.name ?? "nil")")
     if topic != nil {
-        
-        testText = "topic to edit"
+    testText = "topic to edit"//this doesn't run due init sequence of events - is that why? not sure.
         print ("testText = \(testText)")
+        print ("CD topic is \(String(describing: topic))")
     }
-        //thnk need binding var here not@State var...
-    //topicName = "topic name init" //topic!.name
-       //print("topicName has been given a value of \($topicName)")//state's value outside of access for a view is not good, results in constant binding of initial value and will not update
-    //}
-   }
-    
-//        if topic  != nil {
-//            topicName = topic!.name
-//        }
 
-    
+   }
+ 
     var body: some View {
         
         ZStack {
@@ -83,7 +60,6 @@ struct TopicEntryView: View {
                         } else {
                             addTopic()
                         }
-                        //addTopic()
                         self.isPresented = false
                     } ){
                         Text ("Save")}

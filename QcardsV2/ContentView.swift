@@ -45,36 +45,7 @@ struct ContentView: View {
     
     
     var body: some View {
-        //VStack {
-            
-//            HStack {
-//                Button(action: {
-//
-//                } ){
-//                    Text ("run func")}
-//                Spacer()
-//                Button(action: {
-//                    addTopic()
-//                    //self.isPresented = false
-//                } ){
-//                    Text ("Save")}
-//            }
-//
-            
-//            TextField("enter new Topic", text: $newTopic)
-//
-//                .padding(.horizontal, 20)
-//                .padding()
-            
-            //        List {
-            //            ForEach(fetchedTopics,  id: \.self) {topic in
-            //                //Text(topic.wrappedTopicName)
-            //                Text(topic.name)
-            //            }
-            //        }
-            //
-            
-            
+
             NavigationView {
             TableView($topicStore.topics, background: background) { topic in   //was Color.green
                 TopicView(topic: topic)
@@ -130,19 +101,7 @@ struct ContentView: View {
                     print("not iPad")
                 }
             }
-            .actionSheet(isPresented: $showingActionSheet) {
-             
-                ActionSheet(
-                    title: Text("Action for this topic"),
-                    message: Text("Action Sheet message"),
-                    buttons: [  ///two ways to provide the action,either action: func, or in {} as a closure
-                        //.default(Text("Dismiss Action Sheet"), action: addTopic),
-                        //.default(Text("Dismiss Action Sheet")) { addTopic()},
-                        .default(Text("Display MoreSheet")) { self.showingMoreSheet = true},///seems that all buttons are called .default
-                            .cancel()
-                    ])
-                
-            }
+
             //.sheet(isPresented: $showingMoreSheet) { MoreSheet(topic: onMoreTopic!)}
             
            
@@ -150,27 +109,14 @@ struct ContentView: View {
                 //MoreSheet(topic: item)}
                 //print("onMoreTopic is now \(item.name)")
                 withAnimation {
-
-
-                    //TopicEditView(topic: item)
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
 
                     //topicStore.controllerDidChangeContent()
             }
             }
-            
-            .popover(isPresented: $showingPopover)  {
-                Text("Popover text")
-                    .font(.headline)
-                    .padding()
-            }
-                
-                
                 
             .navigationBarTitle("Topics")
-            //.background(Color.black) //no effect
-            
-            //.edgesIgnoringSafeArea(.all)
+
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
                     print("NewTopic View called here")
@@ -186,14 +132,13 @@ struct ContentView: View {
             .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
         } //end of NavView
             .navigationViewStyle(StackNavigationViewStyle())//also I did adjust a couple of infoplist items...
-            //.background(Color.black)//no effect
+
             .sheet(isPresented: $showTopicEntryView)  {
-                TopicEntryView(isPresented:$showTopicEntryView, topic: onMoreTopic) //not sure if this onMoreTopic will revert to nil
+                TopicEntryView(isPresented:$showTopicEntryView, topic: onMoreTopic)
             }
         
-            //.background(Color.black) //no effect
-      //   } //end of VStack
     }//end of body
+    
     //MARK:- addTopic
     private func addTopic() {
         withAnimation {

@@ -16,7 +16,6 @@
 		23BAC9A526A724260065313D /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9A426A724260065313D /* TableView.swift */; };
 		23BAC9A726A7246C0065313D /* TopicStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9A626A7246C0065313D /* TopicStore.swift */; };
 		23BAC9A926A725200065313D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9A826A725200065313D /* Persistence.swift */; };
-		23BAC9AB26A725EA0065313D /* TopicEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9AA26A725EA0065313D /* TopicEditView.swift */; };
 		23BAC9AE26A727050065313D /* QcardsV2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9AC26A727050065313D /* QcardsV2.xcdatamodeld */; };
 		23BAC9B326A728630065313D /* Query+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */; };
 		23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */; };
@@ -59,12 +58,11 @@
 		23BAC9A426A724260065313D /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		23BAC9A626A7246C0065313D /* TopicStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicStore.swift; sourceTree = "<group>"; };
 		23BAC9A826A725200065313D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		23BAC9AA26A725EA0065313D /* TopicEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicEditView.swift; sourceTree = "<group>"; };
 		23BAC9AD26A727050065313D /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
-		23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Query+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Query+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Query+CoreDataClass.swift"; path = "QcardsV2/Model/Query+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Query+CoreDataProperties.swift"; path = "QcardsV2/Model/Query+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Topic+CoreDataClass.swift"; path = "QcardsV2/Model/Topic+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Topic+CoreDataProperties.swift"; path = "QcardsV2/Model/Topic+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		23BAC9B726A7293D0065313D /* TopicEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicEntryView.swift; sourceTree = "<group>"; };
 		23BAC9B926A7298A0065313D /* QcardsV2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QcardsV2.entitlements; sourceTree = "<group>"; };
 		23BAC9BB26A7298D0065313D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -96,6 +94,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		231B1F9F26A756DD005B70FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				23BAC9AC26A727050065313D /* QcardsV2.xcdatamodeld */,
+				23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */,
+				23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */,
+				23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */,
+				23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		23BAC96D26A723900065313D = {
 			isa = PBXGroup;
 			children = (
@@ -120,22 +130,17 @@
 		23BAC97826A723900065313D /* QcardsV2 */ = {
 			isa = PBXGroup;
 			children = (
-				23BAC9B926A7298A0065313D /* QcardsV2.entitlements */,
-				23BAC9AF26A728630065313D /* Query+CoreDataClass.swift */,
-				23BAC9B026A728630065313D /* Query+CoreDataProperties.swift */,
-				23BAC9B126A728630065313D /* Topic+CoreDataClass.swift */,
-				23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */,
-				23BAC97926A723900065313D /* QcardsV2App.swift */,
+				231B1F9F26A756DD005B70FC /* Model */,
 				23BAC97B26A723900065313D /* ContentView.swift */,
 				23BAC9A426A724260065313D /* TableView.swift */,
 				23BAC9A626A7246C0065313D /* TopicStore.swift */,
-				23BAC9AA26A725EA0065313D /* TopicEditView.swift */,
 				23BAC9B726A7293D0065313D /* TopicEntryView.swift */,
+				23BAC97926A723900065313D /* QcardsV2App.swift */,
 				23BAC9A826A725200065313D /* Persistence.swift */,
 				23BAC97D26A723920065313D /* Assets.xcassets */,
 				23BAC98226A723920065313D /* Info.plist */,
+				23BAC9B926A7298A0065313D /* QcardsV2.entitlements */,
 				23BAC97F26A723920065313D /* Preview Content */,
-				23BAC9AC26A727050065313D /* QcardsV2.xcdatamodeld */,
 			);
 			path = QcardsV2;
 			sourceTree = "<group>";
@@ -303,7 +308,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23BAC9AB26A725EA0065313D /* TopicEditView.swift in Sources */,
 				23BAC97C26A723900065313D /* ContentView.swift in Sources */,
 				23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */,
 				23BAC9A526A724260065313D /* TableView.swift in Sources */,
