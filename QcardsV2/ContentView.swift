@@ -10,9 +10,6 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
-    //@ObservedObject var topicStore: TopicStore //this is from Donny Waals tutorial
-    //@StateObject var topicStore: TopicStore //this is from Paris
     @StateObject var topicStore: TopicStore
     
     @State private var showingActionSheet = false
@@ -25,35 +22,17 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Topic.topicName, ascending: true)],
         animation: .default)
-    var fetchedTopics: FetchedResults<Topic>
-    //var topics: FetchedResults<Topic>
-    //@StateObject private var store = TopicStore()
+    var fetchedTopics: FetchedResults<Topic> //FetchRequest puts the results into here
 
     @State var newTopic: String = ""
-   
-//
- //   init(topicStore: State<TopicStore> ){
-//
-//        UITableView.appearance().backgroundColor = .clear
-//        UITableViewCell.appearance().backgroundColor = .clear
-//
-//        let navBarApp = UINavigationBarAppearance()
-
-//
-//        _topicStore = topicStore
- //   }
-    
+ 
     
     var body: some View {
 
             NavigationView {
             TableView($topicStore.topics, background: background) { topic in   //was Color.green
                 TopicView(topic: topic)
-//                    .contextMenu {
-//                        Button { print("button tapped")    }
-//                            label: {Label("Choose button",systemImage: "globe")}
-//                    }   ///above code indent is in my own style to make more compact.  This context menu does work, plus it would have access to topic...
-                
+
             }
             
             .onSelect { topic in
@@ -91,15 +70,7 @@ struct ContentView: View {
                 onMoreTopic = topic
               
                 print("onMoreTopic is now \(onMoreTopic?.name ?? "nil")")
-                //showTopicEntryView = true
-                //showingMoreSheet = true
-                //showingActionSheet = true
-                //showingPopover = true
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    print("iPad device")
-                } else {
-                    print("not iPad")
-                }
+
             }
 
             //.sheet(isPresented: $showingMoreSheet) { MoreSheet(topic: onMoreTopic!)}
@@ -110,8 +81,6 @@ struct ContentView: View {
                 //print("onMoreTopic is now \(item.name)")
                 withAnimation {
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
-
-                    //topicStore.controllerDidChangeContent()
             }
             }
                 
@@ -119,8 +88,6 @@ struct ContentView: View {
 
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
-                    print("NewTopic View called here")
-                    
                     showTopicEntryView = true
                 }
                 
@@ -129,9 +96,9 @@ struct ContentView: View {
                 .padding()
                 .imageScale(.large)
             })
-            .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+            .preferredColorScheme(.dark)
         } //end of NavView
-            .navigationViewStyle(StackNavigationViewStyle())//also I did adjust a couple of infoplist items...
+            .navigationViewStyle(StackNavigationViewStyle())
 
             .sheet(isPresented: $showTopicEntryView)  {
                 TopicEntryView(isPresented:$showTopicEntryView, topic: onMoreTopic)

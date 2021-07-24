@@ -17,10 +17,10 @@ struct TopicEntryView: View {
     @Binding var isPresented: Bool
     @State private var isEditing: Bool = false
 
-    @State var topicName: String = ""
+    @State var topicName: String // = ""
     var topic: Topic? // = nil
     
-    @State var testText: String = "initial value"
+    @State var testText: String = ""
     
     
    init(isPresented: Binding<Bool>,
@@ -28,8 +28,12 @@ struct TopicEntryView: View {
     self._isPresented = isPresented
     self.topic = topic
     
-    self._topicName = State(wrappedValue: topic?.name ?? "")
- 
+    //self._topicName = State(wrappedValue: "")
+    self._topicName = State(initialValue: topic?.name ?? "")
+    
+    
+    
+    print("after init the topicName is \(topicName)")
     print("topic coming in is  \(topic?.name ?? "nil")")
     if topic != nil {
     testText = "topic to edit"//this doesn't run due init sequence of events - is that why? not sure.
@@ -66,31 +70,36 @@ struct TopicEntryView: View {
                         Text ("Save")}
                 }
                 .padding(20)
-                //Text(topic == nil ? "Enter New Topic Name:" : "Edit Topic name:")
-                //Text("Enter new Topic Name:")
                   
-               TextField("enter new Topic Name", text: $topicName)
-                //TextField("enter new Topic Name", text: $topicName ?? "")
-               
-                //TextField(topic == nil ? "enter new Topic Name" : "don't", text:  $topicName)
+                
+                VStack {
+                  Spacer()
+                    Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
+                    
+                        .foregroundColor(.blue)
+                TextField("", text: $topicName )    //no placeholder text due not visible anyway.
+                    
                 .foregroundColor(.white)
                     .padding(.horizontal, 10)
                     .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 45, idealHeight: 45, maxHeight: 55, alignment: .center)
                     .font(.custom("Noteworthy Bold", size: 35))
                     .foregroundColor(.white)
-                    .accentColor(.white)
+                    .accentColor(.white)    //this is the cursor color
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 0.5))
                     .padding()
+                
                 Spacer()
                 Spacer()
                 Spacer()
             }
             .overlay(RoundedRectangle(cornerRadius: 5)
-                        //.strokeBorder(Color(red:0.6, green:0.4, blue:0.2, opacity: 1.0),lineWidth: 8)
+                     
                         .strokeBorder(Color.black,lineWidth: 8) //cannot find black in scope
                         .shadow(color: .white, radius: 5)
                         .cornerRadius(5)
+                     
             )
+            }
         }
     }
     private func addTopic() {
@@ -98,14 +107,7 @@ struct TopicEntryView: View {
             
             let newTopic = Topic(context: viewContext)//original
             newTopic.topicName = topicName//original
-            //let newQuery = Query(context: viewContext)
-            //newTopic.query? = .adding(newQuery)
-            //var tempArray:[Query] = newTopic.queryArray
-            //newQuery.topic?.topicName = newTopic.topicName
-            
-            //tempArray.append(newQuery)
-            //newTopic.queryArray = tempArray
-            //newTopic.addToQuery(newQuery)
+
             do {
                 try viewContext.save()
             } catch {

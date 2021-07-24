@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23B5392826ABFFD300630476 /* SpareCode.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 23B5392726ABFFD300630476 /* SpareCode.rtf */; };
 		23BAC97A26A723900065313D /* QcardsV2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC97926A723900065313D /* QcardsV2App.swift */; };
 		23BAC97C26A723900065313D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC97B26A723900065313D /* ContentView.swift */; };
 		23BAC97E26A723920065313D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BAC97D26A723920065313D /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23B5392726ABFFD300630476 /* SpareCode.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = SpareCode.rtf; sourceTree = "<group>"; };
 		23BAC97626A723900065313D /* QcardsV2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QcardsV2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BAC97926A723900065313D /* QcardsV2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QcardsV2App.swift; sourceTree = "<group>"; };
 		23BAC97B26A723900065313D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				23BAC98226A723920065313D /* Info.plist */,
 				23BAC9B926A7298A0065313D /* QcardsV2.entitlements */,
 				23BAC97F26A723920065313D /* Preview Content */,
+				23B5392726ABFFD300630476 /* SpareCode.rtf */,
 			);
 			path = QcardsV2;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23B5392826ABFFD300630476 /* SpareCode.rtf in Resources */,
 				23BAC98126A723920065313D /* Preview Assets.xcassets in Resources */,
 				23BAC97E26A723920065313D /* Assets.xcassets in Resources */,
 			);
