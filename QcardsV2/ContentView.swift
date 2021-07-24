@@ -10,47 +10,35 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @StateObject var topicStore: TopicStore
-    
-    @State private var showingActionSheet = false
-    @State private var showingPopover = false
-    @State private var showingMoreSheet = false
-    @State var onMoreTopic: Topic?  //using @State to allow this property to change once the program runs
-    @State private var showTopicEntryView: Bool = false
-    
-    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Topic.topicName, ascending: true)],
         animation: .default)
     var fetchedTopics: FetchedResults<Topic> //FetchRequest puts the results into here
 
+    @StateObject var topicStore: TopicStore
+    
+    @State private var showingPopover = false
+
+    @State var editingTopic: Topic?  //using @State to allow this property to change once the program runs
+    @State private var showTopicEntryView: Bool = false
     @State var newTopic: String = ""
+    
+
+   
  
     
     var body: some View {
 
             NavigationView {
-            TableView($topicStore.topics, background: background) { topic in   //was Color.green
+            TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
-
             }
             
             .onSelect { topic in
-                print("ContentView .onSelect ran for topicName \(topic.name)")
-                
-                
             }
             .onDelete { index in
-                //print(".onDelete topic index  is \(index)")
-                //topicStore
                 let topicToRemove = topicStore.topics[index]
-                print("ContentView .onDelete ran with topicName \(topicToRemove.name)")
-                
-                print("ContentView .onDelete removing topic index \(index) from topicStore")
                 topicStore.topics.remove(at: index)
-                //viewContext.delete(topicStore.topics[index])
-                
-                print("ContentView now deleting topicName \(topicToRemove.name) from CoreData")
                 viewContext.delete(topicToRemove)
                 
                 do {
@@ -61,24 +49,13 @@ struct ContentView: View {
                     let nsError = error as NSError
                     fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                 }
-                
             }
             
             //MARK:- onMore
             .onMore { topic in
-                print(".onMore topic name  is \(topic.name)")
-                onMoreTopic = topic
-              
-                print("onMoreTopic is now \(onMoreTopic?.name ?? "nil")")
-
+                editingTopic = topic
             }
-
-            //.sheet(isPresented: $showingMoreSheet) { MoreSheet(topic: onMoreTopic!)}
-            
-           
-            .sheet(item: $onMoreTopic) { item in
-                //MoreSheet(topic: item)}
-                //print("onMoreTopic is now \(item.name)")
+            .sheet(item: $editingTopic) { item in    //animation triggered when optional onMoreTopic is not nil
                 withAnimation {
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
             }
@@ -90,7 +67,6 @@ struct ContentView: View {
                 withAnimation {
                     showTopicEntryView = true
                 }
-                
             })
             {Text(Image(systemName: "plus"))
                 .padding()
@@ -101,7 +77,7 @@ struct ContentView: View {
             .navigationViewStyle(StackNavigationViewStyle())
 
             .sheet(isPresented: $showTopicEntryView)  {
-                TopicEntryView(isPresented:$showTopicEntryView, topic: onMoreTopic)
+                TopicEntryView(isPresented:$showTopicEntryView, topic: editingTopic)
             }
         
     }//end of body
@@ -111,9 +87,7 @@ struct ContentView: View {
         withAnimation {
             let newTopic = Topic(context: viewContext)
             newTopic.topicName = self.newTopic
-            //need to verify whether the topic array has the new topic added to it.
             do {
-           
                 try viewContext.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
@@ -144,13 +118,6 @@ struct ContentView: View {
     }
     
     
-}
-
-struct MoreSheet: View {
-    var topic: Topic
-    var body: some View {
-        Text("The topic's name is \(topic.name)")
-    }
 }
 
 

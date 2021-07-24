@@ -102,7 +102,9 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             print("onSelect called from delegate function")
             self.parent.onSelect(parent.data[indexPath.row])
         }
-        
+        func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+            false
+        }
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             let deleteAction = UIContextualAction(
                 style: .destructive,
