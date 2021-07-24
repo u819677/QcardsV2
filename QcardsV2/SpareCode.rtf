@@ -2,10 +2,10 @@
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red155\green35\blue147;
 \red28\green70\blue74;\red50\green109\blue116;\red93\green108\blue121;\red57\green0\blue160;\red108\green54\blue169;
-\red196\green26\blue22;}
+\red196\green26\blue22;\red15\green104\blue160;}
 {\*\expandedcolortbl;;\csgenericrgb\c0\c0\c0\c85000;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c60759\c13753\c57628;
 \csgenericrgb\c10981\c27276\c28869;\csgenericrgb\c19418\c42935\c45455;\csgenericrgb\c36526\c42188\c47515;\csgenericrgb\c22454\c0\c62803;\csgenericrgb\c42190\c21278\c66379;
-\csgenericrgb\c77000\c10200\c8600;}
+\csgenericrgb\c77000\c10200\c8600;\csgenericrgb\c5882\c40784\c62745;}
 \paperw12240\paperh15840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
 \deftab593
 \pard\tx593\pardeftab593\pardirnatural\partightenfactor0
@@ -44,4 +44,16 @@ check which device\
 \f1\b \cf4 else
 \f0\b0 \cf2  \{\
                     \cf9 print\cf2 (\cf10 "not iPad"\cf2 )\
-                \}}
+                \}\
+\
+       \cf7 //Image(systemName: "sun.haze.fill") way to access system images\
+\
+\cf2    @\cf8 FetchRequest\cf2 (\
+        sortDescriptors: [\cf8 NSSortDescriptor\cf2 (keyPath: \\\cf5 Topic\cf2 .\cf6 topicName\cf2 , ascending: 
+\f1\b \cf4 true
+\f0\b0 \cf2 )],\
+        animation: .\cf9 default\cf2 )\
+    
+\f1\b \cf4 var
+\f0\b0 \cf2  \cf11 fetchedTopics\cf2 : \cf8 FetchedResults\cf2 <\cf5 Topic\cf2 > \cf7 //FetchRequest puts the results into here\cf2 \
+this was the basic fetch request, but extension to Topic now used to populate topics variable with the fetched results.}

@@ -64,7 +64,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         return tableView
     }
     
-    //need to add background: background to these init calls here?
     func onSelect(perform action: @escaping SelectAction) -> Self {
         .init($data, background: background, content: content, onSelect: action, onDelete: onDelete, onMore: onMore)
     }
@@ -117,15 +116,13 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             }
             let moreAction = UIContextualAction(
                 style: .normal,
-                title: "More"
+                title: "Edit"
             ) { [unowned self] action, sourceView, actionPerformed in
                 print("onMore called from delegate function")
                 self.parent.onMore(parent.data[indexPath.row])
-                //is better to use parent.element here?
                 actionPerformed(true)
             }
             moreAction.backgroundColor = .systemPurple
-            
             let actions = [deleteAction, moreAction]
             let configuration = UISwipeActionsConfiguration(actions: actions)
             configuration.performsFirstActionWithFullSwipe = true
