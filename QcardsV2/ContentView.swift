@@ -9,11 +9,11 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext    //context is only required here to enable .onDelete to work 
+    @Environment(\.managedObjectContext) private var viewContext    //context is only required here to enable .onDelete to work
  
     @StateObject var topicStore: TopicStore
     
-    @State private var showingPopover = false
+    @State private var showingAlert = false
     
     @State var editingTopic: Topic?  //using @State to allow this property to change once the program runs
     @State private var showTopicEntryView: Bool = false
@@ -26,13 +26,34 @@ struct ContentView: View {
             TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
             }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             //MARK:- onDelete
             .onSelect { topic in
             }   //this isn't really needed. Have set the highlight row to false, over in TableView
             .onDelete { index in
+                showingAlert = true
+            
                 let topicToRemove = topicStore.topics[index]
+                    
+               
                 topicStore.topics.remove(at: index)
                 viewContext.delete(topicToRemove)
+                    
                 do {
                     try viewContext.save()
                 } catch {
@@ -43,6 +64,9 @@ struct ContentView: View {
                 }
             }
             
+      
+            
+            
             //MARK:- onMore
             .onMore { topic in
                 editingTopic = topic
@@ -52,12 +76,14 @@ struct ContentView: View {
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                 }
             }
-            
+            //MARK:- Navigation Bar
             .navigationBarTitle("Topics")
             
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
                     showTopicEntryView = true
+                    print("no. of topics = \(topicStore.topics.count)")
+                    print("first element of array is \(topicStore.topics[4])")
                 }
             })
             {Text(Image(systemName: "plus"))
@@ -66,7 +92,8 @@ struct ContentView: View {
             })
             .preferredColorScheme(.dark)
         } //end of NavView
-        .navigationViewStyle(StackNavigationViewStyle())
+        
+        .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour
         
         .sheet(isPresented: $showTopicEntryView)  {
             TopicEntryView(isPresented:$showTopicEntryView, topic: editingTopic)

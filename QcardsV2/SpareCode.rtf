@@ -56,4 +56,43 @@ check which device\
     
 \f1\b \cf4 var
 \f0\b0 \cf2  \cf11 fetchedTopics\cf2 : \cf8 FetchedResults\cf2 <\cf5 Topic\cf2 > \cf7 //FetchRequest puts the results into here\cf2 \
-this was the basic fetch request, but extension to Topic now used to populate topics variable with the fetched results.}
+this was the basic fetch request, but extension to Topic now used to populate topics variable with the fetched results.\
+\
+ALERT  CONTROLLER\
+First set up the alert:\
+\
+                
+\f1\b \cf4 let
+\f0\b0 \cf2  alert = \cf8 UIAlertController\cf2 (title: \cf10 "Confirm delete this topic and all its queries?"\cf2 ,\
+                               message: \cf10 ""\cf2 ,\
+                               preferredStyle: .\cf9 alert\cf2 )\
+                
+\f1\b \cf4 let
+\f0\b0 \cf2  cancelAction = \cf8 UIAlertAction\cf2 (title: \cf10 "Cancel"\cf2 , style: .\cf9 cancel\cf2 ) \{ (handler) 
+\f1\b \cf4 in
+\f0\b0 \cf2 \
+                          \cf9 print\cf2 (\cf10 "tapped Cancel"\cf2 )\
+                            \}\
+                
+\f1\b \cf4 let
+\f0\b0 \cf2  deleteAction = \cf8 UIAlertAction\cf2 (title: \cf10 "OK"\cf2 , style: .\cf9 destructive\cf2 ) \{ (handler) 
+\f1\b \cf4 in
+\f0\b0 \cf2 \
+                          \cf9 print\cf2 (\cf10 "tapped OK"\cf2 )\
+                    
+\f1\b \cf4 self
+\f0\b0 \cf2 .\cf6 parent\cf2 .\cf6 onDelete\cf2 (indexPath.\cf9 row\cf2 )\
+                    tableView.\cf9 deleteRows\cf2 (at: [indexPath], with: .\cf9 automatic\cf2 )\
+                    actionPerformed(
+\f1\b \cf4 true
+\f0\b0 \cf2 )\
+\
+\
+                            \}\
+                alert.\cf9 addAction\cf2 (cancelAction)\
+                alert.\cf9 addAction\cf2 (deleteAction)\
+\
+Then present the alert, but need a trick to find the root view controller first\
+\
+         \cf7 //      let rootViewController = UIApplication.shared.keyWindow?.rootViewController\cf2 \
+          \cf7 //      rootViewController?.present(alert, animated: true, completion: nil)}

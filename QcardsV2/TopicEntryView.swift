@@ -42,7 +42,7 @@ struct TopicEntryView: View {
     }
 
    }
- 
+ //MARK:- body
     var body: some View {
         
         ZStack {
@@ -132,7 +132,14 @@ struct TopicEntryView: View {
             
     }
 }
-
+func isBlank(_ string: String) -> Bool {
+  for character in string {
+    if !character.isWhitespace {
+        return false
+    }
+  }
+  return true
+}
 
 //struct TopicEntryView_Previews: PreviewProvider {
 //    static var previews: some View {

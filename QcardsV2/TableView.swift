@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 
 //MARK: TableView
@@ -74,7 +75,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         .init($data, background: background, content: content, onSelect: onSelect, onDelete: onDelete, onMore: action)
     }
     
-    //MARK: Coordinator
+    //MARK:- Coordinator
     class Coordinator: NSObject, UITableViewDelegate, UITableViewDataSource {
         var parent: TableView
         init(_ parent: TableView) {
@@ -96,7 +97,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             return tableViewCell
         }
         
-        //MARK: Delegate functions
+        //MARK:- Delegate functions
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
             self.parent.onSelect(parent.data[indexPath.row])
@@ -105,15 +106,34 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             false
         }
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            let deleteAction = UIContextualAction(
+            
+            let deleteAction = UIContextualAction(  //this action is expanded from original to include the alert
                 style: .destructive,
                 title: "Delete"
-            ) { [unowned self] action, sourceView, actionPerformed in
-                print("onDelete called from delegate function")
-                self.parent.onDelete(indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                actionPerformed(true)
+            ) { [unowned self] action, sourceView, actionPerformed in   //break point here steps through the delete/edit options display
+                /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
+               
+                let rowData  = parent.data[indexPath.row] //this is attempting to access the topicName details to display in the alert. Failing so far.
+                print("rowData is: \(rowData)") ///How to access topicName here? rowData.topicName doesn't compile - "Data.Element has no member..."
+
+                let alert = UIAlertController(title: "Confirm delete this topic and all its queries?",
+                               message: "",
+                               preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
+                            }
+                let deleteAction = UIAlertAction(title: "OK", style: .destructive) { (handler) in
+                    self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into this alert block so they don't run until alert OK is pressed
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    actionPerformed(true)
+                            }
+                alert.addAction(cancelAction)
+                alert.addAction(deleteAction)
+                
+                let rootViewController = UIApplication.shared.keyWindow?.rootViewController ///deprecated but still works, need to find how to access rootView
+                rootViewController?.present(alert, animated: true, completion: nil)
+                //self.present(alert, animated: true) // this doesn't work hence need to access rootView, as above.
             }
+ 
             let moreAction = UIContextualAction(
                 style: .normal,
                 title: "Edit"
@@ -126,7 +146,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             let actions = [deleteAction, moreAction]
             let configuration = UISwipeActionsConfiguration(actions: actions)
             configuration.performsFirstActionWithFullSwipe = true
-            return configuration
+            return configuration 
         }
     }
 }

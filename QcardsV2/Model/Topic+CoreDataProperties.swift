@@ -23,7 +23,7 @@ extension Topic {
     
     
     public var name: String {
-        topicName ?? "missing topic"
+        topicName ?? ""
     }
 
 }
