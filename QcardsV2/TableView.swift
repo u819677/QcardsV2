@@ -121,7 +121,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                                preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
                             }
-                let deleteAction = UIAlertAction(title: "OK", style: .destructive) { (handler) in
+                let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
                     self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into this alert block so they don't run until alert OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                     actionPerformed(true)
