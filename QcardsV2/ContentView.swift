@@ -83,7 +83,7 @@ struct ContentView: View {
                 withAnimation {
                     showTopicEntryView = true
                     print("no. of topics = \(topicStore.topics.count)")
-                    print("first element of array is \(topicStore.topics[4])")
+
                 }
             })
             {Text(Image(systemName: "plus"))

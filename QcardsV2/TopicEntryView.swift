@@ -10,39 +10,38 @@ import CoreData
 
 
 struct TopicEntryView: View {
-
+    
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentionMode
     @Binding var isPresented: Bool
     @State private var isEditing: Bool = false
-
+    
     @State var topicName: String // = ""
     var topic: Topic? // = nil
     
     @State var testText: String = ""
     
     
-   init(isPresented: Binding<Bool>,
-        topic: Topic?) {
-    self._isPresented = isPresented
-    self.topic = topic
-    
-    //self._topicName = State(wrappedValue: "")
-    self._topicName = State(initialValue: topic?.name ?? "")
-    
-    
-    
-    print("after init the topicName is \(topicName)")
-    print("topic coming in is  \(topic?.name ?? "nil")")
-    if topic != nil {
-    testText = "topic to edit"//this doesn't run due init sequence of events - is that why? not sure.
-        print ("testText = \(testText)")
-        print ("CD topic is \(String(describing: topic))")
+    init(isPresented: Binding<Bool>,
+         topic: Topic?) {
+        self._isPresented = isPresented
+        self.topic = topic
+        //self._topicName = State(wrappedValue: "")
+        self._topicName = State(initialValue: topic?.name ?? "")
+        
+        
+        
+        print("after init the topicName is \(topicName)")
+        print("topic coming in is  \(topic?.name ?? "nil")")
+        if topic != nil {
+            testText = "topic to edit"//this doesn't run due init sequence of events - is that why? not sure.
+            print ("testText = \(testText)")
+            print ("CD topic is \(String(describing: topic))")
+        }
+        
     }
-
-   }
- //MARK:- body
+    //MARK:- body
     var body: some View {
         
         ZStack {
@@ -52,7 +51,7 @@ struct TopicEntryView: View {
                 HStack {
                     Button(action: {
                         print("the topic coming in is \(topic?.name ?? "nil")")
-                     
+                        
                         self.isPresented = false
                         presentionMode.wrappedValue.dismiss()   ///need both these 2 methods to remove the view, due 2 methods used to show it
                     } ){
@@ -60,9 +59,12 @@ struct TopicEntryView: View {
                     Spacer()
                     Button(action: {
                         if let topic = topic {  //test for new Topic entry or editing an existing topic
-                        editTopic(topic:topic)
+                            editTopic(topic:topic)
                         } else {
-                            addTopic()
+                            if !isBlank(topicName) {    ///can maybe tidy this up to deactivate Save button for the case of blank entry
+                                print("topicName is not blank")
+                                addTopic()
+                            }
                         }
                         self.isPresented = false
                         presentionMode.wrappedValue.dismiss() 
@@ -70,44 +72,37 @@ struct TopicEntryView: View {
                         Text ("Save")}
                 }
                 .padding(20)
-                  
+                
                 
                 VStack {
-                  Spacer()
+                    Spacer()
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
-                    
-                        .foregroundColor(.blue)
-                TextField("", text: $topicName )    //no placeholder text due not visible anyway.
-                    
-                .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 45, idealHeight: 45, maxHeight: 55, alignment: .center)
-                    .font(.custom("Noteworthy Bold", size: 35))
-                    .foregroundColor(.white)
-                    .accentColor(.white)    //this is the cursor color
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 0.5))
-                    .padding()
-                
-                Spacer()
-                Spacer()
-                Spacer()
-            }
-            .overlay(RoundedRectangle(cornerRadius: 5)
-                     
-                        .strokeBorder(Color.black,lineWidth: 8) //cannot find black in scope
-                        .shadow(color: .white, radius: 5)
-                        .cornerRadius(5)
-                     
-            )
+                        .foregroundColor(.blue) ///could maybe tighten up the spacing between the text and the textField
+                    TextField("", text: $topicName )    //no placeholder text here due it's not visible anyway.
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 45, idealHeight: 45, maxHeight: 55, alignment: .center)
+                        .font(.custom("Noteworthy Bold", size: 35))
+                        .foregroundColor(.white)
+                        .accentColor(.white)    //this is the cursor color
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 0.5))
+                        .padding()
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                }
+                .overlay(RoundedRectangle(cornerRadius: 5)
+                            .strokeBorder(Color.black,lineWidth: 8) //cannot find black in scope
+                            .shadow(color: .white, radius: 5)
+                            .cornerRadius(5)
+                )
             }
         }
     }
     private func addTopic() {
         withAnimation {
-            
             let newTopic = Topic(context: viewContext)//original
             newTopic.topicName = topicName//original
-
             do {
                 try viewContext.save()
             } catch {
@@ -118,27 +113,26 @@ struct TopicEntryView: View {
             }
         }
     }
-        private func editTopic(topic:Topic) {
-            topic.topicName = topicName
-            print("topic name \(topic.name) is edited here")
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-            
+    private func editTopic(topic:Topic) {
+        topic.topicName = topicName
+        print("topic name \(topic.name) is edited here")
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
     }
 }
-func isBlank(_ string: String) -> Bool {
-  for character in string {
-    if !character.isWhitespace {
-        return false
+func isBlank(_ string: String) -> Bool {    //convenience function to avoid saving blank entry
+    for character in string {
+        if !character.isWhitespace {
+            return false
+        }
     }
-  }
-  return true
+    return true
 }
 
 //struct TopicEntryView_Previews: PreviewProvider {
