@@ -25,22 +25,7 @@ struct ContentView: View {
         NavigationView {
             TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
-            }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            }     
             
             //MARK:- onDelete
             .onSelect { topic in
@@ -63,10 +48,7 @@ struct ContentView: View {
                     fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                 }
             }
-            
-      
-            
-            
+         
             //MARK:- onMore
             .onMore { topic in
                 editingTopic = topic

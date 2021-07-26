@@ -16,7 +16,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for _ in 0..<5 {
             let newTopic = Topic(context: viewContext)
-
+            newTopic.topicName = "TEST TOPIC"
         }
         do {
             try viewContext.save()

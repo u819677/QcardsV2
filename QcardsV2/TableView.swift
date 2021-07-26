@@ -44,7 +44,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+    //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -140,6 +140,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             ) { [unowned self] action, sourceView, actionPerformed in
                 print("onMore called from delegate function")
                 self.parent.onMore(parent.data[indexPath.row])
+//                func updateUIView(_ uiView: UIView, context: Coordinator)
+//                {}
                 actionPerformed(true)
             }
             moreAction.backgroundColor = .systemPurple
@@ -174,5 +176,8 @@ class HostingCell<Content: View>: UITableViewCell {
             host?.rootView = view
         }
         setNeedsLayout()
+        setNeedsUpdateConstraints() //no difference
+        invalidateIntrinsicContentSize()    //no difference
+        layoutIfNeeded()    //seems to have fixed it!
     }
 }

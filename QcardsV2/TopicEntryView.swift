@@ -60,6 +60,7 @@ struct TopicEntryView: View {
                     Button(action: {
                         if let topic = topic {  //test for new Topic entry or editing an existing topic
                             editTopic(topic:topic)
+                            
                         } else {
                             if !isBlank(topicName) {    ///can maybe tidy this up to deactivate Save button for the case of blank entry
                                 print("topicName is not blank")
@@ -67,13 +68,13 @@ struct TopicEntryView: View {
                             }
                         }
                         self.isPresented = false
-                        presentionMode.wrappedValue.dismiss() 
+                        presentionMode.wrappedValue.dismiss()
+                        
                     } ){
                         Text ("Save")}
                 }
                 .padding(20)
-                
-                
+
                 VStack {
                     Spacer()
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
@@ -92,7 +93,7 @@ struct TopicEntryView: View {
                     Spacer()
                 }
                 .overlay(RoundedRectangle(cornerRadius: 5)
-                            .strokeBorder(Color.black,lineWidth: 8) //cannot find black in scope
+                            .strokeBorder(Color.black,lineWidth: 8)
                             .shadow(color: .white, radius: 5)
                             .cornerRadius(5)
                 )
@@ -118,6 +119,7 @@ struct TopicEntryView: View {
         print("topic name \(topic.name) is edited here")
         do {
             try viewContext.save()
+            
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -126,7 +128,7 @@ struct TopicEntryView: View {
         }
     }
 }
-func isBlank(_ string: String) -> Bool {    //convenience function to avoid saving blank entry
+func isBlank(_ string: String) -> Bool {    //convenience function to prevent saving blank entry
     for character in string {
         if !character.isWhitespace {
             return false

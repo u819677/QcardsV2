@@ -45,7 +45,6 @@ extension TopicStore: NSFetchedResultsControllerDelegate {
         else { return }
         print("TopicStore ran controllerDidChangeContent")
         topics = changedTopics
-        
     }
 }
 extension TopicStore {
@@ -54,6 +53,5 @@ extension TopicStore {
         else { return }
         print("TopicStore ran controllerDidChangeObject")
         topics = changedTopics
-        
     }
 }
