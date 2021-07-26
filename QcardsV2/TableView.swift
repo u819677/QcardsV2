@@ -176,8 +176,8 @@ class HostingCell<Content: View>: UITableViewCell {
             host?.rootView = view
         }
         setNeedsLayout()
-        setNeedsUpdateConstraints() //no difference
-        invalidateIntrinsicContentSize()    //no difference
+        //setNeedsUpdateConstraints() //no difference
+        //invalidateIntrinsicContentSize()    //no difference
         layoutIfNeeded()    //seems to have fixed it!
     }
 }
