@@ -25,6 +25,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     private var onDelete: DeleteAction
     private var onMore: MoreAction
     
+    var allowRefresh: Bool = true
+    
     init(
         _ data: Binding<Data>,
         background: Background,
@@ -46,10 +48,12 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     }
     //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
-        
+        if allowRefresh {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             uiView.reloadData()
             print("reloadData()")
+            print("allowRefresh is \(allowRefresh)")
+        }
         }
     }
     //MARK:- makeUIView
@@ -110,6 +114,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             let deleteAction = UIContextualAction(  //this action is expanded from original to include the alert
                 style: .destructive,
                 title: "Delete"
+                
             ) { [unowned self] action, sourceView, actionPerformed in   //break point here steps through the delete/edit options display
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
                
@@ -132,6 +137,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 let rootViewController = UIApplication.shared.keyWindow?.rootViewController ///deprecated but still works, need to find how to access rootView
                 rootViewController?.present(alert, animated: true, completion: nil)
                 //self.present(alert, animated: true) // this doesn't work hence need to access rootView, as above.
+                parent.allowRefresh = false
             }
  
             let moreAction = UIContextualAction(

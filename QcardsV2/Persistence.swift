@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 
 struct PersistenceController {
     static let shared = PersistenceController()
@@ -30,7 +31,7 @@ struct PersistenceController {
     }()
 
     let container: NSPersistentContainer
-
+    //let operation : CKOperation
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "QcardsV2")
         if inMemory {
@@ -66,6 +67,15 @@ struct PersistenceController {
         })
          container.viewContext.automaticallyMergesChangesFromParent = true //RDC
         container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        
+    
+       // operation = CKOperation()
+        //operation.configuration.allowsCellularAccess = true
+        let myOperation: Operation = Operation()
+        myOperation.qualityOfService = .userInteractive //this is the highest QoS. can't find a CellularAccess property
+        
+        
+        
         
 //        NotificationCenter.default.addObserver(self,
 //                                               selector: #selector(NSFetchRequest),
