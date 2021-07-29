@@ -48,20 +48,29 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         Coordinator(self)
     }
     //MARK:- updateUIView
-    func updateUIView(_ uiView: UITableView, context: Context) {   //changed to mutating func here to allow change to var loopcounter
-       
-//        //if context.coordinator.parent.allowRefresh {
-     //   if context.coordinator.allowRefresh {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            uiView.reloadData()
-        //context.coordinator.parent.updateUIViewLoopCounter += 1
-//            //context.coordinator.parent.allowRefresh = true
-//            context.coordinator.allowRefresh = true
-        //print("reloadingData() and counter is now \(context.coordinator.parent.updateUIViewLoopCounter)")
-        print("context.coordinator.allowRefresh is \(context.coordinator.allowRefresh)")
-        }
-//        }
+    func updateUIView(_ uiView: UITableView, context: Context) {
+        
+////        //if context.coordinator.parent.allowRefresh {
+   if context.coordinator.allowRefresh {
+    print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        uiView.reloadData()
     }
+    
+    
+   } else {
+    print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
+   }
+//
+//
+//        //context.coordinator.parent.updateUIViewLoopCounter += 1
+////            //context.coordinator.parent.allowRefresh = true
+////            context.coordinator.allowRefresh = true
+//        //print("reloadingData() and counter is now \(context.coordinator.parent.updateUIViewLoopCounter)")
+//        print("context.coordinator.allowRefresh is \(context.coordinator.allowRefresh)")
+//
+//        }
+    }   /// to be clear, the delete functionality only works properly if no reloadData() happens here. This function does run, but delete is messed up  by reloadData() being here.
     //MARK:- makeUIView
     func makeUIView(context: Context) ->  UITableView {
         let tableView = UITableView()
@@ -141,11 +150,13 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                     tableView.reloadData()  //this seems to be the answer, finally!
                     //tableView.reloadRows(at: [indexPath], with: .automatic)
                     
-                    allowRefresh = true
+                 //   allowRefresh = true
                             }
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
                     self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into this alert block so they don't run until alert OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
+                    
+                    allowRefresh = false
                     actionPerformed(true)
                             }
                 alert.addAction(cancelAction)
@@ -158,7 +169,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 //self.present(alert, animated: true) // this doesn't work hence need to access rootView, as above.
                // parent.allowRefresh = false
                 
-                //allowRefresh = false
+                allowRefresh = false
                 //print("parent.allowRefresh is \(parent.allowRefresh)")
             }   //this is the point where the alert is displayed
  
