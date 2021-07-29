@@ -100,6 +100,7 @@ struct TopicEntryView: View {
             }
         }
     }
+    //MARK:- addTopic
     private func addTopic() {
         withAnimation {
             let newTopic = Topic(context: viewContext)//original
@@ -114,6 +115,7 @@ struct TopicEntryView: View {
             }
         }
     }
+    //MARK:- editTopic
     private func editTopic(topic:Topic) {
         topic.topicName = topicName
         print("topic name \(topic.name) is edited here")

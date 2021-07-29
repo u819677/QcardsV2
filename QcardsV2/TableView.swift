@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import CoreData
+import UIKit
 
 
 //MARK: TableView
@@ -48,8 +49,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     }
     //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
-        if allowRefresh {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        if context.coordinator.parent.allowRefresh {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             uiView.reloadData()
             print("reloadData()")
             print("allowRefresh is \(allowRefresh)")
@@ -134,7 +135,9 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 alert.addAction(cancelAction)
                 alert.addAction(deleteAction)
                 
-                let rootViewController = UIApplication.shared.keyWindow?.rootViewController ///deprecated but still works, need to find how to access rootView
+                //let rootViewController = UIApplication.shared.keyWindow?.rootViewController ///deprecated but still works, need to find how to access rootView
+                //this is correct method it seems
+                let rootViewController = UIApplication.shared.windows.first!.rootViewController
                 rootViewController?.present(alert, animated: true, completion: nil)
                 //self.present(alert, animated: true) // this doesn't work hence need to access rootView, as above.
                 parent.allowRefresh = false
