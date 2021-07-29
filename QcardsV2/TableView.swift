@@ -26,8 +26,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     private var onDelete: DeleteAction
     private var onMore: MoreAction
     
-    var allowRefresh: Bool = true
-    
+    //var allowRefresh: Bool = true
+   //var updateUIViewLoopCounter:  Int8 = 0
     init(
         _ data: Binding<Data>,
         background: Background,
@@ -48,14 +48,19 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         Coordinator(self)
     }
     //MARK:- updateUIView
-    func updateUIView(_ uiView: UITableView, context: Context) {
-        if context.coordinator.parent.allowRefresh {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+    func updateUIView(_ uiView: UITableView, context: Context) {   //changed to mutating func here to allow change to var loopcounter
+       
+//        //if context.coordinator.parent.allowRefresh {
+     //   if context.coordinator.allowRefresh {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             uiView.reloadData()
-            print("reloadData()")
-            print("allowRefresh is \(allowRefresh)")
+        //context.coordinator.parent.updateUIViewLoopCounter += 1
+//            //context.coordinator.parent.allowRefresh = true
+//            context.coordinator.allowRefresh = true
+        //print("reloadingData() and counter is now \(context.coordinator.parent.updateUIViewLoopCounter)")
+        print("context.coordinator.allowRefresh is \(context.coordinator.allowRefresh)")
         }
-        }
+//        }
     }
     //MARK:- makeUIView
     func makeUIView(context: Context) ->  UITableView {
@@ -86,6 +91,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         init(_ parent: TableView) {
             self.parent = parent
         }
+        var allowRefresh: Bool = true
+        
+        
+        
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             parent.data.count
@@ -116,16 +125,23 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 style: .destructive,
                 title: "Delete"
                 
-            ) { [unowned self] action, sourceView, actionPerformed in   //break point here steps through the delete/edit options display
+            ) { [unowned self] action, sourceView, actionPerformed in   //flow continues here when choice made by the user
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
                
                 let rowData  = parent.data[indexPath.row] //this is attempting to access the topicName details to display in the alert. Failing so far.
                 print("rowData is: \(rowData)") ///How to access topicName here? rowData.topicName doesn't compile - "Data.Element has no member..."
-
+//MARK: AlertController
                 let alert = UIAlertController(title: "Confirm delete this topic and all its queries?",
                                message: "",
                                preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
+                    print("cancel ran here")
+                    //parent.allowRefresh = true
+                    //self.reloadData()
+                    tableView.reloadData()  //this seems to be the answer, finally!
+                    //tableView.reloadRows(at: [indexPath], with: .automatic)
+                    
+                    allowRefresh = true
                             }
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
                     self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into this alert block so they don't run until alert OK is pressed
@@ -140,8 +156,11 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 let rootViewController = UIApplication.shared.windows.first!.rootViewController
                 rootViewController?.present(alert, animated: true, completion: nil)
                 //self.present(alert, animated: true) // this doesn't work hence need to access rootView, as above.
-                parent.allowRefresh = false
-            }
+               // parent.allowRefresh = false
+                
+                //allowRefresh = false
+                //print("parent.allowRefresh is \(parent.allowRefresh)")
+            }   //this is the point where the alert is displayed
  
             let moreAction = UIContextualAction(
                 style: .normal,
@@ -157,7 +176,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             let actions = [deleteAction, moreAction]
             let configuration = UISwipeActionsConfiguration(actions: actions)
             configuration.performsFirstActionWithFullSwipe = true
-            return configuration 
+            return configuration    //this is where the swipe options are displayed and then thread waits for user action
         }
     }
 }
