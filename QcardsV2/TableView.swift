@@ -156,9 +156,14 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                     self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into this alert block so they don't run until alert OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                     
-                    allowRefresh = false
+                    allowRefresh = false    //this may not be needed due set in line 172 when Alert first appears
                     actionPerformed(true)
+                    print("the delete actionPerformed(true) has just run in line 161")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                        allowRefresh = true
+                    }
                             }
+                
                 alert.addAction(cancelAction)
                 alert.addAction(deleteAction)
                 
