@@ -26,8 +26,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     private var onDelete: DeleteAction
     private var onMore: MoreAction
     
-    //var allowRefresh: Bool = true
-   //var updateUIViewLoopCounter:  Int8 = 0
     init(
         _ data: Binding<Data>,
         background: Background,
@@ -50,27 +48,15 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
         
-////        //if context.coordinator.parent.allowRefresh {
-   if context.coordinator.allowRefresh {
-    print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        uiView.reloadData()
-    }
-    
-    
-   } else {
-    print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
-   }
-//
-//
-//        //context.coordinator.parent.updateUIViewLoopCounter += 1
-////            //context.coordinator.parent.allowRefresh = true
-////            context.coordinator.allowRefresh = true
-//        //print("reloadingData() and counter is now \(context.coordinator.parent.updateUIViewLoopCounter)")
-//        print("context.coordinator.allowRefresh is \(context.coordinator.allowRefresh)")
-//
-//        }
-    }   /// to be clear, the delete functionality only works properly if no reloadData() happens here. This function does run, but delete is messed up  by reloadData() being here.
+        if context.coordinator.allowRefresh {   //stops reloadData() running if called from onDelete
+            print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                uiView.reloadData()
+            }
+        } else {
+            print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
+        }
+    }   /// to be clear, the delete functionality only works properly if no reloadData() happens here. Delete is messed up  by reloadData() being here.
     //MARK:- makeUIView
     func makeUIView(context: Context) ->  UITableView {
         let tableView = UITableView()
@@ -101,10 +87,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             self.parent = parent
         }
         var allowRefresh: Bool = true
-        
-        
-        
-        
+       
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             parent.data.count
         }
@@ -116,7 +99,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             let data = parent.data[indexPath.row]
             let view = parent.content(data)
             tableViewCell.setup(with: view)
-           
             return tableViewCell
         }
         
@@ -145,21 +127,17 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                                preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
                     print("cancel ran here")
-                    //parent.allowRefresh = true
-                    //self.reloadData()
-                    tableView.reloadData()  //this seems to be the answer, finally!
-                    //tableView.reloadRows(at: [indexPath], with: .automatic)
-                    
-                 //   allowRefresh = true
+                    tableView.reloadData()
+                    //tableView.reloadRows(at: [indexPath], with: .automatic)   //this might be more efficient than reload whole table?
                             }
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
-                    self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into this alert block so they don't run until alert OK is pressed
+                    self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into alert block so they don't run until alert OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                    
                     allowRefresh = false    //this may not be needed due set in line 172 when Alert first appears
                     actionPerformed(true)
                     print("the delete actionPerformed(true) has just run in line 161")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 4 ) {  //.global() instead of .main is better?
                         allowRefresh = true
                     }
                             }
@@ -167,15 +145,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 alert.addAction(cancelAction)
                 alert.addAction(deleteAction)
                 
-                //let rootViewController = UIApplication.shared.keyWindow?.rootViewController ///deprecated but still works, need to find how to access rootView
-                //this is correct method it seems
                 let rootViewController = UIApplication.shared.windows.first!.rootViewController
                 rootViewController?.present(alert, animated: true, completion: nil)
-                //self.present(alert, animated: true) // this doesn't work hence need to access rootView, as above.
-               // parent.allowRefresh = false
-                
                 allowRefresh = false
-                //print("parent.allowRefresh is \(parent.allowRefresh)")
+                
             }   //this is the point where the alert is displayed
  
             let moreAction = UIContextualAction(
@@ -184,8 +157,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             ) { [unowned self] action, sourceView, actionPerformed in
                 print("onMore called from delegate function")
                 self.parent.onMore(parent.data[indexPath.row])
-//                func updateUIView(_ uiView: UIView, context: Coordinator)
-//                {}
                 actionPerformed(true)
             }
             moreAction.backgroundColor = .systemPurple
@@ -197,7 +168,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     }
 }
 //MARK: Hosting Cell
-//private
+
 class HostingCell<Content: View>: UITableViewCell {
     var host: UIHostingController<Content>?
     
@@ -220,8 +191,6 @@ class HostingCell<Content: View>: UITableViewCell {
             host?.rootView = view
         }
         setNeedsLayout()
-        //setNeedsUpdateConstraints() //no difference
-        //invalidateIntrinsicContentSize()    //no difference
-        layoutIfNeeded()    //seems to have fixed it!
+        layoutIfNeeded()    //seems to be needed to fix occasional incorrect small height of rows
     }
 }
