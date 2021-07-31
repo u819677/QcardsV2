@@ -29,13 +29,11 @@ struct ContentView: View {
             
             //MARK:- onDelete
             .onSelect { topic in
-            }   //this isn't really needed. Have set the highlight row to false, over in TableView
+            }   //this function isn't really needed. Have set the highlight row to false, over in TableView
             .onDelete { index in
                 showingAlert = true
             
                 let topicToRemove = topicStore.topics[index]
-                    
-               
                 topicStore.topics.remove(at: index)
                 viewContext.delete(topicToRemove)
                     
@@ -65,7 +63,6 @@ struct ContentView: View {
                 withAnimation {
                     showTopicEntryView = true
                     print("no. of topics = \(topicStore.topics.count)")
-
                 }
             })
             {Text(Image(systemName: "plus"))
@@ -89,7 +86,7 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
     }
     //MARK:- TopicView
-    struct TopicView: View {
+    struct TopicView: View {    //this is the view used in each line of the table
         @ObservedObject      var topic: Topic
         var body: some View {
             Text(topic.name)

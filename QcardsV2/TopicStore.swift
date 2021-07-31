@@ -38,7 +38,7 @@ class TopicStore: NSObject, ObservableObject {
     
 }
 
-
+//not sure if either or both of these are needed
 extension TopicStore: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let changedTopics = controller.fetchedObjects as? [Topic]

@@ -20,9 +20,7 @@ struct TopicEntryView: View {
     @State var topicName: String // = ""
     var topic: Topic? // = nil
     
-    @State var testText: String = ""
-    
-    
+
     init(isPresented: Binding<Bool>,
          topic: Topic?) {
         self._isPresented = isPresented
@@ -35,11 +33,9 @@ struct TopicEntryView: View {
         print("after init the topicName is \(topicName)")
         print("topic coming in is  \(topic?.name ?? "nil")")
         if topic != nil {
-            testText = "topic to edit"//this doesn't run due init sequence of events - is that why? not sure.
-            print ("testText = \(testText)")
+
             print ("CD topic is \(String(describing: topic))")
         }
-        
     }
     //MARK:- body
     var body: some View {
