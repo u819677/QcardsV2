@@ -87,7 +87,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             self.parent = parent
         }
         var allowRefresh: Bool = true
-       
+        
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             parent.data.count
         }
@@ -118,29 +118,29 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 
             ) { [unowned self] action, sourceView, actionPerformed in   //flow continues here when choice made by the user
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
-               
+                
                 let rowData  = parent.data[indexPath.row] //this is attempting to access the topicName details to display in the alert. Failing so far.
                 print("rowData is: \(rowData)") ///How to access topicName here? rowData.topicName doesn't compile - "Data.Element has no member..."
-//MARK: AlertController
+                //MARK: AlertController
                 let alert = UIAlertController(title: "Confirm delete this topic and all its queries?",
-                               message: "",
-                               preferredStyle: .alert)
+                                              message: "",
+                                              preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
                     print("cancel ran here")
                     tableView.reloadData()
                     //tableView.reloadRows(at: [indexPath], with: .automatic)   //this might be more efficient than reload whole table?
-                            }
+                }
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
                     self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into alert block so they don't run until alert OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                     allowRefresh = false    //this may not be needed due set in line 172 when Alert first appears
                     actionPerformed(true)
                     print("the delete actionPerformed(true) has just run in line 161")
-
+                    
                     DispatchQueue.global().asyncAfter(deadline: .now() + 4 ) {  //.global() instead of .main is better?
                         allowRefresh = true
                     }
-                            }
+                }
                 
                 alert.addAction(cancelAction)
                 alert.addAction(deleteAction)
@@ -150,7 +150,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 allowRefresh = false
                 
             }   //this is the point where the alert is displayed
- 
+            
             let moreAction = UIContextualAction(
                 style: .normal,
                 title: "Edit"

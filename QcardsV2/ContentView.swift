@@ -25,11 +25,13 @@ struct ContentView: View {
         NavigationView {
             TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
-            }     
+            }
             
             //MARK:- onDelete
             .onSelect { topic in
-            }   //this function isn't really needed. Have set the highlight row to false, over in TableView
+                
+            }
+            //MARK:- onDelete
             .onDelete { index in
                 showingAlert = true
             
@@ -51,6 +53,7 @@ struct ContentView: View {
             .onMore { topic in
                 editingTopic = topic
             }
+            
             .sheet(item: $editingTopic) { item in    //animation triggered when optional onMoreTopic is not nil
                 withAnimation {
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
@@ -70,7 +73,7 @@ struct ContentView: View {
                 .imageScale(.large)
             })
             .preferredColorScheme(.dark)
-        } //end of NavView
+        } //end of NavigationView
         
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour
         
