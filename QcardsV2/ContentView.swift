@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import UIKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext    //context is only required here to enable .onDelete to work
@@ -19,22 +20,24 @@ struct ContentView: View {
     @State private var showTopicEntryView: Bool = false
     @State var newTopic: String = ""
     
+    @State var isLinking: Bool = false
     
     var body: some View {
         
         NavigationView {
+            NavigationLink(
+                            destination: TestView())
+            {
             TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
+                   // .background(NavigationLink(destination: TestView()){LinkView2()})   //this might be the solution??
             }
-            
-            //MARK:- onDelete
+            //MARK:- onSelect and onDelete
             .onSelect { topic in
-                
+               
             }
-            //MARK:- onDelete
             .onDelete { index in
                 showingAlert = true
-            
                 let topicToRemove = topicStore.topics[index]
                 topicStore.topics.remove(at: index)
                 viewContext.delete(topicToRemove)
@@ -53,12 +56,12 @@ struct ContentView: View {
             .onMore { topic in
                 editingTopic = topic
             }
-            
             .sheet(item: $editingTopic) { item in    //animation triggered when optional onMoreTopic is not nil
                 withAnimation {
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                 }
             }
+            
             //MARK:- Navigation Bar
             .navigationBarTitle("Topics")
             
@@ -72,15 +75,20 @@ struct ContentView: View {
                 .padding()
                 .imageScale(.large)
             })
-            .preferredColorScheme(.dark)
-        } //end of NavigationView
-        
+            
+            }  //END OF NAVIGATION LINK
+
+        } //END OF NAVIGATION VIEW
+        .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour
-        
         .sheet(isPresented: $showTopicEntryView)  {
             TopicEntryView(isPresented:$showTopicEntryView, topic: editingTopic)
+            
+            
+            
         }
-    }//end of body
+        
+    }  //END OF BODY
     
     //MARK:-  background
     var background: some View {
