@@ -25,16 +25,16 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            NavigationLink(
-                            destination: TestView())
-            {
+        //    NavigationLink(
+                        //    destination: TestView())
+        //   {
             TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
                    // .background(NavigationLink(destination: TestView()){LinkView2()})   //this might be the solution??
             }
             //MARK:- onSelect and onDelete
             .onSelect { topic in
-               
+              print("onSlelect called in ContentView")
             }
             .onDelete { index in
                 showingAlert = true
@@ -76,7 +76,7 @@ struct ContentView: View {
                 .imageScale(.large)
             })
             
-            }  //END OF NAVIGATION LINK
+       //     }  //END OF NAVIGATION LINK
 
         } //END OF NAVIGATION VIEW
         .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black

@@ -108,7 +108,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             self.parent.onSelect(parent.data[indexPath.row])
         }
         func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-            false
+            true    //this has to be true to allow onSelect to work
         }
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             
