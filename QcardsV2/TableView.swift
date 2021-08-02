@@ -106,6 +106,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
             self.parent.onSelect(parent.data[indexPath.row])
+          //  tableView.reloadData()
         }
         func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
             true    //this has to be true to allow onSelect to work

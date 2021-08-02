@@ -25,16 +25,25 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
+            VStack {
+            NavigationLink(
+                destination: Text("child view"),
+                isActive: $isLinking)
+                {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before.
+           
         //    NavigationLink(
                         //    destination: TestView())
         //   {
             TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                 TopicView(topic: topic)
                    // .background(NavigationLink(destination: TestView()){LinkView2()})   //this might be the solution??
+            
             }
             //MARK:- onSelect and onDelete
             .onSelect { topic in
-              print("onSlelect called in ContentView")
+                isLinking = true
+                print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
+                
             }
             .onDelete { index in
                 showingAlert = true
@@ -61,7 +70,7 @@ struct ContentView: View {
                     TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                 }
             }
-            
+            }//this is the end of the VStack
             //MARK:- Navigation Bar
             .navigationBarTitle("Topics")
             
