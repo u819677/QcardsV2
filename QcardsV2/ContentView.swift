@@ -27,7 +27,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
             NavigationLink(
-                destination: Text("child view"),
+                destination: LinkView2(),
                 isActive: $isLinking)
                 {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before.
            
@@ -41,7 +41,7 @@ struct ContentView: View {
             }
             //MARK:- onSelect and onDelete
             .onSelect { topic in
-                isLinking = true
+                self.isLinking = true
                 print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
                 
             }

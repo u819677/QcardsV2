@@ -106,7 +106,9 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
             self.parent.onSelect(parent.data[indexPath.row])
-          //  tableView.reloadData()
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5 ) {  //.global() instead of .main is better?
+                self.allowRefresh = true
+            }
         }
         func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
             true    //this has to be true to allow onSelect to work
@@ -123,7 +125,12 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 let rowData  = parent.data[indexPath.row] //this is attempting to access the topicName details to display in the alert. Failing so far.
                 print("rowData is: \(rowData)") ///How to access topicName here? rowData.topicName doesn't compile - "Data.Element has no member..."
                 //MARK: AlertController
-                let alert = UIAlertController(title: "Confirm delete this topic and all its queries?",
+                //let titleMessage: String = "topic: \(self.parent.data[indexPath.row])"
+                let chosenTopic: Topic = self.parent.data[indexPath.row] as! Topic
+                let chosenTopicName = chosenTopic.topicName ?? "nil"
+                let titleMessage: String = "chosen topic called \(chosenTopicName)"
+                //GOT IT, YEE HAH! not really so tricky, needed to think carefully about it!
+                let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
                                               message: "",
                                               preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
@@ -147,6 +154,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 alert.addAction(deleteAction)
                 
                 let rootViewController = UIApplication.shared.windows.first!.rootViewController
+                print(" topic to delete is \(parent.data[indexPath.row])")
                 rootViewController?.present(alert, animated: true, completion: nil)
                 allowRefresh = false
                 
