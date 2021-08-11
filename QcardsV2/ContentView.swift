@@ -43,7 +43,7 @@ struct ContentView: View {
             .onSelect { topic in
                 self.isLinking = true
                 print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
-                
+             
             }
             .onDelete { index in
                 showingAlert = true

@@ -106,7 +106,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
             self.parent.onSelect(parent.data[indexPath.row])
-            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5 ) {  //.global() instead of .main is better?
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
                 self.allowRefresh = true
             }
         }
@@ -129,7 +129,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 let chosenTopic: Topic = self.parent.data[indexPath.row] as! Topic
                 let chosenTopicName = chosenTopic.topicName ?? "nil"
                 let titleMessage: String = "chosen topic called \(chosenTopicName)"
-                //GOT IT, YEE HAH! not really so tricky, needed to think carefully about it!
+                //GOT IT, YEE HAH! not really so tricky, needed to think carefully about it! key was to have print statements to analyse alert control flow
                 let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
                                               message: "",
                                               preferredStyle: .alert)
