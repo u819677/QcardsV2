@@ -21,13 +21,13 @@ struct ContentView: View {
     @State var newTopic: String = ""
     
     @State var isLinking: Bool = false
-    
+    @State var chosenTopic: Topic?
     var body: some View {
         
         NavigationView {
             VStack {
             NavigationLink(
-                destination: LinkView2(),
+                destination: LinkView2(topic: chosenTopic),
                 isActive: $isLinking)
                 {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before.
            
@@ -42,6 +42,7 @@ struct ContentView: View {
             //MARK:- onSelect and onDelete
             .onSelect { topic in
                 self.isLinking = true
+                self.chosenTopic = topic
                 print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
              
             }
