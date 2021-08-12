@@ -5,7 +5,7 @@
         <attribute name="extra" optional="YES" attributeType="String"/>
         <attribute name="grade" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="question" optional="YES" attributeType="String"/>
+        <attribute name="queryQuestion" optional="YES" attributeType="String"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="query" inverseEntity="Topic"/>
     </entity>
     <entity name="Topic" representedClassName="Topic" syncable="YES">
@@ -15,7 +15,7 @@
         <relationship name="query" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Query" inverseName="topic" inverseEntity="Query"/>
     </entity>
     <elements>
-        <element name="Topic" positionX="-45" positionY="0" width="128" height="89"/>
         <element name="Query" positionX="-18" positionY="54" width="128" height="119"/>
+        <element name="Topic" positionX="-45" positionY="0" width="128" height="89"/>
     </elements>
 </model>

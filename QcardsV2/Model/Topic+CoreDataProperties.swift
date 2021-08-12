@@ -19,13 +19,20 @@ extension Topic {
     @NSManaged public var topicName: String?
     @NSManaged public var id: UUID?
     @NSManaged public var topicDate: Date?
-    @NSManaged public var query: NSSet?
+    @NSManaged public var query: NSSet? //query is an NSSet which isn't too helpful , so will make it into an array, below
     
     
     public var name: String {
-        topicName ?? ""
+        topicName ?? "missing topicName"
     }
-
+    public var queryArray: [Query] {
+        let set = query as? Set<Query> ?? []
+        return set.sorted {     //sorted function returns an array, so that's done easily here
+            $0.question < $1.question
+        }
+    }
+    
+    
 }
 
 // MARK: Generated accessors for query

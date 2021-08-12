@@ -16,12 +16,17 @@ extension Query {
         return NSFetchRequest<Query>(entityName: "Query")
     }
 
-    @NSManaged public var question: String?
+    @NSManaged public var queryQuestion: String?
     @NSManaged public var answer: String?
     @NSManaged public var extra: String?
     @NSManaged public var id: UUID?
     @NSManaged public var grade: Int16
     @NSManaged public var topic: Topic?
+    
+    
+    public var question: String {   //this is like a wrapper, to enable the optional queryQuestion to be more easily used later.
+        queryQuestion ?? "missing queryQuestion"
+    }
 
 }
 
