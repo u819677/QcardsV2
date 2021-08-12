@@ -15,27 +15,31 @@ struct LinkView2: View {
     @Environment(\.managedObjectContext) private var viewContext
     
   //  init() {
-      //  let queries: [Query] = topic?.query
+       // let queries: [Query] = topic?.queryArray
         
  //  }
     var body: some View {
         VStack{
+            
         List {
-            if queries != nil {
-            ForEach(queries!) { query in
+           // if queries != nil {
+           // if topic?.queryArray != nil {
+                ForEach(topic!.queryArray) { query in
                 //print("\(topic?.query)")
                // Text(topic?.name ?? "")
             
             Text("\(query.queryQuestion ?? "")")
            // Text("\(topic?.query ?? "")")
             }
-            }
+          //  }
         }
         .navigationTitle(topic?.name ?? "No Topic yet")
         Button("Add Query") {
             print("query added here")
             let newQuery = Query(context: viewContext)
-            newQuery.queryQuestion = "Question"
+            let randomInt = Int.random(in: 0...10)
+            newQuery.queryQuestion = "Question\(randomInt)"
+            newQuery.id = UUID()    //maybe the id property is necessary?
             topic?.addToQuery(newQuery)
             do {
                 try viewContext.save()
@@ -45,7 +49,11 @@ struct LinkView2: View {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
-        }.padding()
+        }
+            Button("print output") {
+                print(topic?.queryArray ?? "nothing there")
+            }
+        .padding()
         }
     }
 }
