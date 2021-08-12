@@ -24,7 +24,7 @@ struct LinkView2: View {
         List {
            // if queries != nil {
            // if topic?.queryArray != nil {
-                ForEach(topic!.queryArray) { query in
+            ForEach(topic!.queryArray, id: \.id) { query in
                 //print("\(topic?.query)")
                // Text(topic?.name ?? "")
             
