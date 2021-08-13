@@ -14,46 +14,33 @@ class TopicStore: NSObject, ObservableObject {
     @Published var topics: [Topic] = []
     private let topicsController: NSFetchedResultsController<Topic>
     @Published var queries: [Query] = []
-    private let queryController: NSFetchedResultsController<Query>
+
     
-    
+    //need to add an optional topic, then pass that in to use as a predicate in the fetch request...
     init( managedObjectContext: NSManagedObjectContext) {
         topicsController = NSFetchedResultsController(fetchRequest: Topic.extensionFetchRequest,
                                                       managedObjectContext: managedObjectContext,
                                                       sectionNameKeyPath: nil,
                                                       cacheName: nil
         )
-        queryController = NSFetchedResultsController(fetchRequest: Query.extensionFetchRequest,
-                                                      managedObjectContext: managedObjectContext,
-                                                      sectionNameKeyPath: nil,
-                                                      cacheName: nil
-        )
+
+        //PLAN
+        //create a new queryController here which uses a local fetch request
+        //create the fetch request using a predicate topic, which is passed in, sort descriptor not needed
+        //run the actual perform fetch and assign results to the published var queries
         super.init()
         topicsController.delegate = self
-        queryController.delegate = self
+
         
         
         do {
             try topicsController.performFetch()
             print("TopicStore ran topicsController.performFetch()")
             topics = topicsController.fetchedObjects ?? []
-            
-            //            let tableView = UITableView()
-            //            tableView.reloadData()
         }   catch {
             print("failed to fetch")
         }
         
-        do {
-            try queryController.performFetch()
-            print("TopicStore ran topicsController.performFetch()")
-            queries = queryController.fetchedObjects ?? []
-            
-            //            let tableView = UITableView()
-            //            tableView.reloadData()
-        }   catch {
-            print("failed to fetch")
-        }
     }
     
     
