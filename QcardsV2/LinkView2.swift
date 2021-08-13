@@ -10,8 +10,8 @@ import CoreData
 
 
 struct LinkView2: View {
-    var topic: Topic?
-    var queries: [Query]? // = []
+   var topic: Topic?        //seems to work with or without @State
+  var queries: [Query]? // = []     //using @State here stops the list updating
     @Environment(\.managedObjectContext) private var viewContext
     
   //  init() {
@@ -24,7 +24,8 @@ struct LinkView2: View {
         List {
            // if queries != nil {
            // if topic?.queryArray != nil {
-            ForEach(topic!.queryArray, id: \.id) { query in
+         //  ForEach(topic!.queryArray, id: \.id) { query in
+                ForEach(queries!, id: \.id) { query in
                 //print("\(topic?.query)")
                // Text(topic?.name ?? "")
             
@@ -49,9 +50,20 @@ struct LinkView2: View {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
-        }
-            Button("print output") {
-                print(topic?.queryArray ?? "nothing there")
+        }.padding()
+            Button("print last item") {
+               // print(topic?.queryArray ?? "nothing there")
+                print("last item is \(String(describing: topic!.queryArray.last))")
+                
+            }.padding()
+            Button("delete last item") {
+                viewContext.delete(topic!.queryArray.last!)
+                do {
+                    try viewContext.save()
+                }
+                catch {
+                    // Handle Error
+                }
             }
         .padding()
         }

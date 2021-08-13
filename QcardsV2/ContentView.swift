@@ -26,8 +26,17 @@ struct ContentView: View {
         
         NavigationView {
             VStack {
+                
             NavigationLink(
-                destination: LinkView2(topic: chosenTopic),
+                //now try to link instead to new QuestionsView...
+                destination: QuestionsView(topicStore: topicStore),
+                
+                
+                
+                
+                
+               // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
+               // destination: LinkView2(topic: chosenTopic),
                 isActive: $isLinking)
                 {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before.
            

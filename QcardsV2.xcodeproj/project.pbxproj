@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		232F3DA426B5860500E2943F /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232F3DA326B5860500E2943F /* TestView.swift */; };
 		2398764426B6EE6F00E469AF /* LinkView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2398764326B6EE6F00E469AF /* LinkView2.swift */; };
+		23AC261226C5B53900CBCF93 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC261126C5B53900CBCF93 /* QuestionsView.swift */; };
 		23B5392826ABFFD300630476 /* SpareCode.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 23B5392726ABFFD300630476 /* SpareCode.rtf */; };
 		23BAC97A26A723900065313D /* QcardsV2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC97926A723900065313D /* QcardsV2App.swift */; };
 		23BAC97C26A723900065313D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC97B26A723900065313D /* ContentView.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		232F3DA326B5860500E2943F /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		2398764326B6EE6F00E469AF /* LinkView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView2.swift; sourceTree = "<group>"; };
+		23AC261126C5B53900CBCF93 /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
 		23B5392726ABFFD300630476 /* SpareCode.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = SpareCode.rtf; sourceTree = "<group>"; };
 		23BAC97626A723900065313D /* QcardsV2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QcardsV2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BAC97926A723900065313D /* QcardsV2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QcardsV2App.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				23B5392726ABFFD300630476 /* SpareCode.rtf */,
 				232F3DA326B5860500E2943F /* TestView.swift */,
 				2398764326B6EE6F00E469AF /* LinkView2.swift */,
+				23AC261126C5B53900CBCF93 /* QuestionsView.swift */,
 			);
 			path = QcardsV2;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				23BAC97A26A723900065313D /* QcardsV2App.swift in Sources */,
 				23BAC9A726A7246C0065313D /* TopicStore.swift in Sources */,
 				23BAC9B626A728630065313D /* Topic+CoreDataProperties.swift in Sources */,
+				23AC261226C5B53900CBCF93 /* QuestionsView.swift in Sources */,
 				23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */,
 				23BAC9A926A725200065313D /* Persistence.swift in Sources */,
 				23BAC9B326A728630065313D /* Query+CoreDataClass.swift in Sources */,
