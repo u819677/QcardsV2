@@ -13,19 +13,41 @@ import SwiftUI
 class TopicStore: NSObject, ObservableObject {
     @Published var topics: [Topic] = []
     private let topicsController: NSFetchedResultsController<Topic>
+    @Published var queries: [Query] = []
+    private let queryController: NSFetchedResultsController<Query>
+    
+    
     init( managedObjectContext: NSManagedObjectContext) {
         topicsController = NSFetchedResultsController(fetchRequest: Topic.extensionFetchRequest,
                                                       managedObjectContext: managedObjectContext,
                                                       sectionNameKeyPath: nil,
                                                       cacheName: nil
         )
+        queryController = NSFetchedResultsController(fetchRequest: Query.extensionFetchRequest,
+                                                      managedObjectContext: managedObjectContext,
+                                                      sectionNameKeyPath: nil,
+                                                      cacheName: nil
+        )
         super.init()
         topicsController.delegate = self
+        queryController.delegate = self
+        
         
         do {
             try topicsController.performFetch()
             print("TopicStore ran topicsController.performFetch()")
             topics = topicsController.fetchedObjects ?? []
+            
+            //            let tableView = UITableView()
+            //            tableView.reloadData()
+        }   catch {
+            print("failed to fetch")
+        }
+        
+        do {
+            try queryController.performFetch()
+            print("TopicStore ran topicsController.performFetch()")
+            queries = queryController.fetchedObjects ?? []
             
             //            let tableView = UITableView()
             //            tableView.reloadData()

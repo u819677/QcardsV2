@@ -31,5 +31,10 @@ extension Query {
 }
 
 extension Query : Identifiable {
-
+//added later:
+    static var extensionFetchRequest: NSFetchRequest<Query> {
+        let request: NSFetchRequest<Query> = Query.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Query.queryQuestion, ascending: false)]
+        return request
+    }
 }
