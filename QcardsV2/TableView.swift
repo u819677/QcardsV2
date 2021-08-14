@@ -191,6 +191,7 @@ class HostingCell<Content: View>: UITableViewCell {
             contentView.addSubview(content)
             content.backgroundColor = .clear
             backgroundColor = .clear
+            accessoryType = .disclosureIndicator
             
             content.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
             content.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true

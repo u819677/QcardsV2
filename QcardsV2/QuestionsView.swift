@@ -9,42 +9,49 @@ import SwiftUI
 
 struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-   // @State var topic: Topic?
-    //@StateObject var topicStore: TopicStore
-    @State var queries: [Query]  = []   //make this optional and it's no longer a random acceess collection it seems...
-     //PLAN2 try initializing the queries var instead of computed property, so that can meke it into a @State var instead?
-// var queries: [Query] {
-//    let queryList = (topic?.queryArray)!
-//        return queryList
-//    }
+    @State var queries: [Query]  = []   //if make this optional then have a problem because it's no longer a random acceess collection it seems...
     @State var topicName: String
-   // init(topic: Topic, _ queries: Binding<[Query]> ) {
-    init(queries: [Query], topicName: String) {
-    //self.topic = topic
+    @State var topic: Topic?
+    
+    
+    init(queries: [Query], topicName: String, topic: Topic?) {
         self.queries = queries
         self.topicName = topicName
-        
+        self.topic = topic
+     
     }
-    
-    
-    
-    
-    
-    
-    
+
+    var body: some View {
+        TableView($queries, background: background) {query in
+            QuestionView(query: query)
+        }
+        //.navigationTitle(topicName)
+        .navigationTitle("\(topic?.topicName ?? "nil") OR \(topicName)" )
+        .navigationBarItems(trailing: Button(action: {
+            withAnimation {
+               // showTopicEntryView = true //need to trigger QueryEntryView here
+                print("+button tapped")
+                print(topic ?? "no topic there")        //not sure why not!
+            }
+        })
+        {Text(Image(systemName: "plus"))
+            .padding()
+            .imageScale(.large)
+        })
+    }
+    struct QuestionView: View {    //this is the view used to create each line of the table
+        @ObservedObject      var query: Query       //not sure why not binding here but it works!
+        var body: some View {
+            Text("\(query.question)")
+                .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
+                .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
+        }
+    }
     
     var background: some View {
         Image("blackboard")
             .resizable()
             .edgesIgnoringSafeArea(.all)
-    }
-    var body: some View {
-     // Text("QuestionsView")
-        
-        TableView($queries, background: background) {query in
-            Text("\(query.question)")
-        }
-        .navigationTitle(topicName)
     }
 }
 
