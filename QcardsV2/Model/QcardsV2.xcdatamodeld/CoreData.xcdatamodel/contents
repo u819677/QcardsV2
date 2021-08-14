@@ -12,10 +12,10 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="topicDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="topicName" optional="YES" attributeType="String"/>
-        <relationship name="query" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Query" inverseName="topic" inverseEntity="Query"/>
+        <relationship name="query" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Query" inverseName="topic" inverseEntity="Query"/>
     </entity>
     <elements>
         <element name="Query" positionX="-18" positionY="54" width="128" height="119"/>
-        <element name="Topic" positionX="-45" positionY="0" width="128" height="89"/>
+        <element name="Topic" positionX="-45" positionY="0" width="128" height="14"/>
     </elements>
 </model>

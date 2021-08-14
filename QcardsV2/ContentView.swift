@@ -11,7 +11,7 @@ import UIKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext    //context is only required here to enable .onDelete to work
- 
+    
     @StateObject var topicStore: TopicStore
     
     @State private var showingAlert = false
@@ -25,64 +25,59 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            VStack {
+            VStack {        //this VStack comes from hackingws and is required because of using EmptyView with the nav link
                 
-            NavigationLink(
-                //now try to link instead to new QuestionsView...
-                destination: QuestionsView(topicStore: topicStore),
+                NavigationLink(
+                    destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? ""),
+
+                    // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
+                    // destination: LinkView2(topic: chosenTopic),
+                    isActive: $isLinking)
+                    {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
+
                 
-                
-                
-                
-                
-               // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
-               // destination: LinkView2(topic: chosenTopic),
-                isActive: $isLinking)
-                {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before.
-           
-        //    NavigationLink(
-                        //    destination: TestView())
-        //   {
-            TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
-                TopicView(topic: topic)
-                   // .background(NavigationLink(destination: TestView()){LinkView2()})   //this might be the solution??
-            
-            }
-            //MARK:- onSelect and onDelete
-            .onSelect { topic in
-                self.isLinking = true
-                self.chosenTopic = topic
-                print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
-             
-            }
-            .onDelete { index in
-                showingAlert = true
-                let topicToRemove = topicStore.topics[index]
-                topicStore.topics.remove(at: index)
-                viewContext.delete(topicToRemove)
+                TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
+                    TopicView(topic: topic)
+                    // .background(NavigationLink(destination: TestView()){LinkView2()})   //this might be the solution??
                     
-                do {
-                    try viewContext.save()
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    let nsError = error as NSError
-                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                 }
-            }
-         
-            //MARK:- onMore
-            .onMore { topic in
-                editingTopic = topic
-            }
-            .sheet(item: $editingTopic) { item in    //animation triggered when optional onMoreTopic is not nil
-                withAnimation {
-                    TopicEntryView(isPresented: $showTopicEntryView, topic: item)
+                //MARK:- onSelect and onDelete
+                .onSelect { topic in
+                    self.isLinking = true
+                    self.chosenTopic = topic
+                    print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
+                    
                 }
-            }
+                .onDelete { index in
+                    showingAlert = true
+                    let topicToRemove = topicStore.topics[index]
+                    topicStore.topics.remove(at: index)
+                    viewContext.delete(topicToRemove)
+                    
+                    do {
+                        try viewContext.save()
+                    } catch {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        let nsError = error as NSError
+                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    }
+                }
+                
+                //MARK:- onMore
+                .onMore { topic in
+                    editingTopic = topic
+                }
+                .sheet(item: $editingTopic) { item in    //animation triggered when optional onMoreTopic is not nil
+                    withAnimation {
+                        TopicEntryView(isPresented: $showTopicEntryView, topic: item)
+                    }
+                }
             }//this is the end of the VStack
             //MARK:- Navigation Bar
-            .navigationBarTitle("Topics")
+            
+            .navigationTitle("Topics")
+           // .navigationBarTitle("Topics") //seems that this is deprecated
             
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
@@ -95,15 +90,15 @@ struct ContentView: View {
                 .imageScale(.large)
             })
             
-       //     }  //END OF NAVIGATION LINK
-
+            //     }  //END OF NAVIGATION LINK
+          
         } //END OF NAVIGATION VIEW
         .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour
         .sheet(isPresented: $showTopicEntryView)  {
             TopicEntryView(isPresented:$showTopicEntryView, topic: editingTopic)
             
-            
+           
             
         }
         
