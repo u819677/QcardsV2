@@ -45,7 +45,7 @@ struct ContentView: View {
                 .onSelect { topic in
                     self.isLinking = true
                     self.chosenTopic = topic
-                    print("onSelect topic \(topic.name) called in ContentView and isLinking = \(isLinking)")
+                    print("chosenTopic = \(self.chosenTopic)")
                     
                 }
                 .onDelete { index in
