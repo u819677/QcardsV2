@@ -26,19 +26,20 @@ struct ContentView: View {
         
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
-                
+                if chosenTopic != nil {
+                   
                 NavigationLink(
-                    destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic),
+                    destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic!),
 
                     // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
                     // destination: LinkView2(topic: chosenTopic),
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
-
+                }
                 
                 TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                     TopicView(topic: topic)
-                    // .background(NavigationLink(destination: TestView()){LinkView2()})   //this might be the solution??
+                    // .background(NavigationLink(destination: TestView()){LinkView2()})
                     
                 }
                 //MARK:- onSelect and onDelete
