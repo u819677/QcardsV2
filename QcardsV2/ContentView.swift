@@ -27,7 +27,7 @@ struct ContentView: View {
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
                 if chosenTopic != nil {
-                   
+               // print("chosenTopic = \(chosenTopic)")
                 NavigationLink(
                     destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic!),
 
@@ -35,6 +35,7 @@ struct ContentView: View {
                     // destination: LinkView2(topic: chosenTopic),
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
+                  //  NavigationLink(destination: EmptyView()){EmptyView()} //this is suggestion from forum, to solve the problem of first time using link does pop not navigation. That problem remains even with this link.
                 }
                 
                 TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
@@ -42,6 +43,7 @@ struct ContentView: View {
                     // .background(NavigationLink(destination: TestView()){LinkView2()})
                     
                 }
+                
                 //MARK:- onSelect and onDelete
                 .onSelect { topic in
                     self.isLinking = true
@@ -74,6 +76,7 @@ struct ContentView: View {
                         TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                     }
                 }
+                Button("Toggle isActive") {isLinking.toggle()} //need more careful analysis here, maybe try if with && conditional too eg: && isLinking = true
             }//this is the end of the VStack
             //MARK:- Navigation Bar
             
@@ -91,15 +94,14 @@ struct ContentView: View {
                 .imageScale(.large)
             })
             
-            //     }  //END OF NAVIGATION LINK
           
         } //END OF NAVIGATION VIEW
+       // .navigationTitle("TOPICS")    //doesn't work when it's here
+        
         .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour
         .sheet(isPresented: $showTopicEntryView)  {
             TopicEntryView(isPresented:$showTopicEntryView, topic: editingTopic)
-            
-           
             
         }
         
