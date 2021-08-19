@@ -18,7 +18,8 @@ struct QuestionsView: View {
         self.queries = queries
         self.topicName = topicName
         self.topic = topic
-     print("the topic coming in to QuestionsView is \(topic)")
+     print("the topic initialized in QuestionsView is \(topic), the topicName is \(topicName) and queries are \(queries)")
+        
     }
 
     var body: some View {

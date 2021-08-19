@@ -21,13 +21,13 @@ struct ContentView: View {
     @State var newTopic: String = ""
     
     @State var isLinking: Bool = false
-    @State var chosenTopic: Topic?
+    @State var chosenTopic: Topic? // = Topic()     this may be the way forward here... not sure...
     var body: some View {
         
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
                 if chosenTopic != nil {
-               // print("chosenTopic = \(chosenTopic)")
+
                 NavigationLink(
                     destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic!),
 
@@ -80,9 +80,7 @@ struct ContentView: View {
             }//this is the end of the VStack
             //MARK:- Navigation Bar
             
-            .navigationTitle("Topics")
-           // .navigationBarTitle("Topics") //seems that this is deprecated
-            
+           
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
                     showTopicEntryView = true
@@ -94,7 +92,9 @@ struct ContentView: View {
                 .imageScale(.large)
             })
             
-          
+            .navigationTitle("Topics")  //this needs to be just before end of nav view to display properly on child view
+           // .navigationBarTitle("Topics") //seems that this is deprecated
+            
         } //END OF NAVIGATION VIEW
        // .navigationTitle("TOPICS")    //doesn't work when it's here
         
