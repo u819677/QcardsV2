@@ -11,7 +11,8 @@ struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var queries: [Query]  = []   //if make this optional then have a problem because it's no longer a random acceess collection it seems...
     @State var topicName: String
-    @State var topic: Topic?
+    var topic: Topic?
+   // @State var topic: Topic?      //@State here was not working, topic was being lost with the updateView
    
     
     init(queries: [Query], topicName: String, topic: Topic?) {
@@ -29,7 +30,7 @@ struct QuestionsView: View {
         //.navigationTitle(topicName)
         
       // DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-        .navigationTitle("\(self.topic?.topicName ?? "nil") OR \(topicName)" )
+        .navigationTitle("\(self.topic?.topicName ?? "nil")" )//" OR \(topicName)" )
       //  }
         
         
