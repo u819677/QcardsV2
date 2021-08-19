@@ -56,7 +56,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         } else {
             print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
         }
-    }   /// to be clear, the delete functionality only works properly if no reloadData() happens here. Delete is messed up  by reloadData() being here.
+    }
+    //to be clear, the delete functionality only works properly if reloadData() is delayed above here. Delete is messed up  by reloadData() being here.
     //MARK:- makeUIView
     func makeUIView(context: Context) ->  UITableView {
         let tableView = UITableView()
@@ -105,12 +106,12 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         //MARK:- Delegate functions
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
-          //  self.allowRefresh = true  //no differennce. Need some way to trigger UIViewUpdate somehow I think, when row is first selected. 
+         //  self.allowRefresh = true  ///setting it here means that navlink not triggered unless 2 clicks
             self.parent.onSelect(parent.data[indexPath.row])
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
-//                self.allowRefresh = true
-//                print("TableView set allowRefresh = true after 0.1s")
-//            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
+                self.allowRefresh = true
+                print("TableView set allowRefresh = true after 0.1s")
+            }   ///setting allowRefresh here lets the navlink work correctly after the first time, which pops. But then works ok.
         }
         func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
             print("shouldHighlightRowAt ran here and allowRefresh = \(self.allowRefresh)")

@@ -26,6 +26,7 @@ struct ContentView: View {
         
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
+                
                 if chosenTopic != nil {
                    // NavigationLink(destination: Color.red){EmptyView()} //this is suggestion from forum, to solve the problem of first time using link does pop not navigation. That problem remains even with this link.
                 NavigationLink(
