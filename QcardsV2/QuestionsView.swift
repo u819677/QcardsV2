@@ -11,15 +11,15 @@ struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var queries: [Query]  = []   //if make this optional then have a problem because it's no longer a random acceess collection it seems...
     @State var topicName: String
-    @State var topic: Topic
+    @State var topic: Topic?
    
     
-    init(queries: [Query], topicName: String, topic: Topic) {
+    init(queries: [Query], topicName: String, topic: Topic?) {
         self.queries = queries
         self.topicName = topicName
         self.topic = topic
-     print("the topic initialized in QuestionsView is \(topic), the topicName is \(topicName) and queries are \(queries)")
-        
+     print("the topic initialized in QuestionsView is \(topic)") //", the topicName is \(topicName) and queries are \(queries)")
+        print("the inbound topic.topicName is \(topic?.topicName ?? "nil")")
     }
 
     var body: some View {
@@ -27,7 +27,12 @@ struct QuestionsView: View {
             QuestionView(query: query)
         }
         //.navigationTitle(topicName)
-        .navigationTitle("\(topic.topicName ?? "nil") OR \(topicName)" )
+        
+      // DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        .navigationTitle("\(self.topic?.topicName ?? "nil") OR \(topicName)" )
+      //  }
+        
+        
         .navigationBarItems(trailing: Button(action: {
             withAnimation {
                // showTopicEntryView = true //need to trigger QueryEntryView here
