@@ -27,15 +27,15 @@ struct ContentView: View {
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
                 if chosenTopic != nil {
-
+                   // NavigationLink(destination: Color.red){EmptyView()} //this is suggestion from forum, to solve the problem of first time using link does pop not navigation. That problem remains even with this link.
                 NavigationLink(
                     destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic!),
-
+                  // destination: Text("TestView")
                     // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
                     // destination: LinkView2(topic: chosenTopic),
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
-                  //  NavigationLink(destination: EmptyView()){EmptyView()} //this is suggestion from forum, to solve the problem of first time using link does pop not navigation. That problem remains even with this link.
+
                 }
                 
                 TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
@@ -48,7 +48,7 @@ struct ContentView: View {
                 .onSelect { topic in
                     self.isLinking = true
                     self.chosenTopic = topic
-                    print("chosenTopic = \(self.chosenTopic)")
+                    print("onSelect chosenTopic.topicName = \(self.chosenTopic?.topicName ?? "no topicName")")
                     
                 }
                 .onDelete { index in
@@ -91,6 +91,7 @@ struct ContentView: View {
                 .padding()
                 .imageScale(.large)
             })
+            .navigationViewStyle(StackNavigationViewStyle())    //this seems to make no difference
             
             .navigationTitle("Topics")  //this needs to be just before end of nav view to display properly on child view
            // .navigationBarTitle("Topics") //seems that this is deprecated

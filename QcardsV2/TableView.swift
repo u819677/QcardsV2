@@ -47,9 +47,9 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     }
     //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
-        
+        print("updateUIView called and...")
         if context.coordinator.allowRefresh {   //stops reloadData() running if called from onDelete
-            print("context.coordinator.allowRefresh in updateUIView is \(context.coordinator.allowRefresh)")
+            print("context.coordinator.allowRefresh in updateUIView = \(context.coordinator.allowRefresh)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 uiView.reloadData()
             }
@@ -105,13 +105,17 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         //MARK:- Delegate functions
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
+          //  self.allowRefresh = true  //no differennce. Need some way to trigger UIViewUpdate somehow I think, when row is first selected. 
             self.parent.onSelect(parent.data[indexPath.row])
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
-                self.allowRefresh = true
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
+//                self.allowRefresh = true
+//                print("TableView set allowRefresh = true after 0.1s")
+//            }
         }
         func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-            true    //this has to be true to allow onSelect to work
+            print("shouldHighlightRowAt ran here and allowRefresh = \(self.allowRefresh)")
+            return true    //this has to be true to allow onSelect to work
+            
         }
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             
@@ -145,7 +149,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                     actionPerformed(true)
                     print("the delete actionPerformed(true) has just run in line 161")
                     
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 4 ) {  //.global() instead of .main is better?
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4 ) {  //.global() instead of .main is better? don't think so
                         allowRefresh = true
                     }
                 }
