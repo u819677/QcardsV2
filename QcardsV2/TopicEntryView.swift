@@ -14,28 +14,18 @@ struct TopicEntryView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentionMode
-    @Binding var isPresented: Bool
-    @State private var isEditing: Bool = false
     
-    @State var topicName: String // = ""
     var topic: Topic? // = nil
+    @State var topicName: String // = ""
     
+    @State private var isEditing: Bool = false
+    @Binding var isPresented: Bool
 
-    init(isPresented: Binding<Bool>,
-         topic: Topic?) {
+    init(isPresented: Binding<Bool>, topic: Topic?)
+    {
         self._isPresented = isPresented
         self.topic = topic
-        //self._topicName = State(wrappedValue: "")
-        self._topicName = State(initialValue: topic?.name ?? "")
-        
-        
-        
-        print("after init the topicName is \(topicName)")
-        print("topic coming in is  \(topic?.name ?? "nil")")
-        if topic != nil {
-
-            print ("CD topic is \(String(describing: topic))")
-        }
+        self._topicName = State(initialValue: topic?.name ?? "")    //not  //self._topicName = State(wrappedValue: "")
     }
     //MARK:- body
     var body: some View {
