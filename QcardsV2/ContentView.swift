@@ -28,9 +28,9 @@ struct ContentView: View {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
                 
                 NavigationLink(
-     
-                    destination: QuestionsView(queries: chosenTopic?.queryArray ?? [],  topic: chosenTopic),
-              
+                  //  destination: QuestionsView(queries: chosenTopic?.queryArray ?? [],  topic: chosenTopic),
+                    destination: QuestionsView(topic: chosenTopic),
+                   
 
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
