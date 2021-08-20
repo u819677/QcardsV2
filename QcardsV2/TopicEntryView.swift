@@ -16,7 +16,7 @@ struct TopicEntryView: View {
     @Environment(\.presentationMode) private var presentionMode
     
     var topic: Topic? // = nil
-    @State var topicName: String // = ""
+    @State var newTopicName: String // = ""
     
     @State private var isEditing: Bool = false
     @Binding var isPresented: Bool
@@ -25,7 +25,7 @@ struct TopicEntryView: View {
     {
         self._isPresented = isPresented
         self.topic = topic
-        self._topicName = State(initialValue: topic?.name ?? "")    //not  //self._topicName = State(wrappedValue: "")
+        self._newTopicName = State(initialValue: topic?.name ?? "")    //not  //self._newTopicName = State(wrappedValue: "")
     }
     //MARK:- body
     var body: some View {
@@ -46,16 +46,13 @@ struct TopicEntryView: View {
                     Button(action: {
                         if let topic = topic {  //test for new Topic entry or editing an existing topic
                             editTopic(topic:topic)
-                            
                         } else {
-                            if !isBlank(topicName) {    ///can maybe tidy this up to deactivate Save button for the case of blank entry
-                                print("topicName is not blank")
+                            if !isBlank(newTopicName) {    ///can maybe tidy this up to deactivate Save button for the case of blank entry
                                 addTopic()
                             }
                         }
                         self.isPresented = false
                         presentionMode.wrappedValue.dismiss()
-                        
                     } ){
                         Text ("Save")}
                 }
@@ -65,7 +62,7 @@ struct TopicEntryView: View {
                     Spacer()
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
                         .foregroundColor(.blue) ///could maybe tighten up the spacing between the text and the textField
-                    TextField("", text: $topicName )    //no placeholder text here due it's not visible anyway.
+                    TextField("", text: $newTopicName )    //no placeholder text here due it's not visible anyway.
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
                         .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 45, idealHeight: 45, maxHeight: 55, alignment: .center)
@@ -90,7 +87,7 @@ struct TopicEntryView: View {
     private func addTopic() {
         withAnimation {
             let newTopic = Topic(context: viewContext)//original
-            newTopic.topicName = topicName//original
+            newTopic.topicName = newTopicName//original
             do {
                 try viewContext.save()
             } catch {
@@ -103,7 +100,7 @@ struct TopicEntryView: View {
     }
     //MARK:- editTopic
     private func editTopic(topic:Topic) {
-        topic.topicName = topicName
+        topic.topicName = newTopicName
         print("topic name \(topic.name) is edited here")
         do {
             try viewContext.save()
@@ -117,8 +114,10 @@ struct TopicEntryView: View {
     }
 }
 func isBlank(_ string: String) -> Bool {    //convenience function to prevent saving blank entry
+    //needs more work here to properly stop nonsense entries
     for character in string {
-        if !character.isWhitespace {
+        if !character.isWhitespace { //|| string.count > 2 {
+            print("string count = \(string.count)")
             return false
         }
     }
