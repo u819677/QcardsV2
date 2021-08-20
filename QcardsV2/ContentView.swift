@@ -13,28 +13,21 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext    //context is only required here to enable .onDelete to work
     
     @StateObject var topicStore: TopicStore
+    @State var editingTopic: Topic?  //using @State to allow this property to change once the program runs
+    @State var chosenTopic: Topic? // = Topic()     this may be the way forward here... not sure...
     
     @State private var showingAlert = false
-    
-    @State var editingTopic: Topic?  //using @State to allow this property to change once the program runs
     @State private var showTopicEntryView: Bool = false
-
-    
     @State var isLinking: Bool = false
-    @State var chosenTopic: Topic? // = Topic()     this may be the way forward here... not sure...
+    
     var body: some View {
         
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
-                
                 NavigationLink(
-                  //  destination: QuestionsView(queries: chosenTopic?.queryArray ?? [],  topic: chosenTopic),
                     destination: QuestionsView(topic: chosenTopic),
-                   
-
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
-                
                 TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                     TopicView(topic: topic)
                 }
@@ -44,7 +37,6 @@ struct ContentView: View {
                     self.isLinking = true   //this is what triggers the NavLink
                     self.chosenTopic = topic
                     print("onSelect chosenTopic.topicName = \(self.chosenTopic?.topicName ?? "no topicName")")
-                    
                 }
                 .onDelete { index in
                     showingAlert = true
@@ -71,11 +63,11 @@ struct ContentView: View {
                         TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                     }
                 }
-                Button("Toggle isActive") {isLinking.toggle()} //need more careful analysis here, maybe try if with && conditional too eg: && isLinking = true
-            }//this is the end of the VStack
-            //MARK:- Navigation Bar
+            }   //  end of VStack
             
-           
+            
+            
+            //MARK:- Navigation Bar
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
                     showTopicEntryView = true
@@ -89,10 +81,10 @@ struct ContentView: View {
             .navigationViewStyle(StackNavigationViewStyle())    //this seems to make no difference
             
             .navigationTitle("Topics")  //this needs to be just before end of nav view to display properly on child view
-           // .navigationBarTitle("Topics") //seems that this is deprecated
+            // .navigationBarTitle("Topics") //seems that this is deprecated
             
         } //END OF NAVIGATION VIEW
-       // .navigationTitle("TOPICS")    //doesn't work when it's here
+        // .navigationTitle("TOPICS")    //doesn't work when it's here
         
         .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour

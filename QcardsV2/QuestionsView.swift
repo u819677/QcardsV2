@@ -11,23 +11,23 @@ struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
     var topic: Topic?   //@State didn't work here!
-  
+    
     init(topic: Topic?) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
         self.topic = topic
         self.queries = topic?.queryArray ?? []
     }
-
+    
     var body: some View {
         TableView($queries, background: background) {query in
             QuestionView(query: query)
         }
         .navigationTitle("\(self.topic?.topicName ?? "nil")" )
-
+        
         
         
         .navigationBarItems(trailing: Button(action: {
             withAnimation {
-               // showTopicEntryView = true //need to trigger QueryEntryView here
+                // showTopicEntryView = true //need to trigger QueryEntryView here
                 print("+button tapped")
                 print(topic ?? "no topic there")        //not sure why not!
             }
