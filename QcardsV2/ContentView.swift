@@ -30,7 +30,8 @@ struct ContentView: View {
               // if chosenTopic != nil {
                     //NavigationLink(destination: EmptyView()){EmptyView()} //this is suggestion from forum, to solve the problem of first time using link does pop not navigation. That problem remains even with this link.
                 NavigationLink(
-                    destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic),
+                  //  destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic),
+                    destination: QuestionsView(queries: chosenTopic?.queryArray ?? [],  topic: chosenTopic),
                   // destination: Text("TestView")
                     // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
                     // destination: LinkView2(topic: chosenTopic),

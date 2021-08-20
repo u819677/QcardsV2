@@ -10,14 +10,15 @@ import SwiftUI
 struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var queries: [Query]  = []   //if make this optional then have a problem because it's no longer a random acceess collection it seems...
-    @State var topicName: String
+  //  @State var topicName: String
     var topic: Topic?
    // @State var topic: Topic?      //@State here was not working, topic was being lost with the updateView
    
     
-    init(queries: [Query], topicName: String, topic: Topic?) {
+  //  init(queries: [Query], topicName: String, topic: Topic?) {
+        init(queries: [Query], topic: Topic?) {
         self.queries = queries
-        self.topicName = topicName
+      // self.topicName = topicName
         self.topic = topic
      print("the topic initialized in QuestionsView is \(topic)") //", the topicName is \(topicName) and queries are \(queries)")
         print("the inbound topic.topicName is \(topic?.topicName ?? "nil")")
