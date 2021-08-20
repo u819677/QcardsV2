@@ -18,7 +18,7 @@ struct ContentView: View {
     
     @State var editingTopic: Topic?  //using @State to allow this property to change once the program runs
     @State private var showTopicEntryView: Bool = false
-    @State var newTopic: String = ""
+
     
     @State var isLinking: Bool = false
     @State var chosenTopic: Topic? // = Topic()     this may be the way forward here... not sure...
@@ -27,28 +27,21 @@ struct ContentView: View {
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
                 
-              // if chosenTopic != nil {
-                    //NavigationLink(destination: EmptyView()){EmptyView()} //this is suggestion from forum, to solve the problem of first time using link does pop not navigation. That problem remains even with this link.
                 NavigationLink(
-                  //  destination: QuestionsView(queries: chosenTopic?.queryArray ?? [], topicName: chosenTopic?.topicName ?? "", topic: chosenTopic),
+     
                     destination: QuestionsView(queries: chosenTopic?.queryArray ?? [],  topic: chosenTopic),
-                  // destination: Text("TestView")
-                    // destination: LinkView2(topic: chosenTopic), //, queries: chosenTopic?.queryArray),  //not necessary, due it's optional
-                    // destination: LinkView2(topic: chosenTopic),
+              
+
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
-
-             //   }
                 
                 TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                     TopicView(topic: topic)
-                    // .background(NavigationLink(destination: TestView()){LinkView2()})
-                    
                 }
                 
                 //MARK:- onSelect and onDelete
                 .onSelect { topic in
-                    self.isLinking = true
+                    self.isLinking = true   //this is what triggers the NavLink
                     self.chosenTopic = topic
                     print("onSelect chosenTopic.topicName = \(self.chosenTopic?.topicName ?? "no topicName")")
                     
