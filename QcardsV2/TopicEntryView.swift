@@ -36,8 +36,6 @@ struct TopicEntryView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        print("the topic coming in is \(topic?.name ?? "nil")")
-                        
                         self.isPresented = false
                         presentionMode.wrappedValue.dismiss()   ///need both these 2 methods to remove the view, due 2 methods used to show it
                     } ){
@@ -47,7 +45,7 @@ struct TopicEntryView: View {
                         if let topic = topic {  //test for new Topic entry or editing an existing topic
                             editTopic(topic:topic)
                         } else {
-                            if !isBlank(newTopicName) {    ///can maybe tidy this up to deactivate Save button for the case of blank entry
+                            if isSensible(newTopicName) {
                                 addTopic()
                             }
                         }
@@ -113,17 +111,13 @@ struct TopicEntryView: View {
         }
     }
 }
-func isBlank(_ string: String) -> Bool {    //convenience function to prevent saving blank entry
-    //needs more work here to properly stop nonsense entries
-    for character in string {
-        if !character.isWhitespace { //|| string.count > 2 {
-            print("string count = \(string.count)")
-            return false
-        }
+
+func isSensible(_ userText: String) -> Bool {
+    if userText.isEmpty || userText.count < 4  {
+        return false
     }
     return true
 }
-
 //struct TopicEntryView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TopicEntryView(isPresented: .constant(true))
