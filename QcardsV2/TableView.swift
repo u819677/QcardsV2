@@ -108,7 +108,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             print("onSelect called from delegate function")
          //  self.allowRefresh = true  ///setting it here means that navlink not triggered unless 2 clicks
             self.parent.onSelect(parent.data[indexPath.row])
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05 ) {  //seems that .global() instead of .main causes big delay here
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
                 self.allowRefresh = true
                 print("TableView set allowRefresh = true after 0.05s")
             }   ///setting allowRefresh here lets the navlink work correctly after the first time, which pops. But then works ok.

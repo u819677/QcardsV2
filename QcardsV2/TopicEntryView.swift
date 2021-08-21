@@ -20,7 +20,7 @@ struct TopicEntryView: View {
     
     @State private var isEditing: Bool = false
     @Binding var isPresented: Bool
-
+    
     init(isPresented: Binding<Bool>, topic: Topic?)
     {
         self._isPresented = isPresented
@@ -37,13 +37,13 @@ struct TopicEntryView: View {
                 HStack {
                     Button(action: {
                         self.isPresented = false
-                        presentionMode.wrappedValue.dismiss()   ///need both these 2 methods to remove the view, due 2 methods used to show it
+                        presentionMode.wrappedValue.dismiss()   ///need both these 2 methods to remove the view, due 2 different methods used to show it
                     } ){
                         Text ("Cancel")}
                     Spacer()
                     Button(action: {
-                        if let topic = topic {  //test for new Topic entry or editing an existing topic
-                            editTopic(topic:topic)
+                        if  topic != nil && isSensible(newTopicName) {  //test for new Topic entry or editing an existing topic
+                            editTopic(topic:topic!)
                         } else {
                             if isSensible(newTopicName) {
                                 addTopic()
@@ -55,12 +55,12 @@ struct TopicEntryView: View {
                         Text ("Save")}
                 }
                 .padding(20)
-
+                
                 VStack {
                     Spacer()
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
                         .foregroundColor(.blue) ///could maybe tighten up the spacing between the text and the textField
-                    TextField("", text: $newTopicName )    //no placeholder text here due it's not visible anyway.
+                    TextField("", text: $newTopicName )    //no placeholder text given here due it's not visible anyway.
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
                         .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 45, idealHeight: 45, maxHeight: 55, alignment: .center)
@@ -72,14 +72,14 @@ struct TopicEntryView: View {
                     Spacer()
                     Spacer()
                     Spacer()
-                }
+                }//end of Text + TextField VStack
                 .overlay(RoundedRectangle(cornerRadius: 5)
                             .strokeBorder(Color.black,lineWidth: 8)
                             .shadow(color: .white, radius: 5)
                             .cornerRadius(5)
                 )
-            }
-        }
+            }//end of main VStack
+        }   //end of ZStack
     }
     //MARK:- addTopic
     private func addTopic() {

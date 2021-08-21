@@ -9,8 +9,11 @@ import SwiftUI
 
 struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    
     @State var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
-    var topic: Topic?   //@State didn't work here!
+    var topic: Topic?   //@State didn't work here!      //may not need to be optional? There has to be a parent topic
+    
+    @State var showQueryEntry: Bool = false
     
     init(topic: Topic?) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
         self.topic = topic
@@ -27,7 +30,7 @@ struct QuestionsView: View {
         
         .navigationBarItems(trailing: Button(action: {
             withAnimation {
-                // showTopicEntryView = true //need to trigger QueryEntryView here
+                 showQueryEntry = true //need to trigger QueryEntryView here
                 print("+button tapped")
                 print(topic ?? "no topic there")        //not sure why not!
             }
@@ -36,6 +39,9 @@ struct QuestionsView: View {
             .padding()
             .imageScale(.large)
         })
+        .sheet(isPresented: $showQueryEntry){
+            QueryEntryView(isPresented: $showQueryEntry, selectedTopic: topic!)
+        }
     }
     struct QuestionView: View {    //this is the view used to create each line of the table
         @ObservedObject      var query: Query       //not sure why not use @Binding here but it works!

@@ -77,7 +77,7 @@ struct QueryEntryView: View {
                 .offset(y: -35)//moves the text boxes all up towards the top to make space for keyboard
             }
             .overlay(RoundedRectangle(cornerRadius: 5)
-                        .strokeBorder(Color(red:0.6, green:0.4, blue:0.2, opacity: 1.0),lineWidth: 8)
+                        .strokeBorder(Color.black,lineWidth: 8)
                      .shadow(color: .white, radius: 5)
                         .cornerRadius(5)
                      )

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		232F3DA426B5860500E2943F /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232F3DA326B5860500E2943F /* TestView.swift */; };
-		2398764426B6EE6F00E469AF /* LinkView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2398764326B6EE6F00E469AF /* LinkView2.swift */; };
 		23AC261226C5B53900CBCF93 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC261126C5B53900CBCF93 /* QuestionsView.swift */; };
 		23AC261426C7C25600CBCF93 /* QueryEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC261326C7C25600CBCF93 /* QueryEntryView.swift */; };
 		23B5392826ABFFD300630476 /* SpareCode.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 23B5392726ABFFD300630476 /* SpareCode.rtf */; };
@@ -48,8 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		232F3DA326B5860500E2943F /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		2398764326B6EE6F00E469AF /* LinkView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView2.swift; sourceTree = "<group>"; };
 		23AC261126C5B53900CBCF93 /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
 		23AC261326C7C25600CBCF93 /* QueryEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryEntryView.swift; sourceTree = "<group>"; };
 		23B5392726ABFFD300630476 /* SpareCode.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = SpareCode.rtf; sourceTree = "<group>"; };
@@ -146,6 +142,7 @@
 				23BAC9A626A7246C0065313D /* TopicStore.swift */,
 				23BAC9B726A7293D0065313D /* TopicEntryView.swift */,
 				23AC261326C7C25600CBCF93 /* QueryEntryView.swift */,
+				23AC261126C5B53900CBCF93 /* QuestionsView.swift */,
 				23BAC97926A723900065313D /* QcardsV2App.swift */,
 				23BAC9A826A725200065313D /* Persistence.swift */,
 				23BAC97D26A723920065313D /* Assets.xcassets */,
@@ -153,9 +150,6 @@
 				23BAC9B926A7298A0065313D /* QcardsV2.entitlements */,
 				23BAC97F26A723920065313D /* Preview Content */,
 				23B5392726ABFFD300630476 /* SpareCode.rtf */,
-				232F3DA326B5860500E2943F /* TestView.swift */,
-				2398764326B6EE6F00E469AF /* LinkView2.swift */,
-				23AC261126C5B53900CBCF93 /* QuestionsView.swift */,
 			);
 			path = QcardsV2;
 			sourceTree = "<group>";
@@ -324,8 +318,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				232F3DA426B5860500E2943F /* TestView.swift in Sources */,
-				2398764426B6EE6F00E469AF /* LinkView2.swift in Sources */,
 				23BAC97C26A723900065313D /* ContentView.swift in Sources */,
 				23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */,
 				23BAC9A526A724260065313D /* TableView.swift in Sources */,

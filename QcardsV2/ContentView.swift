@@ -58,7 +58,7 @@ struct ContentView: View {
                 .onMore { topic in
                     editingTopic = topic
                 }
-                .sheet(item: $editingTopic) { item in    //animation triggered when optional onMoreTopic is not nil
+                .sheet(item: $editingTopic) { item in    ///animation triggered when optional editingTopic is not nil. Using another Bool for this could get confusing! Possibly could avoid using the Bool here?
                     withAnimation {
                         TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                     }
