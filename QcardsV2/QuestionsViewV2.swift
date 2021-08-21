@@ -14,20 +14,25 @@ struct QuestionsViewV2: View {
  //   @StateObject var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
    // @StateObject var topicStore: TopicStore
     var topic: Topic?   //@State didn't work here!      //may not need to be optional? There has to be a parent topic
-     @Binding var queries: [Query] //  = []
-    
+    // @Binding var queries: [Query] //  = []
+    @State var queries: [Query] = []
     @State var showQueryEntry: Bool = false
-    
-    
-    
-    
-    init(queries: Binding<[Query]>) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
-        self._queries = queries
-//        if queries  != nil {//?? []
-//            topic = queries[0].topic
-//        }
-       /// self.queries = topic?.queryArray ?? []
+   // @ObservedObject var topicStore: TopicStore
+    init(topic: Topic?) {
+        self.topic = topic
+        queries = State<(initialValue: self.topic.queryArray)>
+
     }
+    
+    
+    
+//    init(queries: Binding<[Query]>) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
+//        self._queries = queries
+////        if queries  != nil {//?? []
+////            topic = queries[0].topic
+////        }
+//       /// self.queries = topic?.queryArray ?? []
+//    }
     
     var body: some View {
         TableView($queries, background: background) {query in

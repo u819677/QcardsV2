@@ -20,12 +20,15 @@ struct ContentView: View {
     @State private var showTopicEntryView: Bool = false
     @State var isLinking: Bool = false
     @State var queries: [Query] = []
+    
+    
+    
     var body: some View {
         
         NavigationView {
             VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
                 NavigationLink(
-                    destination: QuestionsViewV2(queries: $queries),
+                    destination: QuestionsViewV2(topic: chosenTopic),
                    // destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLED TO TEST QUESTIONSVIEWV2
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
