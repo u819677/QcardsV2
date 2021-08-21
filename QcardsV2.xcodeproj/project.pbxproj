@@ -26,6 +26,7 @@
 		23BAC9B626A728630065313D /* Topic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */; };
 		23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B726A7293D0065313D /* TopicEntryView.swift */; };
 		23BAC9BC26A7298D0065313D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAC9BB26A7298D0065313D /* CloudKit.framework */; };
+		23DC378C26D1140D00327902 /* QuestionsViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DC378B26D1140D00327902 /* QuestionsViewV2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		23BAC9B726A7293D0065313D /* TopicEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicEntryView.swift; sourceTree = "<group>"; };
 		23BAC9B926A7298A0065313D /* QcardsV2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QcardsV2.entitlements; sourceTree = "<group>"; };
 		23BAC9BB26A7298D0065313D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		23DC378B26D1140D00327902 /* QuestionsViewV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewV2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				23BAC9B726A7293D0065313D /* TopicEntryView.swift */,
 				23AC261326C7C25600CBCF93 /* QueryEntryView.swift */,
 				23AC261126C5B53900CBCF93 /* QuestionsView.swift */,
+				23DC378B26D1140D00327902 /* QuestionsViewV2.swift */,
 				23BAC97926A723900065313D /* QcardsV2App.swift */,
 				23BAC9A826A725200065313D /* Persistence.swift */,
 				23BAC97D26A723920065313D /* Assets.xcassets */,
@@ -328,6 +331,7 @@
 				23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */,
 				23BAC9A926A725200065313D /* Persistence.swift in Sources */,
 				23BAC9B326A728630065313D /* Query+CoreDataClass.swift in Sources */,
+				23DC378C26D1140D00327902 /* QuestionsViewV2.swift in Sources */,
 				23BAC9AE26A727050065313D /* QcardsV2.xcdatamodeld in Sources */,
 				23AC261426C7C25600CBCF93 /* QueryEntryView.swift in Sources */,
 				23BAC9B526A728630065313D /* Topic+CoreDataClass.swift in Sources */,

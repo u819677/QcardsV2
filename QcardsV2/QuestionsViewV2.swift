@@ -1,24 +1,32 @@
 //
-//  QuestionsView.swift
+//  QuestionsViewV2.swift
 //  QcardsV2
 //
-//  Created by Richard Clark on 12/08/2021.
+//  Created by Richard Clark on 21/08/2021.
 //
 
 import SwiftUI
 import CoreData
 
-struct QuestionsView: View {
+struct QuestionsViewV2: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
+ //   @StateObject var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
+   // @StateObject var topicStore: TopicStore
     var topic: Topic?   //@State didn't work here!      //may not need to be optional? There has to be a parent topic
+     @Binding var queries: [Query] //  = []
     
     @State var showQueryEntry: Bool = false
     
-    init(topic: Topic?) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
-        self.topic = topic
-        self.queries = topic?.queryArray ?? []
+    
+    
+    
+    init(queries: Binding<[Query]>) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
+        self._queries = queries
+//        if queries  != nil {//?? []
+//            topic = queries[0].topic
+//        }
+       /// self.queries = topic?.queryArray ?? []
     }
     
     var body: some View {
