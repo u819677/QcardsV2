@@ -37,12 +37,8 @@ class TopicStore: NSObject, ObservableObject {
             topics = topicsController.fetchedObjects ?? []
         }   catch {
             print("failed to fetch")
-        }
-        
+        } 
     }
-    
-    
-    
 }
 
 //not sure if either or both of these are needed

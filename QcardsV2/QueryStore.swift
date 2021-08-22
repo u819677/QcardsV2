@@ -25,6 +25,15 @@ class QueryStore: NSObject, ObservableObject {
 //    }
     //need to add an optional topic, then pass that in to use as a predicate in the fetch request...
     init( managedObjectContext: NSManagedObjectContext) {
+        
+        var fetchRequest: NSFetchRequest<Query> {
+             let request: NSFetchRequest<Query> = Query.fetchRequest()
+             request.sortDescriptors = [NSSortDescriptor(keyPath: \Query.queryQuestion, ascending: false)]
+             return request
+         }
+        
+        
+        
         queriesController = NSFetchedResultsController(fetchRequest: Query.fetchRequest(),
                                                       managedObjectContext: managedObjectContext,
                                                       sectionNameKeyPath: nil,
@@ -34,25 +43,8 @@ class QueryStore: NSObject, ObservableObject {
         let managedObjectContext = persistenceController.container.viewContext
         let storage = QueryStore(managedObjectContext: managedObjectContext)
         self._queryStore = StateObject(wrappedValue: storage)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-       var fetchRequest: NSFetchRequest<Query> {
-            let request: NSFetchRequest<Query> = Query.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(keyPath: \Query.queryQuestion, ascending: false)]
-            return request
-        }
+  
+       
      
         
         //PLAN1
@@ -64,8 +56,9 @@ class QueryStore: NSObject, ObservableObject {
 
         do {
             try queriesController.performFetch()
-            print("queryStore ran queriesController.performFetch()")
+            
             queries = queriesController.fetchedObjects ?? []
+            print("queryStore ran fetchRequest to give \(queries.count) queries")
         }   catch {
             print("failed to fetch")
         }

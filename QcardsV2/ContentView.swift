@@ -40,8 +40,8 @@ struct ContentView: View {
                 
           
                 NavigationLink(
-                    destination: QuestionsViewV2(topic: chosenTopic),
-                   // destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLED TO TEST QUESTIONSVIEWV2
+                   // destination: QuestionsViewV2(topic: chosenTopic),
+                    destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLE TO TEST QUESTIONSVIEWV2
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
    

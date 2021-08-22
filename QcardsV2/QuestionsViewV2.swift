@@ -10,7 +10,7 @@ import CoreData
 
 struct QuestionsViewV2: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+    let persistenceController = PersistenceController.shared
  //   @StateObject var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
    // @StateObject var topicStore: TopicStore
      var topic: Topic?   //@State didn't work here!      //may not need to be optional? There has to be a parent topic
@@ -18,17 +18,30 @@ struct QuestionsViewV2: View {
     @State var queries = [Query]()    //= []
     @State var showQueryEntry: Bool = false
    // @ObservedObject var topicStore: TopicStore
+    @StateObject var queryStore: QueryStore
     init(topic: Topic?) {
-        self.topic = topic
+     
         _queries = State(initialValue: topic?.queryArray ?? [])
         print("topic coming in for init is \(topic?.topicName ?? "nil") and...")
         //print("queries contains: \($queries)")
+       
+        let managedObjectContext = persistenceController.container.viewContext
+        let storage = QueryStore(managedObjectContext: managedObjectContext)
+        _queryStore = StateObject(wrappedValue: storage)
+        
+        
+        self.topic = topic
+        
+        
+        
+        
     }
     
 
     
     var body: some View {
-        TableView($queries, background: background) {query in
+        TableView($queries, background: background) {query in   //TEMP COPIED OUT
+        //    TableView($queryStore.queries, background: background) {query in
             QuestionView(query: query)
         }
         .navigationTitle("\(self.topic?.topicName ?? "nil")" )

@@ -22,8 +22,10 @@ struct QuestionsView: View {
     }
     
     var body: some View {
-    TableView($queries, background: background) {query in //TEMP COPIED OUT
-      //  TableView($queryStore.queries, background: background) {query in
+        
+        VStack{
+   // TableView($queries, background: background) {query in //TEMP COPIED OUT
+        TableView($queries, background: background) {query in
             QuestionView(query: query)
         }
         .navigationTitle("\(self.topic?.topicName ?? "nil")" )
@@ -43,6 +45,7 @@ struct QuestionsView: View {
         })
         .sheet(isPresented: $showQueryEntry){
             QueryEntryView(isPresented: $showQueryEntry, selectedTopic: topic!)
+        }
         }
     }
     struct QuestionView: View {    //this is the view used to create each line of the table
