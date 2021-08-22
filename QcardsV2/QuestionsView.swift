@@ -22,7 +22,8 @@ struct QuestionsView: View {
     }
     
     var body: some View {
-        TableView($queries, background: background) {query in
+    TableView($queries, background: background) {query in //TEMP COPIED OUT
+      //  TableView($queryStore.queries, background: background) {query in
             QuestionView(query: query)
         }
         .navigationTitle("\(self.topic?.topicName ?? "nil")" )

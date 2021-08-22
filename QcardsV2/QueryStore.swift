@@ -15,7 +15,14 @@ import SwiftUI
 class QueryStore: NSObject, ObservableObject {
     @Published var queries: [Query] = []
     private let queriesController: NSFetchedResultsController<Query>
-    
+    var topic: Topic?
+    let persistenceController = PersistenceController.shared
+    @StateObject var queryStore: QueryStore
+//    init() {
+//        let managedObjectContext = persistenceController.container.viewContext
+//        let storage = QueryStore(managedObjectContext: managedObjectContext)
+//        self._queryStore = StateObject(wrappedValue: storage)
+//    }
     //need to add an optional topic, then pass that in to use as a predicate in the fetch request...
     init( managedObjectContext: NSManagedObjectContext) {
         queriesController = NSFetchedResultsController(fetchRequest: Query.fetchRequest(),
@@ -24,16 +31,29 @@ class QueryStore: NSObject, ObservableObject {
                                                       cacheName: nil
         )
 
+        let managedObjectContext = persistenceController.container.viewContext
+        let storage = QueryStore(managedObjectContext: managedObjectContext)
+        self._queryStore = StateObject(wrappedValue: storage)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
        var fetchRequest: NSFetchRequest<Query> {
             let request: NSFetchRequest<Query> = Query.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(keyPath: \Query.queryQuestion, ascending: false)]
             return request
         }
-        
-        
-        
-        
-        
+     
         
         //PLAN1
         //create a new queryController here which uses a local fetch request
@@ -44,13 +64,13 @@ class QueryStore: NSObject, ObservableObject {
 
         do {
             try queriesController.performFetch()
-            print("TopicStore ran topicsController.performFetch()")
+            print("queryStore ran queriesController.performFetch()")
             queries = queriesController.fetchedObjects ?? []
         }   catch {
             print("failed to fetch")
         }
         
-    }
+    }//end of init
     
     
     
