@@ -15,7 +15,7 @@ struct QuestionsViewV2: View {
    // @StateObject var topicStore: TopicStore
      var topic: Topic?   //@State didn't work here!      //may not need to be optional? There has to be a parent topic
     // @Binding var queries: [Query] //  = []
-    @State var queries: [Query] //= []
+    @State var queries = [Query]()    //= []
     @State var showQueryEntry: Bool = false
    // @ObservedObject var topicStore: TopicStore
     init(topic: Topic?) {
