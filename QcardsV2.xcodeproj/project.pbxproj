@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		231BE71D26D29BAE000FCF4F /* QueryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231BE71C26D29BAE000FCF4F /* QueryStore.swift */; };
 		23AC261226C5B53900CBCF93 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC261126C5B53900CBCF93 /* QuestionsView.swift */; };
 		23AC261426C7C25600CBCF93 /* QueryEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC261326C7C25600CBCF93 /* QueryEntryView.swift */; };
 		23B5392826ABFFD300630476 /* SpareCode.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 23B5392726ABFFD300630476 /* SpareCode.rtf */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		231BE71C26D29BAE000FCF4F /* QueryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryStore.swift; sourceTree = "<group>"; };
 		23AC261126C5B53900CBCF93 /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
 		23AC261326C7C25600CBCF93 /* QueryEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryEntryView.swift; sourceTree = "<group>"; };
 		23B5392726ABFFD300630476 /* SpareCode.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = SpareCode.rtf; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				23BAC97B26A723900065313D /* ContentView.swift */,
 				23BAC9A426A724260065313D /* TableView.swift */,
 				23BAC9A626A7246C0065313D /* TopicStore.swift */,
+				231BE71C26D29BAE000FCF4F /* QueryStore.swift */,
 				23BAC9B726A7293D0065313D /* TopicEntryView.swift */,
 				23AC261326C7C25600CBCF93 /* QueryEntryView.swift */,
 				23AC261126C5B53900CBCF93 /* QuestionsView.swift */,
@@ -322,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23BAC97C26A723900065313D /* ContentView.swift in Sources */,
+				231BE71D26D29BAE000FCF4F /* QueryStore.swift in Sources */,
 				23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */,
 				23BAC9A526A724260065313D /* TableView.swift in Sources */,
 				23BAC97A26A723900065313D /* QcardsV2App.swift in Sources */,
