@@ -27,7 +27,9 @@ struct ContentView: View {
     @State private var showTopicEntryView: Bool = false
     @State var isLinking: Bool = false
     @State var queries: [Query] = []
-    
+    init(topicStore: TopicStore) {
+        _topicStore = StateObject(wrappedValue: topicStore)
+    }
     
     
     var body: some View {
