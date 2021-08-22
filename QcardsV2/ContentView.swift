@@ -14,7 +14,14 @@ struct ContentView: View {
     
     @StateObject var topicStore: TopicStore
     @State var editingTopic: Topic?  //using @State to allow this property to change once the program runs
-    @State var chosenTopic: Topic? // = Topic()     this may be the way forward here... not sure...
+    
+    
+    
+    @State var chosenTopic: Topic?  //has to be optional to avoid requiring this parameter way back up in App.swift
+   //@State var chosenTopic: Topic? // = Topic()
+    
+    
+    
     
     @State private var showingAlert = false
     @State private var showTopicEntryView: Bool = false
@@ -26,12 +33,18 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            VStack {        //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
+            VStack {
+                //this VStack comes from hackingws and seems required because of using EmptyView with the nav link
+                
+          
                 NavigationLink(
                     destination: QuestionsViewV2(topic: chosenTopic),
                    // destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLED TO TEST QUESTIONSVIEWV2
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
+   
+                
+                
                 TableView($topicStore.topics, background: background) { topic in  //TableView is a UITableView
                     TopicView(topic: topic)
                 }
