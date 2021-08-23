@@ -27,8 +27,22 @@ struct ContentView: View {
     @State private var showTopicEntryView: Bool = false
     @State var isLinking: Bool = false
     @State var queries: [Query] = []
+    
+    //MARK:- Create queryStore to be passed into QuestionsView
+    @StateObject var queryStore: QueryStore
+    let persistenceController = PersistenceController.shared
+    
+    
+    
+    
+    
     init(topicStore: TopicStore) {
         _topicStore = StateObject(wrappedValue: topicStore)
+        //now need to init the queryStore. Can't use viewContext from environment due it's not accessible yet
+        let managedObjectContext = persistenceController.container.viewContext
+        let storage = QueryStore(managedObjectContext: managedObjectContext)
+        self._queryStore = StateObject(wrappedValue: storage)
+        
     }
     
     
