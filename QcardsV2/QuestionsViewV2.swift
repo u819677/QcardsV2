@@ -18,19 +18,21 @@ struct QuestionsViewV2: View {
     @State var queries = [Query]()    //= []
     @State var showQueryEntry: Bool = false
    // @ObservedObject var topicStore: TopicStore
+    
+  
     @StateObject var queryStore: QueryStore
-    init(topic: Topic?) {
-     
-        _queries = State(initialValue: topic?.queryArray ?? [])
+init(topic: Topic?, queryStore: QueryStore) {
+    self.topic = topic
+       // _queries = State(initialValue: topic?.queryArray ?? [])
         print("topic coming in for init is \(topic?.topicName ?? "nil") and...")
         //print("queries contains: \($queries)")
        
-        let managedObjectContext = persistenceController.container.viewContext
-        let storage = QueryStore(managedObjectContext: managedObjectContext)
-        _queryStore = StateObject(wrappedValue: storage)
+//        let managedObjectContext = persistenceController.container.viewContext
+//        let storage = QueryStore(managedObjectContext: managedObjectContext)
+       // _queryStore = StateObject(wrappedValue: storage)
+        _queryStore = StateObject(wrappedValue: queryStore)
         
         
-        self.topic = topic
         
         
         
@@ -40,8 +42,8 @@ struct QuestionsViewV2: View {
 
     
     var body: some View {
-        TableView($queries, background: background) {query in   //TEMP COPIED OUT
-        //    TableView($queryStore.queries, background: background) {query in
+       // TableView($queries, background: background) {query in   //TEMP COPIED OUT
+            TableView($queryStore.queries, background: background) {query in
             QuestionView(query: query)
         }
         .navigationTitle("\(self.topic?.topicName ?? "nil")" )
@@ -64,8 +66,8 @@ struct QuestionsViewV2: View {
         }
     }
     struct QuestionView: View {    //this is the view used to create each line of the table
-      //  @ObservedObject      var query: Query       //not sure why not use @Binding here but it works!
-       var query: Query
+        @ObservedObject      var query: Query       //not sure why not use @Binding here but it works!
+       //var query: Query   //think the Observed Object is required here
         var body: some View {
             Text("\(query.question)")
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)

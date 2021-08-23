@@ -18,7 +18,7 @@ struct ContentView: View {
     
     
     @State var chosenTopic: Topic?  //has to be optional to avoid requiring this parameter way back up in App.swift
-   //@State var chosenTopic: Topic? // = Topic()
+   //@State var chosenTopic: Topic? // = Topic()    //can also use :Topic() = []
     
     
     
@@ -28,21 +28,16 @@ struct ContentView: View {
     @State var isLinking: Bool = false
     @State var queries: [Query] = []
     
-    //MARK:- Create queryStore to be passed into QuestionsView
+    //MARK:-  queryStore
     @StateObject var queryStore: QueryStore
     let persistenceController = PersistenceController.shared
-    
-    
-    
-    
-    
+
     init(topicStore: TopicStore) {
         _topicStore = StateObject(wrappedValue: topicStore)
         //now need to init the queryStore. Can't use viewContext from environment due it's not accessible yet
         let managedObjectContext = persistenceController.container.viewContext
         let storage = QueryStore(managedObjectContext: managedObjectContext)
         self._queryStore = StateObject(wrappedValue: storage)
-        
     }
     
     
@@ -54,8 +49,8 @@ struct ContentView: View {
                 
           
                 NavigationLink(
-                   // destination: QuestionsViewV2(topic: chosenTopic),
-                    destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLE TO TEST QUESTIONSVIEWV2
+                    destination: QuestionsViewV2(topic: chosenTopic, queryStore: queryStore),
+                   //destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLE TO TEST QUESTIONSVIEWV2
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
    
