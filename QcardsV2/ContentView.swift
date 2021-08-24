@@ -29,15 +29,29 @@ struct ContentView: View {
     @State var queries: [Query] = []
     
     //MARK:-  queryStore
-    @StateObject var queryStore: QueryStore
+    
+    
+   // @StateObject var queryStore: QueryStore
+    
+    
+    
+    
     let persistenceController = PersistenceController.shared
 
     init(topicStore: TopicStore) {
         _topicStore = StateObject(wrappedValue: topicStore)
         //now need to init the queryStore. Can't use viewContext from environment due it's not accessible yet
-        let managedObjectContext = persistenceController.container.viewContext
-        let storage = QueryStore(managedObjectContext: managedObjectContext)
-        self._queryStore = StateObject(wrappedValue: storage)
+        
+        
+        //trying to init the queryStore in QuestionsViewV3, so have commented out line 34
+//        let managedObjectContext = persistenceController.container.viewContext
+//        let storage = QueryStore(managedObjectContext: managedObjectContext)
+//        self._queryStore = StateObject(wrappedValue: storage)
+        
+        
+        
+        
+        //maybe have a @State topic in here to use as a predicate, so every time it changed, this init would be re-run?
     }
     
     
@@ -49,7 +63,8 @@ struct ContentView: View {
                 
           
                 NavigationLink(
-                    destination: QuestionsViewV2(topic: chosenTopic, queryStore: queryStore),
+                    destination: QuestionsViewV3(topic: chosenTopic),
+                    //destination: QuestionsViewV2(topic: chosenTopic, queryStore: queryStore),
                    //destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLE TO TEST QUESTIONSVIEWV2
                     isActive: $isLinking)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not sure why!
@@ -91,6 +106,7 @@ struct ContentView: View {
                         TopicEntryView(isPresented: $showTopicEntryView, topic: item)
                     }
                 }
+                Text("there are \(topicStore.topics.count) topics")
             }   //  end of VStack
             
             

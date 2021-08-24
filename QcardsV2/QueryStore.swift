@@ -25,14 +25,29 @@ class QueryStore: NSObject, ObservableObject {
 //        self._queryStore = StateObject(wrappedValue: storage)
 //    }
     //need to add an optional topic, somewhere else, then pass that in to here, to use as a predicate in the fetch request...
-    init( managedObjectContext: NSManagedObjectContext) {
-        queriesController = NSFetchedResultsController(fetchRequest: Query.extensionFetchRequest,
+    init( managedObjectContext: NSManagedObjectContext, topic: Topic?) {
+        
+        self.topic = topic
+        
+        //guard topic != nil else {return nil}
+        var fetchRequest: NSFetchRequest<Query> {
+            let request: NSFetchRequest<Query> = Query.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(keyPath: \Query.queryQuestion, ascending: true)]
+            if topic != nil {
+            request.predicate = NSPredicate(format: "topic == %@", topic!)  ///the predicate is optional, so for the initial init of the class, when topic is nil, it's omitted
+            }
+            return request
+        }
+        
+        
+        
+        queriesController = NSFetchedResultsController(fetchRequest: fetchRequest, //Query.extensionFetchRequest,
                                                       managedObjectContext: managedObjectContext,
                                                       sectionNameKeyPath: nil,
                                                       cacheName: nil
         )
         
-    
+   
         
         
         
