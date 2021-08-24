@@ -94,7 +94,6 @@ struct QueryEntryView: View {
             newQuery1.queryQuestion = textQ
             newQuery1.answer = textA
             newQuery1.extra = textE
-            //newQuery1.topic = selectedTopic!//this works!
             selectedTopic!.addToQuery(newQuery1)//this works fine! what was I doing??
          
             do {

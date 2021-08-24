@@ -43,7 +43,6 @@ struct PersistenceController {
             description?.setOption(true as NSNumber, forKey: remoteChangeKey)
             
         }
-       // container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy//needed to enable constraints to work correctly ie: only one entity created for a given topicName. Note that there is another option here, PropertyObject, where existing entity trumps new one. Both seem fine here.
 
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -65,9 +64,7 @@ struct PersistenceController {
            
         })
          container.viewContext.automaticallyMergesChangesFromParent = true //RDC
-        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        
-    
+        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy  //needed to enable constraints to work correctly ie: only one entity created for a given topicName. Note that there is another option here, PropertyObject, where existing entity trumps new one. Both seem fine here.
         //operation.configuration.allowsCellularAccess = true   //is this needed?
         let myOperation: Operation = Operation()
         myOperation.qualityOfService = .userInteractive //this is the highest QoS. can't find a CellularAccess property

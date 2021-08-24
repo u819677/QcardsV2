@@ -14,23 +14,18 @@ class TopicStore: NSObject, ObservableObject {
     @Published var topics: [Topic] = []
     private let topicsController: NSFetchedResultsController<Topic>
     @Published var queries: [Query] = []
-
+    
     
     //need to add an optional topic, then pass that in to use as a predicate in the fetch request...
-    init( managedObjectContext: NSManagedObjectContext) {
+    init(managedObjectContext: NSManagedObjectContext) {
         topicsController = NSFetchedResultsController(fetchRequest: Topic.extensionFetchRequest,
                                                       managedObjectContext: managedObjectContext,
                                                       sectionNameKeyPath: nil,
                                                       cacheName: nil
         )
-
-        //PLAN1
-        //create a new queryController here which uses a local fetch request
-        //create the fetch request using a predicate topic, which is passed in, sort descriptor not needed
-        //run the actual perform fetch and assign results to the published var queries
         super.init()
         topicsController.delegate = self
-
+        
         do {
             try topicsController.performFetch()
             print("TopicStore ran topicsController.performFetch()")
@@ -41,7 +36,7 @@ class TopicStore: NSObject, ObservableObject {
     }
 }
 
-//not sure if either or both of these are needed
+//not sure if didChangeObject is needed
 extension TopicStore: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let changedTopics = controller.fetchedObjects as? [Topic]
