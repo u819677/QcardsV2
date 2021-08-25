@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var selectedTopic: Topic?    ///this topic is to pass into QuestionsView
     
     @State private var showingAlert = false //this is the alert to warn before topic delete
-    @State private var showTopicEntryView: Bool = false
+    @State private var showTopicEntryView: Bool = false //need this for new topic entry
     @State var showQuestionsView: Bool = false     ///the NavLink to QuestionsView needs this Bool because it comes from UITableView triggering the delegate .onSelect function
     
     init(topicStore: TopicStore) {
@@ -56,7 +56,7 @@ struct ContentView: View {
                 .onMore {topic in   //.onMore really means .onEdit
                     optionalTopic = topic
                 }
-                .sheet(item: $optionalTopic) { item in    ///edit View animation triggered when optional editingTopic is not nil.
+                .sheet(item: $optionalTopic) { item in    ///edit View animation triggered when optionalTopic is not nil.
                     withAnimation {
                         TopicEntryView(topic: item)
                     }

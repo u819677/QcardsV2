@@ -122,14 +122,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             ) { [unowned self] action, sourceView, actionPerformed in   //flow continues here when choice made by the user
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
                 
-                let rowData  = parent.data[indexPath.row] //this is attempting to access the topicName details to display in the alert. Failing so far.
-                print("rowData is: \(rowData)") ///How to access topicName here? rowData.topicName doesn't compile - "Data.Element has no member..."
                 //MARK: AlertController
-                //let titleMessage: String = "topic: \(self.parent.data[indexPath.row])"
-                let chosenTopic: Topic = self.parent.data[indexPath.row] as! Topic
-                let chosenTopicName = chosenTopic.topicName ?? "nil"
-                let titleMessage: String = "chosen topic called \(chosenTopicName)"
-                //GOT IT, YEE HAH! not really so tricky, needed to think carefully about it! key was to have print statements to analyse alert control flow
+                let deletingTopic: Topic = self.parent.data[indexPath.row] as! Topic
+                let titleMessage: String = "chosen topic called \(deletingTopic.topicName ?? "no Name")"
+
                 let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
                                               message: "",
                                               preferredStyle: .alert)

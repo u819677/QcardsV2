@@ -13,12 +13,9 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
     
     var topic: Topic?
     @State var newTopicName: String /// this is needed to work with a TextField, which uses a binding
-   // @Binding var isPresented: Bool
-    
-    //init(isPresented: Binding<Bool>, topic: Topic?)
+
     init(topic: Topic?)
     {
-     //   self._isPresented = isPresented
         self.topic = topic
         self._newTopicName = State(initialValue: topic?.name ?? "")    //not  //self._newTopicName = State(wrappedValue: "")
     }
@@ -30,7 +27,6 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
             VStack {
                 HStack {
                     Button(action: {
-                       // self.isPresented = false
                         presentionMode.wrappedValue.dismiss()   ///need this method to dismiss the view when in edit mode, and it works for both
                     } ){
                         Text ("Cancel")}
@@ -44,7 +40,6 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
                                 addTopic()  ///creates a new topic from scratch
                             }
                         }
-                       // self.isPresented = false    /// and this other method to dismiss the view when in new topic mode
                         presentionMode.wrappedValue.dismiss()
                     } ){
                         Text ("Save")}
