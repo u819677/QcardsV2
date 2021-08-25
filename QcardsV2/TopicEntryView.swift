@@ -13,11 +13,12 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
     
     var topic: Topic?
     @State var newTopicName: String /// this is needed to work with a TextField, which uses a binding
-    @Binding var isPresented: Bool
+   // @Binding var isPresented: Bool
     
-    init(isPresented: Binding<Bool>, topic: Topic?)
+    //init(isPresented: Binding<Bool>, topic: Topic?)
+    init(topic: Topic?)
     {
-        self._isPresented = isPresented
+     //   self._isPresented = isPresented
         self.topic = topic
         self._newTopicName = State(initialValue: topic?.name ?? "")    //not  //self._newTopicName = State(wrappedValue: "")
     }

@@ -10,25 +10,22 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext    //context is only required here to enable .onDelete to work
     @StateObject var topicStore: TopicStore
-    @State var editingTopic: Topic?
-    @State var chosenTopic: Topic?
+    @State var optionalTopic: Topic?     ///this topic is either used for topic edit or used as nil to trigger new topic entry mode of topicEntryView
+    @State var selectedTopic: Topic?    ///this topic is to pass into QuestionsView
     
     @State private var showingAlert = false //this is the alert to warn before topic delete
     @State private var showTopicEntryView: Bool = false
     @State var showQuestionsView: Bool = false     ///the NavLink to QuestionsView needs this Bool because it comes from UITableView triggering the delegate .onSelect function
-    @State var queries: [Query] = []
-    
     
     init(topicStore: TopicStore) {
         _topicStore = StateObject(wrappedValue: topicStore)// I guess it could be created here, but it's created in App.swift so it's all ready to use by this point.
     }
     
-    
     var body: some View {
         NavigationView {
             VStack {    ///this VStack comes from hackingws and seems required because of using EmptyView with the NavLink
                 NavigationLink(
-                    destination: QuestionsView(topic: chosenTopic),
+                    destination: QuestionsView(topic: selectedTopic),
                     isActive: $showQuestionsView)
                     {EmptyView() }  //ie: the NavLink is attached to an empty view, not the whole view as before. Seems to work, not exactly sure why!
                 TableView($topicStore.topics, background: background) { topic in  ///TableView is the UITableView created with much help from Paris Pinkney.
@@ -38,7 +35,7 @@ struct ContentView: View {
                 //MARK:- onSelect and onDelete
                 .onSelect {topic in
                     self.showQuestionsView = true   ///this triggers the NavLink to QuestionsView
-                    self.chosenTopic = topic
+                    self.selectedTopic = topic
                 }
                 .onDelete { index in    /// no variable  is required for this topic , due .onDelete uses just the index.  Need to ensure cascade delete works here to delete all associated queries.
                     showingAlert = true ///this is the warning to ask user to confirm delete. Control flow gets rather complex here. See TableView delegate functions.
@@ -57,17 +54,16 @@ struct ContentView: View {
                 
                 //MARK:- onMore
                 .onMore {topic in   //.onMore really means .onEdit
-                    editingTopic = topic
+                    optionalTopic = topic
                 }
-                .sheet(item: $editingTopic) { item in    ///animation triggered when optional editingTopic is not nil. Using another Bool for this could get confusing! Possibly could avoid using a Bool here completely?
+                .sheet(item: $optionalTopic) { item in    ///edit View animation triggered when optional editingTopic is not nil.
                     withAnimation {
-                        TopicEntryView(isPresented: $showTopicEntryView, topic: item)   ///bool still needed to allow dismissal by Cancel button on TopicEntryView.
+                        TopicEntryView(topic: item)
                     }
                 }
             }   //  end of VStack
             
-            
-            
+
             //MARK:- Navigation Bar
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
@@ -86,7 +82,7 @@ struct ContentView: View {
         .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour, which works as it should but not sure it's ideal.
         .sheet(isPresented: $showTopicEntryView)  {
-            TopicEntryView(isPresented:$showTopicEntryView, topic: editingTopic)
+            TopicEntryView(topic: optionalTopic)
         }
     }  //END OF BODY
     
