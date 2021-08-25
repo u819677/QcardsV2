@@ -4,19 +4,15 @@
 //
 //  Created by Richard Clark on 08/06/2021.
 //
-
 import SwiftUI
-import CoreData
 
-
-struct TopicEntryView: View {
-    
-    
+struct TopicEntryView: View {   ///This view is used for both new topic entry and for when editing topic.
+ 
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) private var presentionMode
+    @Environment(\.presentationMode) private var presentionMode ///allows dismissal of view when editing
     
-    var topic: Topic? // = nil
-    @State var newTopicName: String // = ""
+    var topic: Topic?
+    @State var newTopicName: String
     
     @State private var isEditing: Bool = false
     @Binding var isPresented: Bool
@@ -29,15 +25,14 @@ struct TopicEntryView: View {
     }
     //MARK:- body
     var body: some View {
-        
         ZStack {
             Image("blackboard")
                 .resizable()
             VStack {
                 HStack {
                     Button(action: {
-                        self.isPresented = false
-                        presentionMode.wrappedValue.dismiss()   ///need both these 2 methods to remove the view, due 2 different methods used to show it
+                       // self.isPresented = false
+                        presentionMode.wrappedValue.dismiss()   ///need this method to dismiss the view when in edit mode, and it works for both
                     } ){
                         Text ("Cancel")}
                     Spacer()
@@ -49,8 +44,8 @@ struct TopicEntryView: View {
                                 addTopic()
                             }
                         }
-                        self.isPresented = false
-                        presentionMode.wrappedValue.dismiss()
+                        self.isPresented = false    /// and this other method to dismiss the view when in new topic mode
+                       // presentionMode.wrappedValue.dismiss()
                     } ){
                         Text ("Save")}
                 }
@@ -78,7 +73,7 @@ struct TopicEntryView: View {
                             .shadow(color: .white, radius: 5)
                             .cornerRadius(5)
                 )
-            }//end of main VStack
+            }//end of main  VStack
         }   //end of ZStack
     }
     //MARK:- addTopic

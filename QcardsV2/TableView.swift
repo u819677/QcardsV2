@@ -4,12 +4,7 @@
 //
 //  Created by Richard Clark on 19/07/2021.
 //
-
-import Foundation
-import SwiftUI
-import CoreData
-import UIKit
-
+import SwiftUI  ///seems that UIKit not required here
 
 //MARK: TableView
 struct TableView<Data, Content, Background>: UIViewRepresentable
