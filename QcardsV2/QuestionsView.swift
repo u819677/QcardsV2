@@ -9,34 +9,28 @@ import SwiftUI
 import CoreData
 
 struct QuestionsView: View {
+    
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @State var queries: [Query] // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...
-    var topic: Topic?   //@State didn't work here!      //may not need to be optional? There has to be a parent topic
-    
+    let persistenceController = PersistenceController.shared
+    var topic: Topic?
+    @StateObject var queryStore: QueryStore
     @State var showQueryEntry: Bool = false
     
-    init(topic: Topic?) {   //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView
+    init(topic: Topic?) {
         self.topic = topic
-        self.queries = topic?.queryArray ?? []
+        let managedObjectContext = persistenceController.container.viewContext
+        let storage = QueryStore(managedObjectContext: managedObjectContext, topic: topic)
+        self._queryStore = StateObject(wrappedValue: storage)   //and bingo, the queryStore of topic relevant queries is ready
     }
     
     var body: some View {
-        
-        VStack{
-   // TableView($queries, background: background) {query in //TEMP COPIED OUT
-        TableView($queries, background: background) {query in
+        TableView($queryStore.queries, background: background) {query in
             QuestionView(query: query)
         }
         .navigationTitle("\(self.topic?.topicName ?? "nil")" )
-        
-        
-        
         .navigationBarItems(trailing: Button(action: {
             withAnimation {
-                 showQueryEntry = true //need to trigger QueryEntryView here
-                print("+button tapped")
-                print(topic ?? "no topic there")        //not sure why not!
+                 showQueryEntry = true
             }
         })
         {Text(Image(systemName: "plus"))
@@ -44,12 +38,11 @@ struct QuestionsView: View {
             .imageScale(.large)
         })
         .sheet(isPresented: $showQueryEntry){
-            QueryEntryView(isPresented: $showQueryEntry, selectedTopic: topic!)
-        }
+            QueryEntryView(isPresented: $showQueryEntry, selectedTopic: topic!) //maybe need to guard here against a blank topic being selected??
         }
     }
-    struct QuestionView: View {    //this is the view used to create each line of the table
-        @ObservedObject      var query: Query       //not sure why not use @Binding here but it works!
+    struct QuestionView: View {    //this is the view for each line of the table
+        @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
         var body: some View {
             Text("\(query.question)")
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)

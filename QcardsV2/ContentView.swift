@@ -18,7 +18,7 @@ struct ContentView: View {
     
     
     @State var chosenTopic: Topic?  //has to be optional to avoid requiring this parameter way back up in App.swift
-   //@State var chosenTopic: Topic? // = Topic()    //can also use :Topic() = []
+   
     
     
     
@@ -63,7 +63,7 @@ struct ContentView: View {
                 
           
                 NavigationLink(
-                    destination: QuestionsViewV3(topic: chosenTopic),
+                    destination: QuestionsView(topic: chosenTopic),
                     //destination: QuestionsViewV2(topic: chosenTopic, queryStore: queryStore),
                    //destination: QuestionsView(topic: chosenTopic),   //TEMP DISABLE TO TEST QUESTIONSVIEWV2
                     isActive: $isLinking)

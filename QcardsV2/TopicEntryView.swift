@@ -59,7 +59,7 @@ struct TopicEntryView: View {
                 VStack {
                     Spacer()
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
-                        .foregroundColor(.blue) ///could maybe tighten up the spacing between the text and the textField
+                        .foregroundColor(.white) ///could maybe tighten up the spacing between the text and the textField
                     TextField("", text: $newTopicName )    //no placeholder text given here due it's not visible anyway.
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)

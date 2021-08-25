@@ -97,4 +97,40 @@ Then present the alert, but need a trick to find the root view controller first\
          \cf7 //      let rootViewController = UIApplication.shared.keyWindow?.rootViewController\cf2 \
           \cf7 //      rootViewController?.present(alert, animated: true, completion: nil)\
 \
-//an optional init?() can be done, need to do init?() and also within the init block eg: \cf2      \cf7 //guard topic != nil else \{return nil\}}
+//an optional init?() can be done, need to do init?() and also within the init block eg: \cf2      \cf7 //guard topic != nil else \{return nil\}\
+\
+//early attempt for QuestionsView was to initialize a queries array, like so:\
+\cf2    @\cf8 State\cf2  
+\f1\b \cf4 var
+\f0\b0 \cf2  \cf11 queries\cf2 : [\cf5 Query\cf2 ] \cf7 // = []   //if make this optional then have a problem with TableView because it's no longer a random access collection it seems...\cf2 \
+    
+\f1\b \cf4 var
+\f0\b0 \cf2  \cf11 topic\cf2 : \cf5 Topic\cf2 ?   \cf7 //@State didn't work here!      //may not need to be optional? There has to be a parent topic\cf2 \
+    
+\f1\b \cf4 init
+\f0\b0 \cf2 (topic: \cf5 Topic\cf2 ?) \{   \cf7 //can avoid also passing in queryArray, can access all the queries from the topic here in QuestionsView\cf2 \
+        
+\f1\b \cf4 self
+\f0\b0 \cf2 .\cf6 topic\cf2  = topic\
+        
+\f1\b \cf4 self
+\f0\b0 \cf2 .\cf6 queries\cf2  = topic?.\cf6 queryArray\cf2  ?? []\
+    \}\
+    //the above queries array could be used in the TableView, $queries, but wouldn't update,of course, due it's coming from Entity topic, which was not changing, so didChangeObject was not called.\
+\cf7 //create an empty entity like so;\
+//@State var chosenTopic: Topic? //    //can also use :Topic() = []\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}
