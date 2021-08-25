@@ -6,15 +6,13 @@
 //
 import SwiftUI
 
-struct TopicEntryView: View {   ///This view is used for both new topic entry and for when editing topic.
+struct TopicEntryView: View {   ///This view is used for both new topic entry and for when editing an existing topic.
  
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentionMode ///allows dismissal of view when editing
     
     var topic: Topic?
-    @State var newTopicName: String
-    
-    @State private var isEditing: Bool = false
+    @State var newTopicName: String /// this is needed to work with a TextField, which uses a binding
     @Binding var isPresented: Bool
     
     init(isPresented: Binding<Bool>, topic: Topic?)
@@ -37,15 +35,16 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
                         Text ("Cancel")}
                     Spacer()
                     Button(action: {
+                        ///logic here determines whether view is editing or creating new topic
                         if  topic != nil && isSensible(newTopicName) {  //test for new Topic entry or editing an existing topic
-                            editTopic(topic:topic!)
+                            editTopic(topic:topic!) ///passing in the topic being edited
                         } else {
                             if isSensible(newTopicName) {
-                                addTopic()
+                                addTopic()  ///creates a new topic from scratch
                             }
                         }
-                        self.isPresented = false    /// and this other method to dismiss the view when in new topic mode
-                       // presentionMode.wrappedValue.dismiss()
+                       // self.isPresented = false    /// and this other method to dismiss the view when in new topic mode
+                        presentionMode.wrappedValue.dismiss()
                     } ){
                         Text ("Save")}
                 }
@@ -53,6 +52,7 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
                 
                 VStack {
                     Spacer()
+                    ///logic here displays relevant instruction depending on whether View mode is new topic entry or edit mode
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
                         .foregroundColor(.white) ///could maybe tighten up the spacing between the text and the textField
                     TextField("", text: $newTopicName )    //no placeholder text given here due it's not visible anyway.
@@ -108,7 +108,7 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
 }
 
 func isSensible(_ userText: String) -> Bool {
-    if userText.isEmpty || userText.count < 4  {
+    if userText.isEmpty || userText.count < 4  {    //maybe need to add more conditions here?
         return false
     }
     return true
