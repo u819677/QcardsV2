@@ -121,15 +121,17 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 
             ) { [unowned self] action, sourceView, actionPerformed in   //flow continues here when choice made by the user
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
-                
+                var deletingObject: String = ""
                 //MARK: AlertController
                // let deletingTopic: Topic = self.parent.data[indexPath.row] as! Topic
                // let titleMessage: String = "chosen topic called \(deletingTopic.topicName ?? "no Name")"
                 if let entityType = self.parent.data[indexPath.row] as? Topic {
                     print("the selected topic entity is called \(entityType.topicName ?? "nil")")
+                    deletingObject = "Topic and all its \(entityType.queryArray.count) questions?"
                 }
                 if let entityType = self.parent.data[indexPath.row] as? Query {
                     print("the selected query entity question is \(entityType.queryQuestion ?? "nil")")
+                    deletingObject = "Question?"
                 }
                 //above works a treat. Not exactly generic but deals with both of the only two deleting options.
                 
@@ -137,7 +139,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 
 
               //  let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
-                let alert = UIAlertController(title: "Confirm delete this Item and all its associated items?",
+                let alert = UIAlertController(title: "Confirm delete this \(deletingObject) ",
                                               message: "",
                                               preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
