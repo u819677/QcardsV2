@@ -123,10 +123,21 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
                 
                 //MARK: AlertController
-                let deletingTopic: Topic = self.parent.data[indexPath.row] as! Topic
-                let titleMessage: String = "chosen topic called \(deletingTopic.topicName ?? "no Name")"
+               // let deletingTopic: Topic = self.parent.data[indexPath.row] as! Topic
+               // let titleMessage: String = "chosen topic called \(deletingTopic.topicName ?? "no Name")"
+                if let entityType = self.parent.data[indexPath.row] as? Topic {
+                    print("the selected topic entity is called \(entityType.topicName ?? "nil")")
+                }
+                if let entityType = self.parent.data[indexPath.row] as? Query {
+                    print("the selected query entity question is \(entityType.queryQuestion ?? "nil")")
+                }
+                //above works a treat. Not exactly generic but deals with both of the only two deleting options.
+                
+                
+                
 
-                let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
+              //  let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
+                let alert = UIAlertController(title: "Confirm delete this Item and all its associated items?",
                                               message: "",
                                               preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in

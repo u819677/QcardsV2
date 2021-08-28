@@ -82,7 +82,8 @@ struct ContentView: View {
         .preferredColorScheme(.dark)  //this drives the child view to be .dark also, but need this to make Table header black
         .navigationViewStyle(StackNavigationViewStyle())   //this stops iPad split screen behaviour, which works as it should but not sure it's ideal.
         .sheet(isPresented: $showTopicEntryView)  {
-            TopicEntryView(topic: optionalTopic)
+       // .sheet(isPresented: $optionalTopic == nil ? true : false)  {///tried this, which would avoid using a Bool,  but the compiler complains:  Result values in '? :' expression have mismatching types 'Bool' and 'Bool'
+             TopicEntryView(topic: optionalTopic)
         }
     }  //END OF BODY
     

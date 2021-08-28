@@ -4,14 +4,13 @@
 //
 //  Created by Richard Clark on 30/01/2021.
 //
-
 import SwiftUI
-import CoreData
 
 struct QueryEntryView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.presentationMode) private var presentationMode
     
-    @Binding var isPresented: Bool
+  //  @Binding var isPresented: Bool
     @State var textQ: String = ""
     @State var textA: String = ""
     @State var textE: String = ""
@@ -19,9 +18,10 @@ struct QueryEntryView: View {
     var selectedTopic: Topic?
     
     
-    init(isPresented: Binding<Bool>, selectedTopic: Topic) {
+  //  init(isPresented: Binding<Bool>, selectedTopic: Topic) {
+        init(selectedTopic: Topic) {
         UITextView.appearance().backgroundColor = .clear
-        self._isPresented = isPresented
+      //  self._isPresented = isPresented
         self.selectedTopic = selectedTopic
     }
     
@@ -32,14 +32,16 @@ struct QueryEntryView: View {
             VStack {
                 HStack {//Cancel and Save buttons
                     Button(action: {
-                        self.isPresented = false//this is the Cancel button
+                        //self.isPresented = false//this is the Cancel button
+                        presentationMode.wrappedValue.dismiss()
                     } ){
                         Text ("Cancel")}
                     //.foregroundColor(.white)
                     .padding(.leading)
                     Spacer()
                     Button(action: {
-                        self.isPresented = false//this is the AddNewQuery button
+                        //self.isPresented = false//this is the AddNewQuery button
+                        presentationMode.wrappedValue.dismiss()
                         self.addQuery()
                     } ){
                         Text ("Save ")}
