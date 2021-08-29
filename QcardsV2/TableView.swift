@@ -107,11 +107,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 self.allowRefresh = true
             }
         }
-//        func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-//            print("shouldHighlightRowAt ran here and allowRefresh = \(self.allowRefresh)")
-//            return true    //this has to be true to allow onSelect to work
-//
-//        }
+
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             
             let deleteAction = UIContextualAction(  //this action is expanded from original to include the alert
@@ -121,23 +117,14 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             ) { [unowned self] action, sourceView, actionPerformed in   //flow continues here when choice made by the user
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
                 var deletingMessage: String = ""
-                //MARK: AlertController
-               // let deletingTopic: Topic = self.parent.data[indexPath.row] as! Topic
-               // let titleMessage: String = "chosen topic called \(deletingTopic.topicName ?? "no Name")"
                 if let entityType = self.parent.data[indexPath.row] as? Topic {
-                    print("the selected topic entity is called \(entityType.topicName ?? "nil")")
                     deletingMessage = " \(entityType.topicName ?? "") and all its \(entityType.queryArray.count) questions?"
                 }
                 if let entityType = self.parent.data[indexPath.row] as? Query {
-                    print("the selected query entity question is \(entityType.queryQuestion ?? "nil")")
                     deletingMessage = "\(entityType.queryQuestion ?? "") with its answer and any extra info?"
                 }
                 //above works a treat. Not exactly generic but deals with both of the only two deleting options.
-                
-                
-                
-
-              //  let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
+                //MARK:-  AlertController
                 let alert = UIAlertController(title: "Confirm delete  \(deletingMessage) ",
                                               message: "",
                                               preferredStyle: .alert)
@@ -147,12 +134,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                     //tableView.reloadRows(at: [indexPath], with: .automatic)   //this might be more efficient than reload whole table?
                 }
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
-                    self.parent.onDelete(indexPath.row) ///these 3 rows have been moved into alert block so they don't run until alert OK is pressed
+                    self.parent.onDelete(indexPath.row) /// actual delete  doesn't run until OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                    allowRefresh = false    //this may not be needed due set in line 172 when Alert first appears
+                    allowRefresh = false    //this may not be needed due set in line 153 when Alert first appears
                     actionPerformed(true)
-                    print("the delete actionPerformed(true) has just run in line 161")
-                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {  ///too long wait here and possibly a rapid delete of queries then topic causes a crash
                         allowRefresh = true
                     }
@@ -162,7 +147,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 alert.addAction(deleteAction)
                 
                 let rootViewController = UIApplication.shared.windows.first!.rootViewController
-                print(" topic to delete is \(parent.data[indexPath.row])")
                 rootViewController?.present(alert, animated: true, completion: nil)
                 allowRefresh = false
                 
@@ -184,8 +168,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         }
     }
 }
-//MARK: Hosting Cell
 
+//MARK: Hosting Cell
 class HostingCell<Content: View>: UITableViewCell {
     var host: UIHostingController<Content>?
     
@@ -193,7 +177,6 @@ class HostingCell<Content: View>: UITableViewCell {
         if host == nil {
             let controller = UIHostingController(rootView: view)
             host = controller
-            
             guard let content = controller.view else { return }
             content.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(content)
@@ -209,6 +192,6 @@ class HostingCell<Content: View>: UITableViewCell {
             host?.rootView = view
         }
         setNeedsLayout()
-        layoutIfNeeded()    //seems to be needed to fix occasional incorrect small height of rows
+        layoutIfNeeded()    //required to fix occasional incorrect small height of rows
     }
 }
