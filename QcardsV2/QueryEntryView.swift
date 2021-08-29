@@ -10,25 +10,16 @@ struct QueryEntryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentationMode
     
-  //  @Binding var isPresented: Bool
     @State var textQ: String = ""
     @State var textA: String = ""
     @State var textE: String = ""
+    var selectedTopic: Topic?   ///this is the inbound topic, needed for new query creation
+    var optionalQuery: Query?   ///this is a query for editing
     
-    var selectedTopic: Topic?
-    var optionalQuery: Query?
-    
-  //  init(isPresented: Binding<Bool>, selectedTopic: Topic) {
-  // init(selectedTopic: Topic?, optionalQuery: Query?)      {       ///added ? because surely this Topic is an optional
+    // this view has 2 initializers because it can be used in new query and edit query cases
         init(selectedTopic: Topic?)      {  ///this init is for the new query case
             self.selectedTopic = selectedTopic
-           // self.optionalQuery = optionalQuery
-//        self._textQ = State(initialValue: optionalQuery?.queryQuestion ?? "")
-//        self._textA = State(initialValue: optionalQuery?.answer ?? "")
-//        self._textE = State(initialValue: optionalQuery?.extra ?? "")
-        UITextView.appearance().backgroundColor = .clear
-      //  self._isPresented = isPresented
-       
+        UITextView.appearance().backgroundColor = .clear    ///this stops the text field background being white
     }
     init(optionalQuery: Query?) {       ///this init is for the query edit case
         self.optionalQuery = optionalQuery
@@ -44,7 +35,6 @@ struct QueryEntryView: View {
             VStack {
                 HStack {//Cancel and Save buttons
                     Button(action: {
-                        //self.isPresented = false//this is the Cancel button
                         presentationMode.wrappedValue.dismiss()
                     } ){
                         Text ("Cancel")}
@@ -52,12 +42,8 @@ struct QueryEntryView: View {
                     .padding(.leading)
                     Spacer()
                     Button(action: {
-                        //self.isPresented = false//this is the AddNewQuery button
-     
-                        
-                        
-                        if selectedTopic == nil {
-                        print("this is query edit mode")
+                        if isSensible(textQ){   ///this only allows the save if isSensible
+                        if optionalQuery != nil {   ///this is the query edit mode
                             editQuery(query: optionalQuery)
                             presentationMode.wrappedValue.dismiss()
                         } else {
@@ -67,10 +53,10 @@ struct QueryEntryView: View {
                         
                         self.addQuery()
                             
+                        }
                         
-                            
                             presentationMode.wrappedValue.dismiss()
-                    }
+                        }
                     } ){
                         Text ("Save ")}
                     //.foregroundColor(.white)
@@ -80,12 +66,12 @@ struct QueryEntryView: View {
                 .padding(.top, 10)//seems to be more responsive than when using .offset(y:15) which has same effect
                 ScrollView {
                     ScrollViewReader {value in
-                        Text("Enter Question:")
+                        Text(selectedTopic != nil ? "Enter Question:" : "Edit Question:")
                             .modifier(textMods())
                         TextEditor(text: $textQ)
                             .modifier(editorMods())
                             .lineSpacing(0)
-                        Text("Enter Answer:")
+                        Text(selectedTopic != nil ? "Enter Answer:" : "Edit Answer:")
                             .modifier(textMods())
                         TextEditor(text: $textA)
                             .modifier(editorMods())
@@ -96,7 +82,7 @@ struct QueryEntryView: View {
                                 }
                             }//to move text fields up a bit, incase small iPhone
 
-                        Text("Enter any extra info:")
+                        Text(selectedTopic != nil ? "Enter any extra info:" : "Edit extra info:")
                             .modifier(textMods())
                         TextEditor(text: $textE)
                             .modifier(editorMods())
@@ -112,20 +98,15 @@ struct QueryEntryView: View {
                         .cornerRadius(5)
                      )
         }
-        //.border(Color.gray, width: 5)
-        //.border(Color(red:0.6, green:0.4, blue:0.2, opacity: 1.0),width: 10)
-        //.shadow(color: .white, radius: 5)
     }
     
     private func addQuery() {
         withAnimation {
-   
             let newQuery1 = Query(context: viewContext)
             newQuery1.queryQuestion = textQ
             newQuery1.answer = textA
             newQuery1.extra = textE
             selectedTopic!.addToQuery(newQuery1)//this works fine! what was I doing??
-         
             do {
                 try viewContext.save()
             } catch {
@@ -138,8 +119,6 @@ struct QueryEntryView: View {
     }
     
     private func editQuery(query: Query?) {
-        
-        print("query \(query?.queryQuestion ?? "") is to be edited here")
         optionalQuery?.queryQuestion = textQ
         optionalQuery?.answer = textA
         optionalQuery?.extra = textE
@@ -161,7 +140,7 @@ struct editorMods: ViewModifier {
             .accentColor(.white)
             .font(.custom("Noteworthy Bold", size: 23))
             .foregroundColor(.white)
-            //.alignmentGuide(.bottom, computeValue: <#T##(ViewDimensions) -> CGFloat#>)
+            //.alignmentGuide(.bottom, computeValue: T##(ViewDimensions) -> CGFloat)
             // .alignmentGuide(.bottom) { _ in   -20 }//from hackingWS, not convinced has effect
             //.frame(minWidth: 290,  minHeight: 35)
             .overlay(RoundedRectangle(cornerRadius: 10)

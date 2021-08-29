@@ -12,16 +12,17 @@ struct QuestionsView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     let persistenceController = PersistenceController.shared
-    var topic: Topic?   ///this is the inbound selected topic used to create the queries
-    @State var optionalQuery: Query?
     @StateObject var queryStore: QueryStore
+    let topic: Topic?   ///this is the inbound selected topic used to create the queries
+    @State var optionalQuery: Query?    ///this is a selected query for editing
     @State var showQueryEntry: Bool = false
     @State var showingAlert = false
+    
     init(topic: Topic?) {
         self.topic = topic
         let managedObjectContext = persistenceController.container.viewContext
         let storage = QueryStore(managedObjectContext: managedObjectContext, topic: topic)
-        self._queryStore = StateObject(wrappedValue: storage)   //and bingo, the queryStore of topic relevant queries is ready
+        self._queryStore = StateObject(wrappedValue: storage)   ///and bingo, the queryStore of all relevant queries is ready
     }
     
     var body: some View {
@@ -31,7 +32,7 @@ struct QuestionsView: View {
         .onSelect {query in
             print("\(query) was selected")
         }
-        .onDelete { index in    /// no variable  is required for this topic , due .onDelete uses just the index.  Need to ensure cascade delete works here to delete all associated queries.
+        .onDelete { index in    // no topic variable  is required, because .onDelete uses the index
             showingAlert = true ///this is the warning to ask user to confirm delete. Control flow gets rather complex here. See TableView delegate functions.
             let queryToDelete = queryStore.queries[index]
             queryStore.queries.remove(at: index)
@@ -55,7 +56,6 @@ struct QuestionsView: View {
             }
         }
         
-       // .navigationTitle("\(self.topic?.topicName ?? "nil")" )
         .navigationTitle(self.topic?.topicName ?? "nil" )
         .navigationBarItems(trailing: Button(action: {
             withAnimation {
@@ -67,11 +67,10 @@ struct QuestionsView: View {
             .imageScale(.large)
         })
         .sheet(isPresented: $showQueryEntry){
-          //  QueryEntryView(isPresented: $showQueryEntry, selectedTopic: topic!) //maybe need to guard here against a blank topic being selected??
-            QueryEntryView(selectedTopic: topic!)
+            QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
         }
     }
-    struct QuestionView: View {    //this is the view for each line of the table
+    struct QuestionView: View {    //this is the view used for each line of the Questions table
         @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
         var body: some View {
             Text(query.question)

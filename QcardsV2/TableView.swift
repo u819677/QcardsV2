@@ -154,7 +154,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                     actionPerformed(true)
                     print("the delete actionPerformed(true) has just run in line 161")
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4 ) {  //.global() instead of .main is better? don't think so
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {  ///too long wait here and possibly a rapid delete of queries then topic causes a crash
                         allowRefresh = true
                     }
                 }
