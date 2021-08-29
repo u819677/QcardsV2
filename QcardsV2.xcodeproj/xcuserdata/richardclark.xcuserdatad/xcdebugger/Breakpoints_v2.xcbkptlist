@@ -3,4 +3,102 @@
    uuid = "B0879A0D-6DC4-4640-911D-FA8A44CDF1E4"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F1800271-7A93-4F19-9931-ABE744E60C7F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QcardsV2/QuestionsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "F1800271-7A93-4F19-9931-ABE744E60C7F - 475a1b96e7d07627"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QcardsV2.QuestionsView.body.getter : some"
+                  moduleName = "QcardsV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/richardclark/Library/Mobile%20Documents/com~apple~CloudDocs/QcardsV2/QcardsV2/QuestionsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "3364">
+               </Location>
+               <Location
+                  uuid = "F1800271-7A93-4F19-9931-ABE744E60C7F - 2ae70610cd29ca0b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #8 () -&gt; QcardsV2.QueryEntryView in QcardsV2.QuestionsView.body.getter : some"
+                  moduleName = "QcardsV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/richardclark/Library/Mobile%20Documents/com~apple~CloudDocs/QcardsV2/QcardsV2/QuestionsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "184">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "69C0B7B5-4FA6-4617-BE47-64F351EA2858"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QcardsV2/QuestionsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "69C0B7B5-4FA6-4617-BE47-64F351EA2858 - 475a1b96e7d07572"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QcardsV2.QuestionsView.body.getter : some"
+                  moduleName = "QcardsV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/richardclark/Library/Mobile%20Documents/com~apple~CloudDocs/QcardsV2/QcardsV2/QuestionsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "2020">
+               </Location>
+               <Location
+                  uuid = "69C0B7B5-4FA6-4617-BE47-64F351EA2858 - 17cb9acfa9cc4e58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (QcardsV2.Query) -&gt; () in QcardsV2.QuestionsView.body.getter : some"
+                  moduleName = "QcardsV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/richardclark/Library/Mobile%20Documents/com~apple~CloudDocs/QcardsV2/QcardsV2/QuestionsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -13,6 +13,7 @@ struct QuestionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     let persistenceController = PersistenceController.shared
     var topic: Topic?   ///this is the inbound selected topic used to create the queries
+    @State var optionalQuery: Query?
     @StateObject var queryStore: QueryStore
     @State var showQueryEntry: Bool = false
     @State var showingAlert = false
@@ -44,8 +45,15 @@ struct QuestionsView: View {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
-        
-        
+        .onMore { query in
+            print("query to edit is \(query)" )
+            optionalQuery = query
+        }
+        .sheet(item: $optionalQuery) { item in    ///edit View animation triggered when optionalQuery is not nil, ie: in edit mode
+            withAnimation {
+                QueryEntryView(optionalQuery: item)
+            }
+        }
         
        // .navigationTitle("\(self.topic?.topicName ?? "nil")" )
         .navigationTitle(self.topic?.topicName ?? "nil" )

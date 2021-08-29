@@ -16,15 +16,27 @@ struct QueryEntryView: View {
     @State var textE: String = ""
     
     var selectedTopic: Topic?
-    
+    var optionalQuery: Query?
     
   //  init(isPresented: Binding<Bool>, selectedTopic: Topic) {
-        init(selectedTopic: Topic) {
+  // init(selectedTopic: Topic?, optionalQuery: Query?)      {       ///added ? because surely this Topic is an optional
+        init(selectedTopic: Topic?)      {  ///this init is for the new query case
+            self.selectedTopic = selectedTopic
+           // self.optionalQuery = optionalQuery
+//        self._textQ = State(initialValue: optionalQuery?.queryQuestion ?? "")
+//        self._textA = State(initialValue: optionalQuery?.answer ?? "")
+//        self._textE = State(initialValue: optionalQuery?.extra ?? "")
         UITextView.appearance().backgroundColor = .clear
       //  self._isPresented = isPresented
-        self.selectedTopic = selectedTopic
+       
     }
-    
+    init(optionalQuery: Query?) {       ///this init is for the query edit case
+        self.optionalQuery = optionalQuery
+                self._textQ = State(initialValue: optionalQuery?.queryQuestion ?? "")
+                self._textA = State(initialValue: optionalQuery?.answer ?? "")
+                self._textE = State(initialValue: optionalQuery?.extra ?? "")
+        UITextView.appearance().backgroundColor = .clear
+    }
     var body: some View {
         ZStack {
             Image("blackboard")
@@ -41,8 +53,19 @@ struct QueryEntryView: View {
                     Spacer()
                     Button(action: {
                         //self.isPresented = false//this is the AddNewQuery button
+                        
+                        if selectedTopic == nil {
+                        print("this is query edit mode")
+                            editQuery(query: optionalQuery)
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                        
+                        
+                        print("this is query add mode")
                         presentationMode.wrappedValue.dismiss()
                         self.addQuery()
+                            
+                    }
                     } ){
                         Text ("Save ")}
                     //.foregroundColor(.white)
@@ -106,6 +129,22 @@ struct QueryEntryView: View {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
+        }
+    }
+    
+    private func editQuery(query: Query?) {
+        
+        print("query \(query?.queryQuestion ?? "") is to be edited here")
+        optionalQuery?.queryQuestion = textQ
+        optionalQuery?.answer = textA
+        optionalQuery?.extra = textE
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
