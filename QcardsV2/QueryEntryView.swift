@@ -17,15 +17,15 @@ struct QueryEntryView: View {
     var optionalQuery: Query?   ///this is a query for editing
     
     // this view has 2 initializers because it can be used in new query and edit query cases
-        init(selectedTopic: Topic?)      {  ///this init is for the new query case
-            self.selectedTopic = selectedTopic
+    init(selectedTopic: Topic?)      {  ///this init is for the new query case
+        self.selectedTopic = selectedTopic
         UITextView.appearance().backgroundColor = .clear    ///this stops the text field background being white
     }
     init(optionalQuery: Query?) {       ///this init is for the query edit case
         self.optionalQuery = optionalQuery
-                self._textQ = State(initialValue: optionalQuery?.queryQuestion ?? "")
-                self._textA = State(initialValue: optionalQuery?.answer ?? "")
-                self._textE = State(initialValue: optionalQuery?.extra ?? "")
+        self._textQ = State(initialValue: optionalQuery?.queryQuestion ?? "")
+        self._textA = State(initialValue: optionalQuery?.answer ?? "")
+        self._textE = State(initialValue: optionalQuery?.extra ?? "")
         UITextView.appearance().backgroundColor = .clear
     }
     var body: some View {
@@ -43,18 +43,12 @@ struct QueryEntryView: View {
                     Spacer()
                     Button(action: {
                         if isSensible(textQ){   ///this only allows the save if isSensible
-                        if optionalQuery != nil {   ///this is the query edit mode
-                            editQuery(query: optionalQuery)
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                        
-                        
-                        print("this is query add mode")
-                        
-                        self.addQuery()
-                            
-                        }
-                        
+                            if optionalQuery != nil {   ///this is the query edit mode
+                                editQuery(query: optionalQuery)
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                self.addQuery()
+                            }
                             presentationMode.wrappedValue.dismiss()
                         }
                     } ){
@@ -78,10 +72,9 @@ struct QueryEntryView: View {
                             .id(1)//seems that can just allocate a view with an id number! works well.
                             .onTapGesture {
                                 withAnimation {
-                                value.scrollTo(3, anchor: .bottom)//this seems to do it
+                                    value.scrollTo(3, anchor: .bottom)//this seems to do it
                                 }
                             }//to move text fields up a bit, incase small iPhone
-
                         Text(selectedTopic != nil ? "Enter any extra info:" : "Edit extra info:")
                             .modifier(textMods())
                         TextEditor(text: $textE)
@@ -94,12 +87,12 @@ struct QueryEntryView: View {
             }
             .overlay(RoundedRectangle(cornerRadius: 5)
                         .strokeBorder(Color.black,lineWidth: 8)
-                     .shadow(color: .white, radius: 5)
+                        .shadow(color: .white, radius: 5)
                         .cornerRadius(5)
-                     )
+            )
         }
     }
-    
+  //MARK:- saving query functions
     private func addQuery() {
         withAnimation {
             let newQuery1 = Query(context: viewContext)
@@ -132,7 +125,7 @@ struct QueryEntryView: View {
         }
     }
 }
-
+//MARK:- editor and text mods
 struct editorMods: ViewModifier {
     func body(content: Content) -> some View {
         return content

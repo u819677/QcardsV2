@@ -7,13 +7,13 @@
 import SwiftUI
 
 struct TopicEntryView: View {   ///This view is used for both new topic entry and for when editing an existing topic.
- 
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentionMode ///allows dismissal of view when editing
     
     var topic: Topic?
     @State var newTopicName: String /// this is needed to work with a TextField, which uses a binding. Need to init this below, can't give a value ="" here, because won't edit otherwise.
-
+    
     init(topic: Topic?)
     {
         self.topic = topic
@@ -102,7 +102,7 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
         }
     }
 }
-
+//MARK:- isSensible
 func isSensible(_ userText: String) -> Bool {
     if userText.isEmpty || userText.count < 4  {    //maybe need to add more conditions here?
         return false
