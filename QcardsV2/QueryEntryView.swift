@@ -53,6 +53,8 @@ struct QueryEntryView: View {
                     Spacer()
                     Button(action: {
                         //self.isPresented = false//this is the AddNewQuery button
+     
+                        
                         
                         if selectedTopic == nil {
                         print("this is query edit mode")
@@ -62,9 +64,12 @@ struct QueryEntryView: View {
                         
                         
                         print("this is query add mode")
-                        presentationMode.wrappedValue.dismiss()
+                        
                         self.addQuery()
                             
+                        
+                            
+                            presentationMode.wrappedValue.dismiss()
                     }
                     } ){
                         Text ("Save ")}
@@ -148,6 +153,7 @@ struct QueryEntryView: View {
         }
     }
 }
+
 struct editorMods: ViewModifier {
     func body(content: Content) -> some View {
         return content
