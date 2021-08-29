@@ -105,14 +105,13 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
             self.parent.onSelect(parent.data[indexPath.row])
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
                 self.allowRefresh = true
-                print("TableView set allowRefresh = true after 0.05s")
-            }   ///setting allowRefresh here lets the navlink work correctly after the first time, which pops. But then works ok.
+            }
         }
-        func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-            print("shouldHighlightRowAt ran here and allowRefresh = \(self.allowRefresh)")
-            return true    //this has to be true to allow onSelect to work
-            
-        }
+//        func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+//            print("shouldHighlightRowAt ran here and allowRefresh = \(self.allowRefresh)")
+//            return true    //this has to be true to allow onSelect to work
+//
+//        }
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             
             let deleteAction = UIContextualAction(  //this action is expanded from original to include the alert
@@ -121,17 +120,17 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 
             ) { [unowned self] action, sourceView, actionPerformed in   //flow continues here when choice made by the user
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
-                var deletingObject: String = ""
+                var deletingMessage: String = ""
                 //MARK: AlertController
                // let deletingTopic: Topic = self.parent.data[indexPath.row] as! Topic
                // let titleMessage: String = "chosen topic called \(deletingTopic.topicName ?? "no Name")"
                 if let entityType = self.parent.data[indexPath.row] as? Topic {
                     print("the selected topic entity is called \(entityType.topicName ?? "nil")")
-                    deletingObject = "Topic and all its \(entityType.queryArray.count) questions?"
+                    deletingMessage = " \(entityType.topicName ?? "") and all its \(entityType.queryArray.count) questions?"
                 }
                 if let entityType = self.parent.data[indexPath.row] as? Query {
                     print("the selected query entity question is \(entityType.queryQuestion ?? "nil")")
-                    deletingObject = "Question?"
+                    deletingMessage = "\(entityType.queryQuestion ?? "") with its answer and any extra info?"
                 }
                 //above works a treat. Not exactly generic but deals with both of the only two deleting options.
                 
@@ -139,7 +138,7 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 
 
               //  let alert = UIAlertController(title: "Confirm delete this \(titleMessage) and all its queries?",
-                let alert = UIAlertController(title: "Confirm delete this \(deletingObject) ",
+                let alert = UIAlertController(title: "Confirm delete  \(deletingMessage) ",
                                               message: "",
                                               preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (handler) in
