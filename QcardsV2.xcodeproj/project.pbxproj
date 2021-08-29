@@ -27,6 +27,7 @@
 		23BAC9B626A728630065313D /* Topic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B226A728630065313D /* Topic+CoreDataProperties.swift */; };
 		23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B726A7293D0065313D /* TopicEntryView.swift */; };
 		23BAC9BC26A7298D0065313D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAC9BB26A7298D0065313D /* CloudKit.framework */; };
+		23BE915526DC23A3004DF4CC /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE915426DC23A3004DF4CC /* AnswerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		23BAC9B726A7293D0065313D /* TopicEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicEntryView.swift; sourceTree = "<group>"; };
 		23BAC9B926A7298A0065313D /* QcardsV2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QcardsV2.entitlements; sourceTree = "<group>"; };
 		23BAC9BB26A7298D0065313D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		23BE915426DC23A3004DF4CC /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				23BAC9B726A7293D0065313D /* TopicEntryView.swift */,
 				23AC261326C7C25600CBCF93 /* QueryEntryView.swift */,
 				23AC261126C5B53900CBCF93 /* QuestionsView.swift */,
+				23BE915426DC23A3004DF4CC /* AnswerView.swift */,
 				23BAC97926A723900065313D /* QcardsV2App.swift */,
 				23BAC9A826A725200065313D /* Persistence.swift */,
 				23BAC97D26A723920065313D /* Assets.xcassets */,
@@ -323,6 +326,7 @@
 			files = (
 				23BAC97C26A723900065313D /* ContentView.swift in Sources */,
 				231BE71D26D29BAE000FCF4F /* QueryStore.swift in Sources */,
+				23BE915526DC23A3004DF4CC /* AnswerView.swift in Sources */,
 				23BAC9B426A728630065313D /* Query+CoreDataProperties.swift in Sources */,
 				23BAC9A526A724260065313D /* TableView.swift in Sources */,
 				23BAC97A26A723900065313D /* QcardsV2App.swift in Sources */,

@@ -17,6 +17,8 @@ struct QuestionsView: View {
     @State var optionalQuery: Query?    ///this is a selected query for editing
     @State var showQueryEntry: Bool = false
     @State var showingAlert = false
+    @State var showAnswer: Bool = false
+    @State var selectedQuery: Query?
     
     init(topic: Topic?) {
         self.topic = topic
@@ -31,6 +33,8 @@ struct QuestionsView: View {
         }
         .onSelect {query in
             print("\(query) was selected")
+          selectedQuery = query
+            showAnswer = true
         }
         .onDelete { index in    // no topic variable  is required, because .onDelete uses the index
             showingAlert = true ///this is the warning to ask user to confirm delete. Control flow gets rather complex here. See TableView delegate functions.
@@ -69,6 +73,17 @@ struct QuestionsView: View {
         .sheet(isPresented: $showQueryEntry){
             QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
         }
+        
+        if showAnswer { //Bool here is a binding to the var within FilteredQuestionList
+            AnswerView(isShown: $showAnswer, theQuery: selectedQuery).zIndex(0)//needs this to subsequently animate away properly
+                .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
+                .animation(.easeOut)
+        }
+        
+        
+        
+        
+        
     }
     struct QuestionView: View {    //this is the view used for each line of the Questions table
         @ObservedObject var query: Query       //not sure why not use @Binding here but it works!

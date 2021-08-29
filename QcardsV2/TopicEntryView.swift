@@ -48,13 +48,12 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
                 
                 VStack {
                     Spacer()
-                    ///logic here displays relevant instruction depending on whether View mode is new topic entry or edit mode
+                    ///logic here displays relevant instruction depending on whether View  is for new topic entry or edit
                     Text(topic?.name  == nil ? "Enter a name for the new Topic:" : "Edit Topic name:")
                         .foregroundColor(.white) ///could maybe tighten up the spacing between the text and the textField
                     TextField("", text: $newTopicName )    //no placeholder text given here due it's not visible anyway.
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
-//                        .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 45, idealHeight: 45, maxHeight: 55, alignment: .center)
                         .frame(minWidth: 290, idealWidth: 500, maxWidth: 500, minHeight: 35, idealHeight: 43, maxHeight: 65, alignment: .bottomLeading)
                         .font(.custom("Noteworthy Bold", size: 35))
                         .foregroundColor(.white)
@@ -65,23 +64,12 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
                     Spacer()
                     Spacer()
                 }//end of Text + TextField VStack
-//                .overlay(RoundedRectangle(cornerRadius: 5)
-//                            .strokeBorder(Color.black,lineWidth: 8)
-//                            .shadow(color: .white, radius: 5)
-//                            .cornerRadius(5)
-//                )
             }//end of main  VStack
-            
             .overlay(RoundedRectangle(cornerRadius: 5)
                         .strokeBorder(Color.black,lineWidth: 8)
                         .shadow(color: .white, radius: 5)
                         .cornerRadius(5)
             )
-            
-            
-            
-            
-            
         }   //end of ZStack
     }
     //MARK:- addTopic
