@@ -28,6 +28,7 @@
 		23BAC9B826A7293D0065313D /* TopicEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAC9B726A7293D0065313D /* TopicEntryView.swift */; };
 		23BAC9BC26A7298D0065313D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAC9BB26A7298D0065313D /* CloudKit.framework */; };
 		23BE915526DC23A3004DF4CC /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE915426DC23A3004DF4CC /* AnswerView.swift */; };
+		23BE915926DCDE92004DF4CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BE915826DCDE92004DF4CC /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		23BAC9B926A7298A0065313D /* QcardsV2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QcardsV2.entitlements; sourceTree = "<group>"; };
 		23BAC9BB26A7298D0065313D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		23BE915426DC23A3004DF4CC /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
+		23BE915826DCDE92004DF4CC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				23BE915426DC23A3004DF4CC /* AnswerView.swift */,
 				23BAC97926A723900065313D /* QcardsV2App.swift */,
 				23BAC9A826A725200065313D /* Persistence.swift */,
+				23BE915826DCDE92004DF4CC /* LaunchScreen.storyboard */,
 				23BAC97D26A723920065313D /* Assets.xcassets */,
 				23BAC98226A723920065313D /* Info.plist */,
 				23BAC9B926A7298A0065313D /* QcardsV2.entitlements */,
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23B5392826ABFFD300630476 /* SpareCode.rtf in Resources */,
+				23BE915926DCDE92004DF4CC /* LaunchScreen.storyboard in Resources */,
 				23BAC98126A723920065313D /* Preview Assets.xcassets in Resources */,
 				23BAC97E26A723920065313D /* Assets.xcassets in Resources */,
 			);
