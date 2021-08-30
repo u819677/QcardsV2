@@ -28,8 +28,10 @@ struct QuestionsView: View {
     }
     
     var body: some View {
+        ZStack { ///this is used to allow the AnswerView to animate up over QuestionsView.
         TableView($queryStore.queries, background: background) {query in
             QuestionView(query: query)
+                .blur(radius: showAnswer ? 3 : 0)
         }
         .onSelect {query in
             print("\(query) was selected")
@@ -72,41 +74,24 @@ struct QuestionsView: View {
         .sheet(isPresented: $showQueryEntry){
             QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
         }
+            if showAnswer { 
+                AnswerView(isShown: $showAnswer, tappedQ: selectedQuery).zIndex(0)//needs this to subsequently animate away properly
+                    .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
+                    .animation(.easeOut)
+                   // .animation(.easeInOut)
+                   // .animation(.default)
+            }
+        }//end ZStack
         
-        .sheet(isPresented: $showAnswer) {
-            AnswerView(isShown: $showAnswer, tappedQ: selectedQuery).zIndex(0)
-                .transition(.move(edge: .bottom))
-                .animation(.easeOut)
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        if showAnswer {
-//            AnswerView(isShown: $showAnswer, tappedQ: selectedQuery).zIndex(0)//needs this to subsequently animate away properly
-//                .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
-//                .animation(.easeOut)
-//        }
-//        
-        
-        
-        
-        
-    }
+    }//end of View
     struct QuestionView: View {    //this is the view used for each line of the Questions table
         @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
         var body: some View {
             Text(query.question)
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
                 .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
+                
+                
         }
     }
     

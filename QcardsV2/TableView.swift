@@ -45,7 +45,8 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         print("updateUIView called and...")
         if context.coordinator.allowRefresh {   //stops reloadData() running if called from onDelete
             print("context.coordinator.allowRefresh in updateUIView = \(context.coordinator.allowRefresh)")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+           // DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {     //setting 0.1 here makes the blur effect more instantaneous. Does delete still work ok?
                 uiView.reloadData()
             }
         } else {

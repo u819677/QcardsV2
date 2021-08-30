@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct AnswerView: View {
-    
-    @Binding var isShown: Bool
+    @Binding var isShown: Bool  //there's no init() so the order in which these two vars are declared determines how AnswerView should be called...
     var tappedQ: Query?
     
     var body: some View {
