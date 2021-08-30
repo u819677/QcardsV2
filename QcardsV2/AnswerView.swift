@@ -10,7 +10,7 @@ import SwiftUI
 struct AnswerView: View {
     
     @Binding var isShown: Bool
-    var theQuery: Query?
+    var tappedQ: Query?
     
     var body: some View {
         ZStack {
@@ -23,7 +23,7 @@ struct AnswerView: View {
                     .font(.title3)
                     .padding(20)
             }
-            TwoTextViews(thisQuery: theQuery)
+            TwoTextViews(thisQuery: tappedQ)
         }
         .cornerRadius(5)
         .overlay(RoundedRectangle(cornerRadius: 5)
@@ -47,21 +47,21 @@ struct AnswerView: View {
 }
 
 struct TwoTextViews: View {
-    var thisQuery: Query?
+    var currentQuery: Query?
     init(thisQuery: Query?){
-        self.thisQuery = thisQuery
+        self.currentQuery = thisQuery
     }
     var body: some View {
         VStack {
             Spacer()
             Group {
-                Text(thisQuery?.answer ?? "Test answer would go here and take up 2 lines  only or maybe 3 would be ok and what about if it went to four? Hmm ti cold be interesting")
+                Text(currentQuery?.answer ?? "Test answer would go here and take up 2 lines  only or maybe 3 would be ok and what about if it went to four? Hmm ti cold be interesting")
                     .foregroundColor(.white)
                     .lineLimit(2)
                     .font(.custom("Noteworthy Bold", size: 25))
                     .padding(.horizontal,15)
                     .padding(.bottom,15)
-                Text(thisQuery?.extra ?? "Test extra would go here and take up 2 lines  only or maybe 3 would be ok and what about if it went to four? Hmm ti cold be interesting")
+                Text(currentQuery?.extra ?? "Test extra would go here and take up 2 lines  only or maybe 3 would be ok and what about if it went to four? Hmm ti cold be interesting")
                     .foregroundColor(.white)
                     .lineLimit(4)
                     .font(.custom("Noteworthy Bold", size: 20))

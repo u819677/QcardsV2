@@ -59,7 +59,6 @@ struct QuestionsView: View {
                 QueryEntryView(optionalQuery: item)
             }
         }
-        
         .navigationTitle(self.topic?.topicName ?? "nil" )
         .navigationBarItems(trailing: Button(action: {
             withAnimation {
@@ -74,12 +73,29 @@ struct QuestionsView: View {
             QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
         }
         
-        if showAnswer { //Bool here is a binding to the var within FilteredQuestionList
-            AnswerView(isShown: $showAnswer, theQuery: selectedQuery).zIndex(0)//needs this to subsequently animate away properly
-                .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
+        .sheet(isPresented: $showAnswer) {
+            AnswerView(isShown: $showAnswer, tappedQ: selectedQuery).zIndex(0)
+                .transition(.move(edge: .bottom))
                 .animation(.easeOut)
         }
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        if showAnswer {
+//            AnswerView(isShown: $showAnswer, tappedQ: selectedQuery).zIndex(0)//needs this to subsequently animate away properly
+//                .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
+//                .animation(.easeOut)
+//        }
+//        
         
         
         
