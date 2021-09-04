@@ -1,11 +1,12 @@
 {\rtf1\ansi\ansicpg1252\cocoartf2580
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;\f2\fmodern\fcharset0 Courier;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red155\green35\blue147;
 \red28\green70\blue74;\red50\green109\blue116;\red93\green108\blue121;\red57\green0\blue160;\red108\green54\blue169;
-\red196\green26\blue22;\red15\green104\blue160;}
+\red196\green26\blue22;\red15\green104\blue160;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\csgenericrgb\c0\c0\c0\c85000;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c60759\c13753\c57628;
 \csgenericrgb\c10981\c27276\c28869;\csgenericrgb\c19418\c42935\c45455;\csgenericrgb\c36526\c42188\c47515;\csgenericrgb\c22454\c0\c62803;\csgenericrgb\c42190\c21278\c66379;
-\csgenericrgb\c77000\c10200\c8600;\csgenericrgb\c5882\c40784\c62745;}
+\csgenericrgb\c77000\c10200\c8600;\csgenericrgb\c5882\c40784\c62745;\cssrgb\c0\c0\c0;}
 \paperw12240\paperh15840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
 \deftab593
 \pard\tx593\pardeftab593\pardirnatural\partightenfactor0
@@ -122,6 +123,30 @@ Then present the alert, but need a trick to find the root view controller first\
 \
 //found when tidying up:\
 \cf2                 \cf7 //GOT IT, YEE HAH! not really so tricky, needed to think carefully about it! key was to have print statements to analyse alert control flow\
+\
+ACTIVITY CONTROLLER IMPLEMENTATION \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs26 \cf0 \cb1 \expnd0\expndtw0\kerning0
+struct ShareSheetView: View \{\
+    var body: some View \{\
+        Button(action: actionSheet) \{\
+            Image(systemName: "square.and.arrow.up")\
+                .resizable()\
+                .aspectRatio(contentMode: .fit)\
+                .frame(width: 36, height: 36)\
+        \}\
+    \}\
+    \
+    func actionSheet() \{\
+        guard let data = URL(string: "https://www.zoho.com") else \{ return \}\
+        let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)\
+        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)\
+    \}\
+\}
+\f0\fs24 \cf7 \cb3 \kerning1\expnd0\expndtw0 \
+\pard\tx593\pardeftab593\pardirnatural\partightenfactor0
+\cf7 \
 \
 \
 \
