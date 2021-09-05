@@ -82,7 +82,7 @@ struct QuestionsView: View {
                                                 showQueryEntry = true
                                             }
                                         })
-                                        {Text(Image(systemName: "plus"))///Button expects a label (?) so use Text
+                                        {Text(Image(systemName: "plus"))///Button expects a label (?) so need to use Text
                                             .padding()
                                             .imageScale(.large)
                                         }
@@ -96,8 +96,6 @@ struct QuestionsView: View {
                 AnswerView(isShown: $showAnswer, tappedQ: selectedQuery!).zIndex(0)//needs this to subsequently animate away properly
                     .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
                     .animation(.easeOut)
-                // .animation(.easeInOut)
-                // .animation(.default)
             }
         }//end ZStack
     }//end of View
@@ -107,8 +105,6 @@ struct QuestionsView: View {
             .resizable()
             .edgesIgnoringSafeArea(.all)
     }
-    
-    
 }
 
 //MARK:- QuestionView
@@ -120,19 +116,17 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
         ZStack{
             if !hidingGrades {
                 HStack{
-                    //Image("redPatch")
                     gradeImage(grade: query.grade)
                         .resizable()
                         .frame(width: 30, height: 30, alignment: .center)
-                    Spacer()
+                    Spacer()    ///pushes the color patch over to the left edge
                 }
             }
             HStack{
-
             Text(query.question)
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
                 .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
-                .padding()
+                .padding()  ///this is to try to avoid color patch overlapping with text but this not ideal...
             }
         }
     }

@@ -12,16 +12,12 @@ struct AnswerView: View {
     @Binding var isShown: Bool  //there's no init() so the order in which these two vars are declared determines how AnswerView should be called...
     var tappedQ: Query
     @State var grade: Int16
+    
     init(isShown: Binding<Bool>, tappedQ: Query){
         _isShown = isShown
-        
         self.tappedQ = tappedQ
-        
-        grade = tappedQ.grade
+        _grade = State(initialValue: tappedQ.grade)  ///grade needs to be initalized properly to enable save() to work
     }
-    
-    
-    
     
     var body: some View {
         ZStack {
@@ -29,7 +25,6 @@ struct AnswerView: View {
                 .resizable()
             VStack{
                 HStack{
-                    //Image("redPatch")
                     gradeImage(grade: grade)
                         .resizable()
                         .frame(width: 30, height: 30, alignment: .center)
@@ -38,20 +33,18 @@ struct AnswerView: View {
                             print("color patch was tapped")
                             if grade < 3 {
                                 grade += 1
-                                                } else {
-                                                    grade = 1
-                                                }
-
+                            } else {
+                                grade = 1
+                            }
                         }
-                    Spacer()
+                    Spacer()    ///puts color patch top left corner
                 }
-                Spacer()
+                Spacer()    ///puts OK  at the bottom
                 Text("OK")
                     .foregroundColor(.blue)
                     .font(.title3)
                     .padding(20)
             }
-            
             TwoTextViews(thisQuery: tappedQ)
         }
         .cornerRadius(5)
@@ -74,23 +67,19 @@ struct AnswerView: View {
         )
         //MARK:- onDisappear
         .onDisappear(){
-         print("AnswerView is deciding whether to save before leaving the room")
-//            if tappedQ.grade != grade {
-//                tappedQ.grade = Int16(grade)
-//                print(" change to grade so run a save")
-//
-//                do {
-//                    try viewContext.save()
-//                } catch {
-//                    // Replace this implementation with code to handle the error appropriately.
-//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                    let nsError = error as NSError
-//                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-//                }
-//            }
+            if tappedQ.grade != grade { ///only need to save() if user has actually changed the grade
+                tappedQ.grade = grade
+                do {
+                    try viewContext.save()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nsError = error as NSError
+                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                }
+            }
         }
     }
-    
 }
 
 struct TwoTextViews: View {
