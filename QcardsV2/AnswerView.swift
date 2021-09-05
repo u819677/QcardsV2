@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct AnswerView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var isShown: Bool  //there's no init() so the order in which these two vars are declared determines how AnswerView should be called...
     var tappedQ: Query
-    @State var grade: Int
+    @State var grade: Int16
     init(isShown: Binding<Bool>, tappedQ: Query){
         _isShown = isShown
         
         self.tappedQ = tappedQ
         
-        grade = Int(tappedQ.grade)
+        grade = tappedQ.grade
     }
     
     
@@ -71,8 +72,22 @@ struct AnswerView: View {
                     self.isShown = false
                 }
         )
+        //MARK:- onDisappear
         .onDisappear(){
-         print("AnswerView left the room")
+         print("AnswerView is deciding whether to save before leaving the room")
+//            if tappedQ.grade != grade {
+//                tappedQ.grade = Int16(grade)
+//                print(" change to grade so run a save")
+//
+//                do {
+//                    try viewContext.save()
+//                } catch {
+//                    // Replace this implementation with code to handle the error appropriately.
+//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                    let nsError = error as NSError
+//                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//                }
+//            }
         }
     }
     
