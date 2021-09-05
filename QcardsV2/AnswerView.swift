@@ -9,7 +9,18 @@ import SwiftUI
 
 struct AnswerView: View {
     @Binding var isShown: Bool  //there's no init() so the order in which these two vars are declared determines how AnswerView should be called...
-    var tappedQ: Query?
+    var tappedQ: Query
+    @State var grade: Int
+    init(isShown: Binding<Bool>, tappedQ: Query){
+        _isShown = isShown
+        
+        self.tappedQ = tappedQ
+        
+        grade = Int(tappedQ.grade)
+    }
+    
+    
+    
     
     var body: some View {
         ZStack {
@@ -17,12 +28,19 @@ struct AnswerView: View {
                 .resizable()
             VStack{
                 HStack{
-                    Image("redPatch")
+                    //Image("redPatch")
+                    gradeImage(grade: grade)
                         .resizable()
                         .frame(width: 30, height: 30, alignment: .center)
                         .padding(25)
                         .onTapGesture {
                             print("color patch was tapped")
+                            if grade < 3 {
+                                grade += 1
+                                                } else {
+                                                    grade = 1
+                                                }
+
                         }
                     Spacer()
                 }
@@ -53,7 +71,11 @@ struct AnswerView: View {
                     self.isShown = false
                 }
         )
+        .onDisappear(){
+         print("AnswerView left the room")
+        }
     }
+    
 }
 
 struct TwoTextViews: View {
@@ -82,22 +104,22 @@ struct TwoTextViews: View {
     }
 }
 
-struct AnswerView_Previews: PreviewProvider {
-    //struct TwoTextViews_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        Group {
-            AnswerView(isShown: .constant(true))
-                //TwoTextViews(thisQuery: nil)
-                .previewDevice("iPad Pro (9.7-inch)")
-            //TwoTextViews(thisQuery: nil)
-            AnswerView(isShown: .constant(true))
-                .previewDevice("iPhone 6s")
-            AnswerView(isShown: .constant(true))
-                //TwoTextViews(thisQuery: nil)
-                .previewDevice("iPhone SE")
-        }
-        
-    }
-}
+//struct AnswerView_Previews: PreviewProvider {
+//    //struct TwoTextViews_Previews: PreviewProvider {
+//    static var previews: some View {
+//        
+//        Group {
+//            AnswerView(isShown: .constant(true))
+//                //TwoTextViews(thisQuery: nil)
+//                .previewDevice("iPad Pro (9.7-inch)")
+//            //TwoTextViews(thisQuery: nil)
+//            AnswerView(isShown: .constant(true))
+//                .previewDevice("iPhone 6s")
+//            AnswerView(isShown: .constant(true))
+//                //TwoTextViews(thisQuery: nil)
+//                .previewDevice("iPhone SE")
+//        }
+//        
+//    }
+//}
 

@@ -99,6 +99,7 @@ struct QueryEntryView: View {
             newQuery1.queryQuestion = textQ
             newQuery1.answer = textA
             newQuery1.extra = textE
+            newQuery1.grade = 1
             selectedTopic!.addToQuery(newQuery1)//this works fine! what was I doing??
             do {
                 try viewContext.save()

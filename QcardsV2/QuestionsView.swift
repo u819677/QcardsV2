@@ -30,7 +30,7 @@ struct QuestionsView: View {
     var body: some View {
         ZStack { ///this is used to allow the AnswerView to animate up over QuestionsView.
         TableView($queryStore.queries, background: background) {query in
-            QuestionView(query: query)
+            QuestionView(query: query, hidingGrades: $hidingGrades)
                 .blur(radius: showAnswer ? 3 : 0)
         }
         .onSelect {query in
@@ -74,9 +74,7 @@ struct QuestionsView: View {
                                         .imageScale(.large)
                                          .disabled(hidingGrades ? true : false) ///only disabling the Image, not the button!
                                     }
-                             
-                                    
-                             
+
                                     Button(action: {
                                         withAnimation {
                                             showQueryEntry = true
@@ -90,52 +88,64 @@ struct QuestionsView: View {
                                     
                                 }
                             
-                            
-                            
-                            
-                            
         )
         .sheet(isPresented: $showQueryEntry){
             QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
         }
             if showAnswer { 
-                AnswerView(isShown: $showAnswer, tappedQ: selectedQuery).zIndex(0)//needs this to subsequently animate away properly
+                AnswerView(isShown: $showAnswer, tappedQ: selectedQuery!).zIndex(0)//needs this to subsequently animate away properly
                     .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
                     .animation(.easeOut)
                    // .animation(.easeInOut)
                    // .animation(.default)
             }
         }//end ZStack
-        
     }//end of View
-    struct QuestionView: View {    //this is the view used for each line of the Questions table
-        @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
-        var body: some View {
-            ZStack{
-               // if hidingGrades {
-            
-                HStack{
-                    Image("redPatch")
-                        .resizable()
-                        .frame(width: 30, height: 30, alignment: .center)
-                    Spacer()
-                }
-           //     }
-            Text(query.question)
-                .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
-                .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
-            }
-                
-        }
-    }
-    
+
     var background: some View {
         Image("blackboard")
             .resizable()
             .edgesIgnoringSafeArea(.all)
     }
+    
+    
 }
 
+
+struct QuestionView: View {    //this is the view used for each line of the Questions table
+    @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
+    @Binding var hidingGrades: Bool
+    
+    var body: some View {
+        ZStack{
+            if !hidingGrades {
+                HStack{
+                    //Image("redPatch")
+                    gradeImage(grade: Int(query.grade))
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                    Spacer()
+                }
+            }
+            Text(query.question)
+                .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
+                .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
+        }
+    }
+}
+
+func gradeImage(grade: Int) -> Image {
+    switch grade {
+    case 1:
+        return Image("redPatch")
+    case 2:
+        return Image("orangePatch")
+    case 3:
+        return Image("greenPatch")
+    default:
+        return Image("nil")
+    }
+}
 //struct QuestionsView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        QuestionsView()
