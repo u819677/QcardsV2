@@ -19,7 +19,7 @@ struct QuestionsView: View {
     @State var showingAlert = false
     @State var showAnswer: Bool = false
     @State var selectedQuery: Query?
-    
+    @State var hidingGrades: Bool = false
     init(topic: Topic?) {
         self.topic = topic
         let managedObjectContext = persistenceController.container.viewContext
@@ -62,15 +62,39 @@ struct QuestionsView: View {
             }
         }
         .navigationTitle(self.topic?.topicName ?? "nil" )
-        .navigationBarItems(trailing: Button(action: {
-            withAnimation {
-                 showQueryEntry = true
-            }
-        })
-        {Text(Image(systemName: "plus"))
-            .padding()
-            .imageScale(.large)
-        })
+        .navigationBarItems(trailing:
+                                HStack{
+                                    Button(action: {
+                                        hidingGrades.toggle()
+                                        print("grade button was tapped")
+                                    }
+                                    )
+                                    {Text(Image(systemName: "list.bullet"))
+                                        .padding()
+                                        .imageScale(.large)
+                                         .disabled(hidingGrades ? true : false) ///only disabling the Image, not the button!
+                                    }
+                             
+                                    
+                             
+                                    Button(action: {
+                                        withAnimation {
+                                            showQueryEntry = true
+                                        }
+                                    })
+                                    {Text(Image(systemName: "plus"))
+                                        .padding()
+                                        .imageScale(.large)
+                                    }
+                                    
+                                    
+                                }
+                            
+                            
+                            
+                            
+                            
+        )
         .sheet(isPresented: $showQueryEntry){
             QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
         }
@@ -87,10 +111,20 @@ struct QuestionsView: View {
     struct QuestionView: View {    //this is the view used for each line of the Questions table
         @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
         var body: some View {
+            ZStack{
+               // if hidingGrades {
+            
+                HStack{
+                    Image("redPatch")
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                    Spacer()
+                }
+           //     }
             Text(query.question)
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
                 .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
-                
+            }
                 
         }
     }

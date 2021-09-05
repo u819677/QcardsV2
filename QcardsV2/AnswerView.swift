@@ -16,12 +16,23 @@ struct AnswerView: View {
             Image("blackboard")
                 .resizable()
             VStack{
+                HStack{
+                    Image("redPatch")
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                        .padding(25)
+                        .onTapGesture {
+                            print("color patch was tapped")
+                        }
+                    Spacer()
+                }
                 Spacer()
                 Text("OK")
                     .foregroundColor(.blue)
                     .font(.title3)
                     .padding(20)
             }
+            
             TwoTextViews(thisQuery: tappedQ)
         }
         .cornerRadius(5)
