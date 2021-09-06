@@ -35,6 +35,12 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         self.onSelect = onSelect
         self.onDelete = onDelete
         self.onMore = onMore
+//        let appearance = UINavigationBarAppearance()
+//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//        UINavigationBar.appearance().compactAppearance = appearance
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        let navController = UINavigationController()
+//        navController.navigationBar.prefersLargeTitles = true
     }
     
     func makeCoordinator() -> Coordinator {
@@ -42,8 +48,17 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     }
     //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
+//        let navController = UINavigationController()
+//        navController.navigationBar.prefersLargeTitles = true
+        
+        
+        
+        
+        
+        
         print("updateUIView called and...")
         if context.coordinator.allowRefresh {   //stops reloadData() running if called from onDelete
+         //   uiView.bounces = true
             print("context.coordinator.allowRefresh in updateUIView = \(context.coordinator.allowRefresh)")
            // DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {     //setting 0.1 here makes the blur effect more instantaneous. Does delete still work ok?
@@ -64,6 +79,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
+        
+        let navController = UINavigationController()
+        navController.navigationBar.prefersLargeTitles = true
+  //      tableView.bounces = true
         return tableView
     }
     
@@ -193,6 +212,6 @@ class HostingCell<Content: View>: UITableViewCell {
             host?.rootView = view
         }
         setNeedsLayout()
-        layoutIfNeeded()    //required to fix occasional incorrect small height of rows
+        layoutIfNeeded()    //seems required to fix occasional incorrect small height of rows
     }
 }

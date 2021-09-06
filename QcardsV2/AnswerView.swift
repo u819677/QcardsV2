@@ -25,10 +25,14 @@ struct AnswerView: View {
                 .resizable()
             VStack{
                 HStack{
-                    gradeImage(grade: grade)
-                        .resizable()
-                        .frame(width: 30, height: 30, alignment: .center)
+                    Circle()
+                  //  gradeImage(grade: grade)
+                        .fill(gradeColor(grade: grade))
+                        //.resizable()
                         .padding(25)
+                        .frame(width: 70, height: 70, alignment: .center)
+                        .padding(10)
+                   
                         .onTapGesture {
                             print("color patch was tapped")
                             if grade < 3 {
@@ -111,7 +115,7 @@ struct TwoTextViews: View {
 //struct AnswerView_Previews: PreviewProvider {
 //    //struct TwoTextViews_Previews: PreviewProvider {
 //    static var previews: some View {
-//        
+//
 //        Group {
 //            AnswerView(isShown: .constant(true))
 //                //TwoTextViews(thisQuery: nil)
@@ -123,7 +127,7 @@ struct TwoTextViews: View {
 //                //TwoTextViews(thisQuery: nil)
 //                .previewDevice("iPhone SE")
 //        }
-//        
+//
 //    }
 //}
 

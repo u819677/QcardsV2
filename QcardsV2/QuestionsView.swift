@@ -93,7 +93,7 @@ struct QuestionsView: View {
                 QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
             }
             if showAnswer { 
-                AnswerView(isShown: $showAnswer, tappedQ: selectedQuery!).zIndex(0)//needs this to subsequently animate away properly
+                AnswerView(isShown: $showAnswer, tappedQ: selectedQuery!).zIndex(1)//needs this to subsequently animate away properly but set to 1 not zero! otherwise whole raft of issues with navigation bar size etc...
                     .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
                     .animation(.easeOut)
             }
@@ -116,9 +116,12 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
         ZStack{
             if !hidingGrades {
                 HStack{
-                    gradeImage(grade: query.grade)
-                        .resizable()
-                        .frame(width: 30, height: 30, alignment: .center)
+                  //  gradeImage(grade: query.grade)
+                    Circle()
+                        .fill(gradeColor(grade: query.grade))   ///just one missing ) and the compiler is freaked out!
+                        //.resizable()
+                        .frame(width: 10, height: 10, alignment: .center)
+                        .padding(.leading,2)
                     Spacer()    ///pushes the color patch over to the left edge
                 }
             }
@@ -126,9 +129,9 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
             Text(query.question)
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
                 .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
-                .padding()  ///this is to try to avoid color patch overlapping with text but this not ideal...
+                .padding(.leading, 10)  ///this is to try to avoid color patch overlapping with text 
             }
-        }
+        }//end of ZStack
     }
 }
 //MARK:- gradeImage
@@ -142,6 +145,18 @@ func gradeImage(grade: Int16) -> Image {
         return Image("greenPatch")
     default:
         return Image(systemName: "hammer")
+    }
+}
+func gradeColor(grade: Int16) -> Color {
+    switch grade {
+    case 1:
+        return .red
+    case 2:
+        return .orange
+    case 3:
+        return .green
+    default:
+        return .black
     }
 }
 //struct QuestionsView_Previews: PreviewProvider {
