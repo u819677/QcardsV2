@@ -63,7 +63,7 @@ struct QuestionsView: View {
                 }
             }
             //MARK:- Navigation Bar
-            .navigationTitle(self.topic?.topicName ?? "nil" )
+            .navigationTitle(self.topic?.topicName ?? "nil" )/// should never be nil but too nervous to force-unwrap
             .navigationBarItems(trailing:
                                     HStack{
                                         Button(action: {
@@ -124,12 +124,10 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
                     Spacer()    ///pushes the color patch over to the left edge
                 }
             }
-            HStack{
             Text(query.question)
                 .font(.custom("Noteworthy Bold", size: 26 )) //may need to use system font size eg: font(.largeTitle)
                 .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
-                .padding(.leading, 10)  ///this is to try to avoid color patch overlapping with text 
-            }
+                .padding(.leading, 10)  ///this is to try to avoid color patch overlapping with text
         }//end of ZStack
     }
 }

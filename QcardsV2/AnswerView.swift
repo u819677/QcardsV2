@@ -35,10 +35,9 @@ struct AnswerView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 50)
-                        .padding() //(.leading, 10)
+                        .padding()
                         .contentShape(Circle())
-                        .onTapGesture {
-                            print("color patch was tapped")
+                        .onTapGesture { ///toggles through the 3 color patches
                             if grade < 3 {
                                 grade += 1
                             } else {
@@ -80,7 +79,7 @@ struct AnswerView: View {
         )
         //MARK:- onDisappear
         .onDisappear(){
-            if tappedQ.grade != grade { ///only need to save() if user has actually changed the grade
+            if tappedQ.grade != grade { ///only need to do save() if user has actually changed the grade
                 tappedQ.grade = grade
                 do {
                     try viewContext.save()
