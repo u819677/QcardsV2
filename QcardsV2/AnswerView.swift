@@ -25,14 +25,12 @@ struct AnswerView: View {
                 .resizable()
             VStack{
                 HStack{
-                    Circle()
-                  //  gradeImage(grade: grade)
-                        .fill(gradeColor(grade: grade))
-                        //.resizable()
-                        .padding(25)
-                        .frame(width: 70, height: 70, alignment: .center)
-                        .padding(10)
-                   
+                    gradeImage(grade: grade)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 50)
+                        .padding() //(.leading, 10)
+                        .contentShape(Circle())
                         .onTapGesture {
                             print("color patch was tapped")
                             if grade < 3 {
@@ -42,6 +40,10 @@ struct AnswerView: View {
                             }
                         }
                     Spacer()    ///puts color patch top left corner
+                    HStack{
+                        Text("Tap here to set or change the difficulty")
+                            .font(.footnote)
+                    }
                 }
                 Spacer()    ///puts OK  at the bottom
                 Text("OK")

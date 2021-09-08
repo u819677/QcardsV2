@@ -114,13 +114,12 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
     
     var body: some View {
         ZStack{
-            if !hidingGrades {
+            if !hidingGrades && query.grade != 4 {
                 HStack{
-                  //  gradeImage(grade: query.grade)
-                    Circle()
-                        .fill(gradeColor(grade: query.grade))   ///just one missing ) and the compiler is freaked out!
-                        //.resizable()
-                        .frame(width: 10, height: 10, alignment: .center)
+                    gradeImage(grade: query.grade)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 20)
                         .padding(.leading,2)
                     Spacer()    ///pushes the color patch over to the left edge
                 }
@@ -138,13 +137,13 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
 func gradeImage(grade: Int16) -> Image {
     switch grade {
     case 1:
-        return Image("redPatch")
+        return Image("redPatch2")
     case 2:
-        return Image("orangePatch")
+        return Image("orangePatch2")
     case 3:
-        return Image("greenPatch")
+        return Image("greenPatch2")
     default:
-        return Image(systemName: "hammer")
+        return Image("dotsPatch")
     }
 }
 func gradeColor(grade: Int16) -> Color {

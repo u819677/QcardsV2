@@ -35,12 +35,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         self.onSelect = onSelect
         self.onDelete = onDelete
         self.onMore = onMore
-//        let appearance = UINavigationBarAppearance()
-//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//        UINavigationBar.appearance().compactAppearance = appearance
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        let navController = UINavigationController()
-//        navController.navigationBar.prefersLargeTitles = true
     }
     
     func makeCoordinator() -> Coordinator {
@@ -48,20 +42,13 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
     }
     //MARK:- updateUIView
     func updateUIView(_ uiView: UITableView, context: Context) {
-//        let navController = UINavigationController()
-//        navController.navigationBar.prefersLargeTitles = true
-        
-        
-        
-        
-        
+      
         
         print("updateUIView called and...")
         if context.coordinator.allowRefresh {   //stops reloadData() running if called from onDelete
          //   uiView.bounces = true
             print("context.coordinator.allowRefresh in updateUIView = \(context.coordinator.allowRefresh)")
-           // DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {     //setting 0.1 here makes the blur effect more instantaneous. Does delete still work ok?
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {     //setting 0.1 not 0.5 here makes the blur effect more instantaneous. Does delete still work ok?
                 uiView.reloadData()
             }
         } else {
@@ -82,7 +69,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         
         let navController = UINavigationController()
         navController.navigationBar.prefersLargeTitles = true
-  //      tableView.bounces = true
         return tableView
     }
     
@@ -121,7 +107,6 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
         //MARK:- Delegate functions
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("onSelect called from delegate function")
-         //  self.allowRefresh = true  ///setting it here means that navlink not triggered unless 2 clicks
             self.parent.onSelect(parent.data[indexPath.row])
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {  //seems that .global() instead of .main causes big delay here
                 self.allowRefresh = true
@@ -156,9 +141,9 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
                     self.parent.onDelete(indexPath.row) /// actual delete  doesn't run until OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                    allowRefresh = false    //this may not be needed due set in line 153 when Alert first appears
+                    allowRefresh = false    //this may not be needed due set in line 171 when Alert first appears
                     actionPerformed(true)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {  ///too long wait here and possibly a rapid delete of queries then topic causes a crash
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {  ///too long wait here and there's a risk of a rapid delete of queries by user then topic which will cause a crash
                         allowRefresh = true
                     }
                 }
