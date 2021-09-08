@@ -16,7 +16,13 @@ struct AnswerView: View {
     init(isShown: Binding<Bool>, tappedQ: Query){
         _isShown = isShown
         self.tappedQ = tappedQ
-        _grade = State(initialValue: tappedQ.grade)  ///grade needs to be initalized properly to enable save() to work
+      
+        if tappedQ.grade != 3 && tappedQ.grade != 2 && tappedQ.grade != 1 {
+        _grade = State(initialValue: 4)
+        } else {
+            _grade = State(initialValue: tappedQ.grade)
+        ///grade needs to be initalized properly to enable save() to work
+        }
     }
     
     var body: some View {
@@ -41,8 +47,9 @@ struct AnswerView: View {
                         }
                     Spacer()    ///puts color patch top left corner
                     HStack{
-                        Text("Tap here to set or change the difficulty")
+                        Text(grade == 4 ? "Tap to set/change the difficulty" : "")
                             .font(.footnote)
+                        Spacer()
                     }
                 }
                 Spacer()    ///puts OK  at the bottom

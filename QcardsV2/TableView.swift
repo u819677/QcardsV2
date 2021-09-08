@@ -123,10 +123,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 /// the alert sheet is displayed here, and the delete operation is paused until alert OK is pressed
                 var deletingMessage: String = ""
                 if let entityType = self.parent.data[indexPath.row] as? Topic {
-                    deletingMessage = " \(entityType.topicName ?? "") and all its \(entityType.queryArray.count) questions?"
+                    deletingMessage = " \"\(entityType.topicName ?? "")\" and all its \(entityType.queryArray.count) questions?"
                 }
                 if let entityType = self.parent.data[indexPath.row] as? Query {
-                    deletingMessage = "\(entityType.queryQuestion ?? "") with its answer and any extra info?"
+                    deletingMessage = "\"\(entityType.queryQuestion ?? "")\" with its answer and any extra info?"
                 }
                 //above works a treat. Not exactly generic but deals with both of the only two deleting options.
                 //MARK:-  AlertController

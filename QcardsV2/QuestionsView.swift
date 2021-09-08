@@ -142,10 +142,13 @@ func gradeImage(grade: Int16) -> Image {
         return Image("orangePatch2")
     case 3:
         return Image("greenPatch2")
-    default:
+    case 4:
         return Image("dotsPatch")
+    default:
+        return Image("transparentPatch")
     }
 }
+
 func gradeColor(grade: Int16) -> Color {
     switch grade {
     case 1:
