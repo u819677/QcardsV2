@@ -104,7 +104,7 @@ struct TopicEntryView: View {   ///This view is used for both new topic entry an
 }
 //MARK:- isSensible
 func isSensible(_ userText: String) -> Bool {
-    if userText.isEmpty || userText.count < 4  {    //maybe need to add more conditions here?
+    if userText.isEmpty  { //|| userText.count < 3  {    //maybe need to add more conditions here? Or maybe fewer!?
         return false
     }
     return true
