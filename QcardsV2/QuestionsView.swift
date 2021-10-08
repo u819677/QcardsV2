@@ -33,6 +33,7 @@ struct QuestionsView: View {
             TableView($queryStore.queries, background: background) {query in
                 QuestionView(query: query, hidingGrades: $hidingGrades)
                     .blur(radius: showAnswer ? 3 : 0)
+               // allowsHitTesting(showAnswer ? false : true)
             }
             .onSelect {query in
                 print("\(query) was selected")
@@ -57,6 +58,8 @@ struct QuestionsView: View {
                 print("query to edit is \(query)" )
                 optionalQuery = query
             }
+            
+           .allowsHitTesting(showAnswer ? false : true) //tapping is only permitted within AnswerView
             .sheet(item: $optionalQuery) { item in    ///edit View animation triggered when optionalQuery is not nil, ie: in edit mode
                 withAnimation {
                     QueryEntryView(optionalQuery: item)
@@ -94,7 +97,8 @@ struct QuestionsView: View {
             }
             if showAnswer { 
                 AnswerView(isShown: $showAnswer, tappedQ: selectedQuery!).zIndex(1)//needs this to subsequently animate away properly but set to 1 not zero! otherwise whole raft of issues with navigation bar size etc...
-                    .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack
+                   /// .transition(.move(edge: .bottom))   //this view is temporarily on top of the ZStack. Using .move animation the view appears abruptly, .transition is better.
+                    .transition(.offset(x:0, y:1000))
                     .animation(.easeOut)
             }
         }//end ZStack
