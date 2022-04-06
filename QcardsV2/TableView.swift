@@ -141,10 +141,10 @@ where Data: RandomAccessCollection,  Content: View, Data.Index == Int, Backgroun
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (handler) in
                     self.parent.onDelete(indexPath.row) /// actual delete  doesn't run until OK is pressed
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                    allowRefresh = false    //this may not be needed due set in line 171 when Alert first appears
+                    self.allowRefresh = false    //this may not be needed due set in line 171 when Alert first appears
                     actionPerformed(true)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {  ///too long wait here and there's a risk of a rapid delete of queries by user then topic which will cause a crash
-                        allowRefresh = true
+                        self.allowRefresh = true
                     }
                 }
                 

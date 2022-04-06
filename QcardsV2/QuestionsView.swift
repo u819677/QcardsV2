@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CoreData
+import UIKit
+import Foundation
 
 struct QuestionsView: View {
     
@@ -20,7 +22,8 @@ struct QuestionsView: View {
     @State var showAnswer: Bool = false
     @State var selectedQuery: Query?
     @State var hidingGrades: Bool = false
-    
+    @State var showActivitySheet = false
+    var activityText = "TextFileName"
     init(topic: Topic?) {
         self.topic = topic
         let managedObjectContext = persistenceController.container.viewContext
@@ -89,9 +92,42 @@ struct QuestionsView: View {
                                             .padding()
                                             .imageScale(.large)
                                         }
-                                    }
-                                
-            )
+            //    Button {
+
+               //     }
+//
+//
+//
+//                    //try this:
+////                    Button(action: actionSheet) {
+////
+////                                   Image(systemName: "square.and.arrow.up")
+////
+////                                       .resizable()
+////
+////                                       .aspectRatio(contentMode: .fit)
+////
+////                                       .frame(width: 36, height: 36)
+////
+////                               }
+//
+//                    // end of try this
+//
+//                    showActivitySheet = true
+//                } label: {
+//                    Image(systemName: "square.and.arrow.up")
+//                }//end of Button
+               // Button(action: actionSheet) {
+                Button(action: {
+                    
+                    showActivitySheet = true })
+                {
+                    Image(systemName: "square.and.arrow.up")
+                }
+                
+                
+            }   //end of HStack
+            )   //end of NavigationBarItems
             .sheet(isPresented: $showQueryEntry){
                 QueryEntryView(selectedTopic: topic!)   ///there will always be an inbound topic so force-unwrap should be safe!
             }
@@ -101,7 +137,13 @@ struct QuestionsView: View {
                     .transition(.offset(x:0, y:1000))
                     .animation(.easeOut)
             }
+           
         }//end ZStack
+             .sheet(isPresented: $showActivitySheet) {  //ie: .sheet goes immediately before end of view
+                
+                 //ActivityView(activityItems: [activityText, UIImage(systemName: "pencil")!], applicationActivities: nil)
+                 ActivityView(activityItems: [URL(string: "textFileToShare")!, "TextFileName"], applicationActivities: nil)
+       }
     }//end of View
     
     var background: some View {
@@ -111,11 +153,23 @@ struct QuestionsView: View {
     }
 }
 
+struct ActivityView: UIViewControllerRepresentable {
+   var activityItems: [Any]
+//var objectsToShare: URL = URL(string: "textFileToShare")!
+   let applicationActivities: [UIActivity]?
+   func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
+      UIActivityViewController(activityItems: activityItems,
+                            applicationActivities: applicationActivities)
+   }
+   func updateUIViewController(_ uiViewController: UIActivityViewController,
+                               context: UIViewControllerRepresentableContext<ActivityView>) {}
+   }
+//}
 //MARK:- QuestionView
 struct QuestionView: View {    //this is the view used for each line of the Questions table
     @ObservedObject var query: Query       //not sure why not use @Binding here but it works!
     @Binding var hidingGrades: Bool
-    
+  
     var body: some View {
         ZStack{
             if !hidingGrades && query.grade != 4 {
@@ -133,6 +187,7 @@ struct QuestionView: View {    //this is the view used for each line of the Ques
                 .foregroundColor(.white) //may need to use Color.primary to enable accessibility here.
                 .padding(.leading, 10)  ///this is to try to avoid color patch overlapping with text
         }//end of ZStack
+        
     }
 }
 //MARK:- gradeImage

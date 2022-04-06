@@ -74,6 +74,21 @@ struct ContentView: View {
                 .padding()
                 .imageScale(.large)
             })
+            //add a second item to bar, position is nearer the centre, ie: first item reading across bar:
+            
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//              print("pencil tapped")
+//                }
+//            })
+//            {Text(Image(systemName: "pencil"))
+//                .padding()
+//                .imageScale(.large)
+//            })
+            
+            
+            
+            
             .navigationTitle("Topics")  //this is immediately before end of NavView to display properly on child view. makes sense!
             // .navigationBarTitle("Topics") //seems that this is deprecated
             
